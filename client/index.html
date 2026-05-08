@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectroMart | Mobile Optimized Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { margin: 0; padding: 0; scroll-behavior: smooth; background-color: #f8fafc; }
+        /* Smooth transition for mobile menu */
+        #mobile-menu-overlay { transition: opacity 0.3s ease; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Mobile Menu Toggle (Left) -->
+            <button id="mobile-menu-btn" class="lg:hidden text-2xl text-gray-600 focus:outline-none">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+
+            <!-- Logo -->
+            <a href="/" class="text-xl md:text-2xl font-black text-blue-600 tracking-tighter">ElectroMart</a>
+
+            <!-- Search Bar (Hidden on very small screens, visible in mobile menu) -->
+            <div class="hidden md:block w-1/3">
+                <div class="relative">
+                    <input type="text" id="search-input" placeholder="Search tech..." class="w-full border border-gray-200 rounded-full py-2 px-10 focus:ring-2 focus:ring-blue-500 outline-none">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-3 text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- Profile & Icons -->
+            <div class="flex items-center space-x-4">
+                <nav class="hidden lg:flex space-x-6 font-bold text-gray-600 text-sm">
+                    <a href="/" class="hover:text-blue-600">Home</a>
+                    <a href="#" class="hover:text-blue-600">Products</a>
+                </nav>
+                <div class="relative">
+                    <button id="profile-btn" class="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center border-2 border-transparent hover:border-blue-600 transition-all">
+                        <i class="fa-solid fa-user text-blue-600"></i>
+                    </button>
+                    <div id="profile-menu" class="hidden absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-50"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU OVERLAY (NEW) -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-[100] hidden opacity-0 transition-opacity">
+        <div class="bg-white w-3/4 h-full p-6 shadow-2xl flex flex-col">
+            <div class="flex justify-between items-center mb-10">
+                <span class="text-xl font-black text-blue-600">Menu</span>
+                <button id="close-menu-btn" class="text-2xl text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <!-- Mobile Search -->
+            <div class="relative mb-8">
+                <input type="text" id="mobile-search" placeholder="Search gadgets..." class="w-full bg-gray-100 border-none p-4 rounded-2xl outline-none font-bold">
+                <i class="fa-solid fa-magnifying-glass absolute right-4 top-4 text-gray-400"></i>
+            </div>
+            <nav class="flex flex-col space-y-4 font-black text-slate-800 text-lg">
+                <a href="/" class="hover:text-blue-600 py-2">Home</a>
+                <a href="#" class="hover:text-blue-600 py-2">Our Products</a>
+                <a href="/pages/cart.html" class="hover:text-blue-600 py-2">My Cart</a>
+                <a href="#" class="hover:text-blue-600 py-2">Customer Support</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero (Responsive Height) -->
+    <section class="bg-blue-900 text-white py-12 md:py-20 overflow-hidden">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center text-center md:text-left">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-3xl md:text-6xl font-black mb-6 leading-tight">Digital <br><span class="text-blue-400">Lifestyle</span></h1>
+                <button class="bg-white text-blue-900 px-8 py-3 rounded-full font-black shadow-xl">Explore Deals</button>
+            </div>
+            <div class="md:w-1/2 flex justify-center md:justify-end">
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600" class="rounded-3xl shadow-2xl w-4/5 md:w-3/4 rotate-2">
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Grid (1 Col Mobile, 4 Col Desktop) -->
+    <section class="container mx-auto px-4 py-12 md:py-16">
+        <h2 class="text-xl md:text-2xl font-black text-gray-800 mb-8"><span class="w-2 h-6 bg-blue-600 mr-3 rounded-full inline-block"></span>Categories</h2>
+        <div id="category-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"></div>
+    </section>
+
+    <!-- Products Grid (2 Col Mobile, 4 Col Desktop) -->
+    <section class="container mx-auto px-4 py-12 bg-white rounded-[2rem] md:rounded-[3rem]">
+        <h2 class="text-xl md:text-2xl font-black text-gray-800 mb-10 text-center md:text-left"><span class="hidden md:inline-block w-2 h-8 bg-blue-600 mr-4 rounded-full"></span>Top Products</h2>
+        <div id="product-container" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-10 mt-auto text-center">
+        <p class="text-slate-500 font-bold text-xs uppercase">&copy; 2024 ElectroMart | Responsive Edition</p>
+    </footer>
+
+    <script src="js/cart-handler.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

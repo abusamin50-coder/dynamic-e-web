@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product | Admin Mart</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f8fafc; font-family: 'Inter', sans-serif; }
+        .form-card { box-shadow: 0 20px 50px rgba(0,0,0,0.02); }
+        .input-style {
+            width: 100%;
+            background-color: #f1f5f9;
+            border: 2px solid transparent;
+            padding: 1rem;
+            border-radius: 1.25rem;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .input-style:focus {
+            background-color: #fff;
+            border-color: #3b82f6;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Header & Back Button -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
+                <div>
+                    <button onclick="window.location.href='products.html'" class="flex items-center text-slate-400 hover:text-blue-600 font-bold transition group mb-2">
+                        <i class="fa-solid fa-arrow-left mr-2 transition-transform group-hover:-translate-x-1"></i>
+                        Back to Inventory
+                    </button>
+                    <h1 class="text-4xl font-black text-slate-800 tracking-tighter">Edit Product</h1>
+                </div>
+                <div id="product-id-badge" class="bg-blue-50 text-blue-600 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest border border-blue-100">
+                    Loading ID...
+                </div>
+            </div>
+
+            <!-- Main Edit Form -->
+            <form id="edit-product-form" enctype="multipart/form-data" class="space-y-8">
+                
+                <!-- Section 1: Basic Information -->
+                <div class="bg-white p-8 md:p-12 rounded-[2.5rem] border border-slate-100 form-card">
+                    <h3 class="text-xl font-black text-slate-800 mb-8 flex items-center">
+                        <span class="w-2 h-6 bg-blue-600 rounded-full mr-3"></span>
+                        Basic Details
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Product Display Name</label>
+                            <input type="text" name="name" required class="input-style" placeholder="e.g. Sony PlayStation 5">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Full Description</label>
+                            <textarea name="description" required class="input-style h-40 resize-none" placeholder="Describe the features, specs, and condition..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Inventory & Pricing -->
+                <div class="bg-white p-8 md:p-12 rounded-[2.5rem] border border-slate-100 form-card">
+                    <h3 class="text-xl font-black text-slate-800 mb-8 flex items-center">
+                        <span class="w-2 h-6 bg-orange-500 rounded-full mr-3"></span>
+                        Pricing & Stock
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Selling Price ($)</label>
+                            <input type="number" name="price" required class="input-style" placeholder="0.00">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Units in Stock</label>
+                            <input type="number" name="countInStock" required class="input-style" placeholder="0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Classification -->
+                <div class="bg-white p-8 md:p-12 rounded-[2.5rem] border border-slate-100 form-card">
+                    <h3 class="text-xl font-black text-slate-800 mb-8 flex items-center">
+                        <span class="w-2 h-6 bg-purple-600 rounded-full mr-3"></span>
+                        Attributes
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Manufacturer / Brand</label>
+                            <input type="text" name="brand" required class="input-style" placeholder="e.g. Apple, Samsung">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Product Category</label>
+                            <div class="relative">
+                                <select id="category-select" name="category" required class="input-style appearance-none cursor-pointer">
+                                    <!-- Dynamic categories -->
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-5 top-5 text-slate-400 pointer-events-none"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Media -->
+                <div class="bg-white p-8 md:p-12 rounded-[2.5rem] border border-slate-100 form-card">
+                    <h3 class="text-xl font-black text-slate-800 mb-8 flex items-center">
+                        <span class="w-2 h-6 bg-green-500 rounded-full mr-3"></span>
+                        Product Media
+                    </h3>
+                    
+                    <div class="flex flex-col items-center justify-center border-4 border-dashed border-slate-50 rounded-[2rem] p-10 hover:border-blue-100 transition-colors">
+                        <i class="fa-solid fa-cloud-arrow-up text-5xl text-slate-200 mb-4"></i>
+                        <label class="cursor-pointer bg-white border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-2xl font-black hover:bg-blue-600 hover:text-white transition shadow-lg">
+                            Choose New Images
+                            <input type="file" name="images" multiple class="hidden">
+                        </label>
+                        <p class="text-[10px] font-bold text-slate-400 mt-4 uppercase tracking-widest">Only select if you want to replace current photos</p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col md:flex-row gap-4 pt-6">
+                    <button type="submit" class="flex-[2] bg-blue-600 text-white py-6 rounded-[2rem] font-black text-xl hover:bg-blue-700 transition shadow-2xl shadow-blue-200 active:scale-95">
+                        <i class="fa-solid fa-check-circle mr-3"></i> Save Product Changes
+                    </button>
+                    <button type="button" onclick="window.location.href='products.html'" class="flex-1 bg-white text-slate-400 border border-slate-100 py-6 rounded-[2rem] font-black text-xl hover:bg-slate-50 transition active:scale-95">
+                        Discard
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <script src="../../js/admin.js"></script>
+</body>
+</html>

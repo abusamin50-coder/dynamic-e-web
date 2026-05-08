@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details | ElectroMart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen py-10">
+
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+            
+            <div class="mb-6 flex justify-between items-center">
+                <button onclick="window.history.back()" class="text-blue-600 font-bold hover:underline">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Back
+                </button>
+                <button onclick="window.print()" class="bg-gray-800 text-white px-5 py-2 rounded-lg font-bold text-sm hover:bg-black transition">
+                    <i class="fa-solid fa-print mr-2"></i> Print Invoice
+                </button>
+            </div>
+
+            <!-- Invoice Content -->
+            <div id="invoice-card" class="bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-gray-100">
+                <!-- Data injected by JS -->
+                <div class="p-20 text-center text-gray-300 font-bold uppercase tracking-widest">
+                    Loading Invoice...
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../js/orders.js"></script>
+</body>
+</html>

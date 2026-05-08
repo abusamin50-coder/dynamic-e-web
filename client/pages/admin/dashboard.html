@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Responsive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @media (max-width: 1024px) {
+            .sidebar-hidden { transform: translateX(-100%); }
+            .sidebar-visible { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen font-sans">
+
+    <!-- Mobile Header (Visible only on Mobile) -->
+    <div class="lg:hidden bg-slate-900 text-white p-4 flex justify-between items-center sticky top-0 z-[60]">
+        <button id="admin-sidebar-toggle" class="text-2xl"><i class="fa-solid fa-bars"></i></button>
+        <span class="font-black text-blue-500">Admin Mart</span>
+        <div class="h-8 w-8 bg-blue-600 rounded-full flex items-center justify-center font-bold">A</div>
+    </div>
+
+    <!-- Sidebar (Slide-in Mobile, Fixed Desktop) -->
+    <aside id="admin-sidebar" class="w-64 bg-slate-900 text-white min-h-screen fixed shadow-2xl z-50 transition-transform duration-300 sidebar-hidden lg:translate-x-0">
+        <div class="p-6 hidden lg:block">
+            <a href="/" class="text-2xl font-black text-blue-500 tracking-tighter">ElectroMart</a>
+        </div>
+        <nav class="px-4 py-6 lg:py-0 space-y-2 mt-4">
+            <a href="dashboard.html" class="flex items-center space-x-3 bg-blue-600 p-4 rounded-2xl transition">
+                <i class="fa-solid fa-gauge"></i><span>Dashboard</span>
+            </a>
+            <a href="products.html" class="flex items-center space-x-3 p-4 hover:bg-slate-800 rounded-2xl text-slate-300">
+                <i class="fa-solid fa-box"></i><span>Products</span>
+            </a>
+            <a href="categories.html" class="flex items-center space-x-3 p-4 hover:bg-slate-800 rounded-2xl text-slate-300">
+                <i class="fa-solid fa-list"></i><span>Categories</span>
+            </a>
+            <a href="orders.html" class="flex items-center space-x-3 p-4 hover:bg-slate-800 rounded-2xl text-slate-300">
+                <i class="fa-solid fa-cart-shopping"></i><span>Orders</span>
+            </a>
+            <hr class="border-slate-800 my-4">
+            <a href="/" class="flex items-center space-x-3 p-4 hover:bg-slate-800 rounded-2xl text-slate-400 font-bold">
+                <i class="fa-solid fa-globe"></i><span>Store</span>
+            </a>
+        </nav>
+        <div class="p-4 border-t border-slate-800 absolute bottom-0 w-full">
+            <button onclick="handleLogout()" class="w-full flex items-center justify-center space-x-3 bg-red-600/10 text-red-500 p-4 rounded-2xl hover:bg-red-600 hover:text-white transition">
+                <i class="fa-solid fa-power-off"></i><span>Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content (Adjusted Margin) -->
+    <main class="flex-1 lg:ml-64 p-4 md:p-8">
+        <h1 class="text-2xl md:text-3xl font-black text-slate-800 mb-8 mt-2 lg:mt-0">Admin Overview</h1>
+
+        <!-- Stats (Stack on mobile) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-12">
+            <div class="bg-white p-6 md:p-8 rounded-[2rem] shadow-sm border border-slate-100 flex justify-between items-center">
+                <div><p class="text-slate-400 font-bold uppercase text-[10px]">Users</p><h2 id="total-users-count" class="text-3xl font-black text-slate-900 mt-2">0</h2></div>
+                <i class="fa-solid fa-users text-blue-600 text-2xl"></i>
+            </div>
+            <div class="bg-white p-6 md:p-8 rounded-[2rem] shadow-sm border border-slate-100 flex justify-between items-center">
+                <div><p class="text-slate-400 font-bold uppercase text-[10px]">Revenue</p><h2 class="text-3xl font-black text-slate-900 mt-2">$0.00</h2></div>
+                <i class="fa-solid fa-wallet text-green-600 text-2xl"></i>
+            </div>
+        </div>
+
+        <!-- RESPONSIVE TABLE WRAPPER -->
+        <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+            <div class="p-6 border-b font-black text-slate-800">Recent Users</div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left min-w-[600px]">
+                    <thead class="bg-slate-50 text-slate-400 text-[10px] font-black uppercase">
+                        <tr><th class="p-6">Details</th><th class="p-6">Revenue</th><th class="p-6">Status</th><th class="p-6">Actions</th></tr>
+                    </thead>
+                    <tbody id="user-table-body" class="divide-y divide-slate-50"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/admin.js"></script>
+</body>
+</html>

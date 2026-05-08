@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders | Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 flex font-sans">
+
+    <!-- Sidebar (Consistent with Dashboard) -->
+    <aside class="w-64 bg-slate-900 text-white min-h-screen fixed shadow-2xl z-50">
+        <div class="p-6 font-black text-2xl text-blue-500">ElectroMart</div>
+        <nav class="flex-1 px-4 space-y-2 mt-4">
+            <a href="dashboard.html" class="flex items-center space-x-3 p-3 hover:bg-slate-800 rounded-xl transition text-slate-300">
+                <i class="fa-solid fa-gauge"></i><span>Dashboard</span>
+            </a>
+            <a href="products.html" class="flex items-center space-x-3 p-3 hover:bg-slate-800 rounded-xl transition text-slate-300">
+                <i class="fa-solid fa-box"></i><span>Products</span>
+            </a>
+            <a href="categories.html" class="flex items-center space-x-3 p-3 hover:bg-slate-800 rounded-xl transition text-slate-300">
+                <i class="fa-solid fa-list"></i><span>Categories</span>
+            </a>
+            <a href="orders.html" class="flex items-center space-x-3 bg-blue-600 p-3 rounded-xl transition text-white">
+                <i class="fa-solid fa-cart-shopping"></i><span>Orders</span>
+            </a>
+            <hr class="border-slate-800 my-4">
+            <a href="/" class="flex items-center space-x-3 p-3 text-slate-400 font-bold hover:text-white transition">
+                <i class="fa-solid fa-globe"></i><span>Visit Store</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 ml-64 p-8">
+        <div class="flex justify-between items-center mb-10">
+            <h1 class="text-3xl font-black text-slate-800 tracking-tighter">Customer Orders</h1>
+            <div class="bg-blue-50 text-blue-600 px-4 py-2 rounded-xl font-black text-xs uppercase">
+                Order Management System
+            </div>
+        </div>
+
+        <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-50 text-slate-400 uppercase text-[10px] font-black">
+                        <tr>
+                            <th class="p-6">Order ID / Date</th>
+                            <th class="p-6">Customer</th>
+                            <th class="p-6">Total Price</th>
+                            <th class="p-6">Payment</th>
+                            <th class="p-6">Status Control</th>
+                            <th class="p-6">Invoice</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-orders-body" class="divide-y divide-slate-50 text-sm">
+                        <!-- Loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/admin.js"></script>
+</body>
+</html>
