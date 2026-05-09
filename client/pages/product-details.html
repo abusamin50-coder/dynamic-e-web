@@ -8,19 +8,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background-color: #f8fafc;
-            scroll-behavior: smooth;
-        }
-
-        .back-btn:hover i {
-            transform: translateX(-5px);
-        }
+        body { background-color: #f8fafc; scroll-behavior: smooth; font-family: 'Inter', sans-serif; }
+        .back-btn:hover i { transform: translateX(-5px); }
+        /* Prevent layout shift while image loads */
+        #main-product-image { min-height: 300px; object-fit: contain; }
     </style>
 </head>
 
 <body class="min-h-screen flex flex-col">
 
+    <!-- Header -->
     <header class="bg-white shadow-sm sticky top-0 z-50 py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="/" class="text-2xl font-black text-blue-600 tracking-tighter">ElectroMart</a>
@@ -36,42 +33,81 @@
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-10 flex-1">
+    <main class="container mx-auto px-4 py-8 flex-1">
+        
+        <!-- Breadcrumbs (Professional Addition) -->
+        <nav class="flex items-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">
+            <a href="/" class="hover:text-blue-600">Home</a>
+            <i class="fa-solid fa-chevron-right mx-3 text-[8px]"></i>
+            <span id="breadcrumb-category" class="hover:text-blue-600 cursor-pointer">Category</span>
+            <i class="fa-solid fa-chevron-right mx-3 text-[8px]"></i>
+            <span id="breadcrumb-name" class="text-slate-600">Product</span>
+        </nav>
+
         <!-- Back Navigation -->
-        <button onclick="window.history.back()"
-            class="back-btn flex items-center text-slate-500 font-bold mb-8 transition group">
+        <button onclick="window.location.href='/'"
+            class="back-btn flex items-center text-slate-500 font-bold mb-8 transition group text-sm">
             <i class="fa-solid fa-arrow-left mr-2 transition-transform"></i> Back to Shop
         </button>
 
         <!-- Main Product Card -->
-        <div
-            class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden flex flex-col md:flex-row mb-20">
-            <div class="md:w-1/2 p-10 flex items-center justify-center bg-white border-r border-slate-50">
-                <img id="main-product-image" src=""
-                    class="max-w-full h-auto rounded-3xl transition-transform duration-700 hover:scale-110">
+        <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden flex flex-col md:flex-row mb-20">
+            <!-- Image Area -->
+            <div class="md:w-1/2 p-6 md:p-10 flex items-center justify-center bg-white border-r border-slate-50">
+                <img id="main-product-image" src="https://via.placeholder.com/600x600?text=Loading..."
+                    class="max-w-full h-auto rounded-3xl transition-transform duration-700 hover:scale-105" alt="Product Image">
             </div>
-            <div class="md:w-1/2 p-10 md:p-16 flex flex-col justify-center">
+            
+            <!-- Details Area -->
+            <div class="md:w-1/2 p-8 md:p-16 flex flex-col justify-center">
                 <span id="product-brand"
-                    class="bg-blue-50 text-blue-600 text-[10px] font-black uppercase px-4 py-1.5 rounded-full w-fit tracking-widest mb-6">Brand</span>
-                <h1 id="product-name" class="text-4xl font-black text-slate-900 leading-tight mb-4">Loading...</h1>
-                <p id="product-price" class="text-5xl font-black text-blue-600 mb-8">$0.00</p>
-                <div class="bg-slate-50 p-6 rounded-2xl mb-8">
-                    <p id="product-description" class="text-slate-500 leading-relaxed text-sm"></p>
+                    class="bg-blue-50 text-blue-600 text-[10px] font-black uppercase px-4 py-1.5 rounded-full w-fit tracking-widest mb-6 border border-blue-100">Brand</span>
+                
+                <h1 id="product-name" class="text-3xl md:text-5xl font-black text-slate-900 leading-tight mb-4 tracking-tighter">Loading Product...</h1>
+                
+                <div class="flex items-baseline space-x-3 mb-8">
+                    <p id="product-price" class="text-5xl font-black text-blue-600">$0.00</p>
+                    <p class="text-lg text-slate-300 font-bold line-through">$0.00</p>
                 </div>
-                <div id="stock-status-container" class="mb-10 font-bold text-sm"></div>
-                <div class="flex gap-4">
+
+                <div class="bg-slate-50 p-6 rounded-3xl mb-8 border border-slate-100">
+                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Product Description</h4>
+                    <p id="product-description" class="text-slate-600 leading-relaxed text-sm font-medium">
+                        Fetching latest specifications from server...
+                    </p>
+                </div>
+
+                <div id="stock-status-container" class="mb-10 text-sm font-black uppercase tracking-tighter"></div>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
                     <button id="add-to-cart-btn"
-                        class="flex-1 bg-blue-600 text-white py-5 rounded-2xl font-black hover:bg-blue-700 transition shadow-xl shadow-blue-100 flex items-center justify-center">
+                        class="flex-1 bg-blue-600 text-white py-5 rounded-[1.5rem] font-black hover:bg-blue-700 transition shadow-xl shadow-blue-100 flex items-center justify-center active:scale-95">
                         <i class="fa-solid fa-cart-plus mr-3 text-xl"></i> Add to Cart
                     </button>
+                    <button id="buy-now-btn" onclick="window.location.href='/pages/cart.html'"
+                        class="flex-1 bg-slate-900 text-white py-5 rounded-[1.5rem] font-black hover:bg-black transition shadow-xl active:scale-95">
+                        Buy Now
+                    </button>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="grid grid-cols-2 gap-4 mt-12 pt-8 border-t border-slate-50">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-shield-check text-green-500"></i>
+                        <span class="text-[10px] font-black text-slate-400 uppercase">Official Warranty</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-truck-fast text-blue-500"></i>
+                        <span class="text-[10px] font-black text-slate-400 uppercase">Fast Delivery</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- RELATED PRODUCTS SECTION (NEW) -->
+        <!-- RELATED PRODUCTS SECTION -->
         <section id="related-section" class="hidden">
             <h2 class="text-2xl font-black text-slate-800 mb-10 flex items-center">
-                <span class="w-2 h-8 bg-blue-600 mr-4 rounded-full"></span> You May Also Like
+                <span class="w-2 h-8 bg-blue-600 mr-4 rounded-full"></span> Similar Products
             </h2>
             <div id="related-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- Related products will load here -->
@@ -79,10 +115,12 @@
         </section>
     </main>
 
-    <footer class="bg-slate-900 text-white py-12 text-center text-slate-500 font-bold">&copy; 2024 ElectroMart</footer>
+    <footer class="bg-slate-900 text-white py-12 text-center text-slate-500 font-bold mt-auto">&copy; 2024 ElectroMart</footer>
 
+    <!-- Scripts -->
     <script src="../js/cart-handler.js"></script>
-    <script src="../js/main.js"></script> <!-- Needed for navbar dropdown -->
+    <script src="../js/main.js"></script>
     <script src="../js/details.js"></script>
 </body>
+
 </html>
