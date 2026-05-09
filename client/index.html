@@ -22,10 +22,10 @@
                 <i class="fa-solid fa-bars-staggered"></i>
             </button>
 
-            <!-- Logo -->
+            <!-- Logo (Fixed: Using / to ensure a clean reload) -->
             <a href="/" class="text-xl md:text-2xl font-black text-blue-600 tracking-tighter">ElectroMart</a>
 
-            <!-- Search Bar (Hidden on very small screens, visible in mobile menu) -->
+            <!-- Search Bar -->
             <div class="hidden md:block w-1/3">
                 <div class="relative">
                     <input type="text" id="search-input" placeholder="Search tech..." class="w-full border border-gray-200 rounded-full py-2 px-10 focus:ring-2 focus:ring-blue-500 outline-none">
@@ -37,7 +37,8 @@
             <div class="flex items-center space-x-4">
                 <nav class="hidden lg:flex space-x-6 font-bold text-gray-600 text-sm">
                     <a href="/" class="hover:text-blue-600">Home</a>
-                    <a href="#" class="hover:text-blue-600">Products</a>
+                    <!-- Fixed: Linked to products-section -->
+                    <a href="#products-section" class="hover:text-blue-600">Products</a>
                 </nav>
                 <div class="relative">
                     <button id="profile-btn" class="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center border-2 border-transparent hover:border-blue-600 transition-all">
@@ -49,7 +50,7 @@
         </div>
     </header>
 
-    <!-- MOBILE MENU OVERLAY (NEW) -->
+    <!-- MOBILE MENU OVERLAY -->
     <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-[100] hidden opacity-0 transition-opacity">
         <div class="bg-white w-3/4 h-full p-6 shadow-2xl flex flex-col">
             <div class="flex justify-between items-center mb-10">
@@ -63,19 +64,20 @@
             </div>
             <nav class="flex flex-col space-y-4 font-black text-slate-800 text-lg">
                 <a href="/" class="hover:text-blue-600 py-2">Home</a>
-                <a href="#" class="hover:text-blue-600 py-2">Our Products</a>
+                <a href="#products-section" onclick="closeMobileMenu()" class="hover:text-blue-600 py-2">Our Products</a>
                 <a href="/pages/cart.html" class="hover:text-blue-600 py-2">My Cart</a>
                 <a href="#" class="hover:text-blue-600 py-2">Customer Support</a>
             </nav>
         </div>
     </div>
 
-    <!-- Hero (Responsive Height) -->
+    <!-- Hero Section -->
     <section class="bg-blue-900 text-white py-12 md:py-20 overflow-hidden">
         <div class="container mx-auto px-4 flex flex-col md:flex-row items-center text-center md:text-left">
             <div class="md:w-1/2 mb-10 md:mb-0">
                 <h1 class="text-3xl md:text-6xl font-black mb-6 leading-tight">Digital <br><span class="text-blue-400">Lifestyle</span></h1>
-                <button class="bg-white text-blue-900 px-8 py-3 rounded-full font-black shadow-xl">Explore Deals</button>
+                <!-- Fixed: Added smooth scroll logic -->
+                <button onclick="document.getElementById('products-section').scrollIntoView({behavior: 'smooth'})" class="bg-white text-blue-900 px-8 py-3 rounded-full font-black shadow-xl hover:bg-gray-100 transition">Explore Deals</button>
             </div>
             <div class="md:w-1/2 flex justify-center md:justify-end">
                 <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600" class="rounded-3xl shadow-2xl w-4/5 md:w-3/4 rotate-2">
@@ -83,14 +85,14 @@
         </div>
     </section>
 
-    <!-- Categories Grid (1 Col Mobile, 4 Col Desktop) -->
-    <section class="container mx-auto px-4 py-12 md:py-16">
+    <!-- Categories Grid -->
+    <section id="categories-section" class="container mx-auto px-4 py-12 md:py-16">
         <h2 class="text-xl md:text-2xl font-black text-gray-800 mb-8"><span class="w-2 h-6 bg-blue-600 mr-3 rounded-full inline-block"></span>Categories</h2>
         <div id="category-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"></div>
     </section>
 
-    <!-- Products Grid (2 Col Mobile, 4 Col Desktop) -->
-    <section class="container mx-auto px-4 py-12 bg-white rounded-[2rem] md:rounded-[3rem]">
+    <!-- Products Grid (Fixed: Added id="products-section") -->
+    <section id="products-section" class="container mx-auto px-4 py-12 bg-white rounded-[2rem] md:rounded-[3rem]">
         <h2 class="text-xl md:text-2xl font-black text-gray-800 mb-10 text-center md:text-left"><span class="hidden md:inline-block w-2 h-8 bg-blue-600 mr-4 rounded-full"></span>Top Products</h2>
         <div id="product-container" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8"></div>
     </section>
@@ -100,7 +102,30 @@
         <p class="text-slate-500 font-bold text-xs uppercase">&copy; 2024 ElectroMart | Responsive Edition</p>
     </footer>
 
+    <!-- Auth Modal (Ensuring this matches main.js logic) -->
+    <div id="auth-modal" class="fixed inset-0 bg-black/60 z-[100] hidden items-center justify-center px-4 backdrop-blur-sm">
+        <div class="bg-white rounded-[2rem] p-10 max-w-sm w-full text-center">
+            <i class="fa-solid fa-lock text-4xl text-blue-600 mb-4"></i>
+            <h3 class="text-2xl font-black text-gray-800 mb-2">Login Required</h3>
+            <p class="text-gray-500 mb-8" id="modal-action-name">Please login to continue.</p>
+            <div class="flex flex-col space-y-3">
+                <a href="/pages/login.html" class="bg-blue-600 text-white py-4 rounded-2xl font-black text-center">Login Now</a>
+                <button onclick="window.closeAuthModal()" class="text-gray-400 font-bold">Maybe Later</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript order is important -->
     <script src="js/cart-handler.js"></script>
     <script src="js/main.js"></script>
+    
+    <script>
+        // Helper function for mobile menu navigation
+        function closeMobileMenu() {
+            const overlay = document.getElementById('mobile-menu-overlay');
+            overlay.classList.remove('opacity-100');
+            setTimeout(() => overlay.classList.add('hidden'), 300);
+        }
+    </script>
 </body>
 </html>
