@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product | Admin</title>
+    <title>Add Product | Admin Mart</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -14,31 +14,31 @@
             <i class="fa-solid fa-arrow-left mr-2"></i> Back to Products
         </a>
 
-        <div class="bg-white p-8 rounded-[2rem] shadow-xl border border-gray-100">
+        <div class="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-gray-100">
             <h1 class="text-3xl font-black mb-8 text-slate-800 tracking-tighter">Add New Product</h1>
             
-            <!-- enctype is important for Multer to recognize file uploads -->
-            <form id="add-product-form" enctype="multipart/form-data" class="space-y-6">
+            <!-- Removed enctype because we are sending URL as JSON now -->
+            <form id="add-product-form" class="space-y-6">
                 <div>
-                    <label class="block text-[10px] font-black uppercase text-slate-400 mb-2">Product Name</label>
+                    <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Product Display Name</label>
                     <input type="text" name="name" placeholder="e.g. iPhone 15 Pro Max" required 
                         class="w-full bg-slate-50 border-none p-4 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700">
                 </div>
 
                 <div>
-                    <label class="block text-[10px] font-black uppercase text-slate-400 mb-2">Detailed Description</label>
+                    <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Detailed Description</label>
                     <textarea name="description" placeholder="Enter product specs and details..." required 
                         class="w-full bg-slate-50 border-none p-4 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 h-32"></textarea>
                 </div>
 
                 <div class="grid grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-[10px] font-black uppercase text-slate-400 mb-2">Price ($)</label>
+                        <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Price ($)</label>
                         <input type="number" name="price" placeholder="999" required 
                             class="w-full bg-slate-50 border-none p-4 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700">
                     </div>
                     <div>
-                        <label class="block text-[10px] font-black uppercase text-slate-400 mb-2">Stock Quantity</label>
+                        <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Stock Quantity</label>
                         <input type="number" name="countInStock" placeholder="50" required 
                             class="w-full bg-slate-50 border-none p-4 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700">
                     </div>
@@ -46,23 +46,30 @@
 
                 <div class="grid grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-[10px] font-black uppercase text-slate-400 mb-2">Brand</label>
+                        <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Manufacturer / Brand</label>
                         <input type="text" name="brand" placeholder="e.g. Apple" required 
                             class="w-full bg-slate-50 border-none p-4 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700">
                     </div>
                     <div>
-                        <label class="block text-[10px] font-black uppercase text-slate-400 mb-2">Category</label>
+                        <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Category</label>
                         <select id="category-select" name="category" required 
-                            class="w-full bg-slate-50 border-none p-4 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 appearance-none">
+                            class="w-full bg-slate-50 border-none p-4 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 appearance-none cursor-pointer">
                             <option value="">Loading categories...</option>
                         </select>
                     </div>
                 </div>
                 
+                <!-- NEW URL INPUT SECTION -->
                 <div>
-                    <label class="block text-[10px] font-black uppercase text-slate-400 mb-2">Product Images</label>
-                    <input type="file" name="images" multiple required 
-                        class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
+                    <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Product Image URL</label>
+                    <div class="relative">
+                        <input type="text" name="images" placeholder="https://example.com/image.jpg" required 
+                            class="w-full bg-slate-50 border-none p-4 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-700 pr-12">
+                        <i class="fa-solid fa-link absolute right-5 top-5 text-slate-300"></i>
+                    </div>
+                    <p class="text-[9px] text-slate-400 mt-2 ml-4 italic font-medium uppercase tracking-tighter">
+                        Paste a direct link to the product photo (JPG, PNG, or WebP).
+                    </p>
                 </div>
                 
                 <button type="submit" class="w-full bg-blue-600 text-white py-5 rounded-[1.5rem] font-black text-lg hover:bg-blue-700 transition shadow-xl shadow-blue-100 active:scale-95">
@@ -72,7 +79,6 @@
         </div>
     </div>
     
-    <!-- Link to the master admin script -->
     <script src="../../js/admin.js"></script>
 </body>
 </html>

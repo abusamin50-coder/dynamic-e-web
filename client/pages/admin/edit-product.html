@@ -36,19 +36,19 @@
             <!-- Header & Back Button -->
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
                 <div>
-                    <button onclick="window.location.href='products.html'" class="flex items-center text-slate-400 hover:text-blue-600 font-bold transition group mb-2">
+                    <button onclick="window.location.href='products.html'" class="flex items-center text-slate-400 hover:text-blue-600 font-bold transition group mb-2 text-sm">
                         <i class="fa-solid fa-arrow-left mr-2 transition-transform group-hover:-translate-x-1"></i>
                         Back to Inventory
                     </button>
                     <h1 class="text-4xl font-black text-slate-800 tracking-tighter">Edit Product</h1>
                 </div>
-                <div id="product-id-badge" class="bg-blue-50 text-blue-600 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest border border-blue-100">
+                <div id="product-id-badge" class="bg-blue-50 text-blue-600 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border border-blue-100 h-fit">
                     Loading ID...
                 </div>
             </div>
 
-            <!-- Main Edit Form -->
-            <form id="edit-product-form" enctype="multipart/form-data" class="space-y-8">
+            <!-- Main Edit Form (Removed enctype as we send URL strings) -->
+            <form id="edit-product-form" class="space-y-8">
                 
                 <!-- Section 1: Basic Information -->
                 <div class="bg-white p-8 md:p-12 rounded-[2.5rem] border border-slate-100 form-card">
@@ -65,7 +65,7 @@
                         
                         <div>
                             <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Full Description</label>
-                            <textarea name="description" required class="input-style h-40 resize-none" placeholder="Describe the features, specs, and condition..."></textarea>
+                            <textarea name="description" required class="input-style h-40 resize-none" placeholder="Describe the features..."></textarea>
                         </div>
                     </div>
                 </div>
@@ -107,26 +107,28 @@
                                 <select id="category-select" name="category" required class="input-style appearance-none cursor-pointer">
                                     <!-- Dynamic categories -->
                                 </select>
-                                <i class="fa-solid fa-chevron-down absolute right-5 top-5 text-slate-400 pointer-events-none"></i>
+                                <i class="fa-solid fa-chevron-down absolute right-6 top-5 text-slate-400 pointer-events-none"></i>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Section 4: Media -->
+                <!-- Section 4: Media (UPDATED TO URL SYSTEM) -->
                 <div class="bg-white p-8 md:p-12 rounded-[2.5rem] border border-slate-100 form-card">
                     <h3 class="text-xl font-black text-slate-800 mb-8 flex items-center">
                         <span class="w-2 h-6 bg-green-500 rounded-full mr-3"></span>
-                        Product Media
+                        Product Media URL
                     </h3>
                     
-                    <div class="flex flex-col items-center justify-center border-4 border-dashed border-slate-50 rounded-[2rem] p-10 hover:border-blue-100 transition-colors">
-                        <i class="fa-solid fa-cloud-arrow-up text-5xl text-slate-200 mb-4"></i>
-                        <label class="cursor-pointer bg-white border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-2xl font-black hover:bg-blue-600 hover:text-white transition shadow-lg">
-                            Choose New Images
-                            <input type="file" name="images" multiple class="hidden">
-                        </label>
-                        <p class="text-[10px] font-bold text-slate-400 mt-4 uppercase tracking-widest">Only select if you want to replace current photos</p>
+                    <div>
+                        <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Image Source URL</label>
+                        <div class="relative">
+                            <input type="text" name="images" required class="input-style pr-14" placeholder="https://example.com/image.jpg">
+                            <i class="fa-solid fa-link absolute right-6 top-5 text-blue-500"></i>
+                        </div>
+                        <p class="text-[9px] text-slate-400 mt-4 ml-4 italic font-bold uppercase tracking-widest">
+                            Copy and paste the image address from the web to update the photo.
+                        </p>
                     </div>
                 </div>
 
