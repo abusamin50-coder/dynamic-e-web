@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,37 +8,51 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #f8fafc; scroll-behavior: smooth; }
-        .back-btn:hover i { transform: translateX(-5px); }
+        body {
+            background-color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        .back-btn:hover i {
+            transform: translateX(-5px);
+        }
     </style>
 </head>
+
 <body class="min-h-screen flex flex-col">
 
     <header class="bg-white shadow-sm sticky top-0 z-50 py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="/" class="text-2xl font-black text-blue-600 tracking-tighter">ElectroMart</a>
             <div class="relative">
-                <button id="profile-btn" class="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center border-2 border-transparent hover:border-blue-600 transition-all">
+                <button id="profile-btn"
+                    class="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center border-2 border-transparent hover:border-blue-600 transition-all">
                     <i class="fa-solid fa-user text-blue-600"></i>
                 </button>
-                <div id="profile-menu" class="hidden absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-50"></div>
+                <div id="profile-menu"
+                    class="hidden absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-50">
+                </div>
             </div>
         </div>
     </header>
 
     <main class="container mx-auto px-4 py-10 flex-1">
         <!-- Back Navigation -->
-        <button onclick="window.history.back()" class="back-btn flex items-center text-slate-500 font-bold mb-8 transition group">
+        <button onclick="window.history.back()"
+            class="back-btn flex items-center text-slate-500 font-bold mb-8 transition group">
             <i class="fa-solid fa-arrow-left mr-2 transition-transform"></i> Back to Shop
         </button>
 
         <!-- Main Product Card -->
-        <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden flex flex-col md:flex-row mb-20">
+        <div
+            class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden flex flex-col md:flex-row mb-20">
             <div class="md:w-1/2 p-10 flex items-center justify-center bg-white border-r border-slate-50">
-                <img id="main-product-image" src="" class="max-w-full h-auto rounded-3xl transition-transform duration-700 hover:scale-110">
+                <img id="main-product-image" src=""
+                    class="max-w-full h-auto rounded-3xl transition-transform duration-700 hover:scale-110">
             </div>
             <div class="md:w-1/2 p-10 md:p-16 flex flex-col justify-center">
-                <span id="product-brand" class="bg-blue-50 text-blue-600 text-[10px] font-black uppercase px-4 py-1.5 rounded-full w-fit tracking-widest mb-6">Brand</span>
+                <span id="product-brand"
+                    class="bg-blue-50 text-blue-600 text-[10px] font-black uppercase px-4 py-1.5 rounded-full w-fit tracking-widest mb-6">Brand</span>
                 <h1 id="product-name" class="text-4xl font-black text-slate-900 leading-tight mb-4">Loading...</h1>
                 <p id="product-price" class="text-5xl font-black text-blue-600 mb-8">$0.00</p>
                 <div class="bg-slate-50 p-6 rounded-2xl mb-8">
@@ -45,7 +60,8 @@
                 </div>
                 <div id="stock-status-container" class="mb-10 font-bold text-sm"></div>
                 <div class="flex gap-4">
-                    <button id="add-to-cart-btn" class="flex-1 bg-blue-600 text-white py-5 rounded-2xl font-black hover:bg-blue-700 transition shadow-xl shadow-blue-100 flex items-center justify-center">
+                    <button id="add-to-cart-btn"
+                        class="flex-1 bg-blue-600 text-white py-5 rounded-2xl font-black hover:bg-blue-700 transition shadow-xl shadow-blue-100 flex items-center justify-center">
                         <i class="fa-solid fa-cart-plus mr-3 text-xl"></i> Add to Cart
                     </button>
                 </div>
