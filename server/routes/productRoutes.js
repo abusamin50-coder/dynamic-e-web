@@ -6,20 +6,22 @@ const {
     createProduct, 
     updateProduct, 
     deleteProduct,
-    getRelatedProducts // New import
+    getRelatedProducts 
 } = require('../controllers/productController');
 const { protect, admin } = require('../middleware/authMiddleware');
-const upload = require('../middleware/uploadMiddleware');
 
-router.route('/')
-    .get(getProducts)
-    .post(protect, admin, upload.array('images', 5), createProduct);
+/**
+ * PRODUCT ROUTES
+ */
 
-router.get('/related/:productId/:categoryId', getRelatedProducts); // New Public Route
+// PUBLIC ROUTES
+router.get('/', getProducts);
+router.get('/related/:productId/:categoryId', getRelatedProducts);
+router.get('/:id', getProductById);
 
-router.route('/:id')
-    .get(getProductById)
-    .put(protect, admin, upload.array('images', 5), updateProduct)
-    .delete(protect, admin, deleteProduct);
+// ADMIN ONLY ROUTES
+router.post('/', protect, admin, createProduct);
+router.put('/:id', protect, admin, updateProduct);
+router.delete('/:id', protect, admin, deleteProduct);
 
 module.exports = router;
