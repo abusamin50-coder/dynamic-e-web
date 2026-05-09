@@ -3,36 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Category | Admin</title>
+    <title>Add Category | Admin Mart</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f8fafc; font-family: 'Inter', sans-serif; }
+        .input-style {
+            width: 100%;
+            background-color: #f1f5f9;
+            border: 2px solid transparent;
+            padding: 1.25rem;
+            border-radius: 1.5rem;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .input-style:focus {
+            background-color: #fff;
+            border-color: #3b82f6;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.05);
+        }
+    </style>
 </head>
-<body class="bg-gray-100 p-8">
-    <div class="max-w-xl mx-auto">
-        <!-- Back Button -->
-        <a href="categories.html" class="inline-flex items-center text-blue-600 font-bold mb-6 hover:underline">
-            <i class="fa-solid fa-arrow-left mr-2"></i> Back to Categories
-        </a>
+<body class="min-h-screen p-6 md:p-12">
 
-        <div class="bg-white p-8 rounded-xl shadow-lg">
-            <h1 class="text-2xl font-bold mb-6 text-gray-800">Add New Category</h1>
-            <form id="add-category-form" class="space-y-4">
+    <div class="max-w-xl mx-auto">
+        <!-- Professional Back Button -->
+        <button onclick="window.location.href='categories.html'" class="flex items-center text-slate-400 hover:text-blue-600 font-bold transition group mb-8 text-sm">
+            <i class="fa-solid fa-arrow-left mr-2 transition-transform group-hover:-translate-x-1"></i>
+            Back to Categories
+        </button>
+
+        <div class="bg-white p-10 rounded-[2.5rem] shadow-xl border border-slate-100">
+            <h1 class="text-3xl font-black mb-2 text-slate-800 tracking-tighter">Create Category</h1>
+            <p class="text-slate-400 text-sm mb-8 font-medium">Add a new group for your electronics inventory.</p>
+            
+            <form id="add-category-form" class="space-y-6">
                 <div>
-                    <label class="block font-bold mb-1">Category Name</label>
-                    <input type="text" name="name" placeholder="e.g. Smartphones" required 
-                        class="w-full border p-3 rounded-lg outline-none focus:border-blue-500">
+                    <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Category Name</label>
+                    <input type="text" name="name" required class="input-style" placeholder="e.g. Laptops, Audio, Gaming">
                 </div>
+
                 <div>
-                    <label class="block font-bold mb-1">Description</label>
-                    <textarea name="description" placeholder="Short description..." required 
-                        class="w-full border p-3 rounded-lg outline-none h-32 focus:border-blue-500"></textarea>
+                    <label class="block text-[10px] font-black uppercase text-slate-400 mb-2 ml-4">Description</label>
+                    <textarea name="description" required class="input-style h-40 resize-none" placeholder="What kind of products belong here?"></textarea>
                 </div>
-                <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">
-                    Save Category
-                </button>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-blue-600 text-white py-5 rounded-[1.5rem] font-black text-lg hover:bg-blue-700 transition shadow-xl shadow-blue-100 active:scale-95">
+                        Save Category
+                    </button>
+                    <button type="button" onclick="window.location.href='categories.html'" class="w-full mt-4 text-slate-400 font-bold hover:text-slate-600 transition">
+                        Cancel
+                    </button>
+                </div>
             </form>
         </div>
     </div>
+
     <script src="../../js/admin.js"></script>
 </body>
 </html>
