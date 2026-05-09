@@ -1,126 +1,1304 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ElectroMart | Mobile Optimized Store</title>
+    <title>ElectroMart | Premium Electronics Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
     <style>
-        body { margin: 0; padding: 0; scroll-behavior: smooth; background-color: #f8fafc; }
-        /* Smooth transition for mobile menu */
-        #mobile-menu-overlay { transition: opacity 0.3s ease; }
+        :root {
+            --primary: #0f172a;
+            --accent: #3b82f6;
+            --accent-dark: #1d4ed8;
+            --accent-light: #eff6ff;
+            --surface: #ffffff;
+            --surface-2: #f8fafc;
+            --border: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-body: #475569;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            background-color: var(--surface-2);
+            font-family: 'DM Sans', sans-serif;
+            color: var(--primary);
+        }
+
+        h1,
+        h2,
+        h3,
+        .font-display {
+            font-family: 'Syne', sans-serif;
+        }
+
+        /* ── Navbar ── */
+        .navbar {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .search-bar {
+            background: var(--surface-2);
+            border: 1.5px solid var(--border);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-bar input {
+            background: transparent;
+        }
+
+        /* ── Profile Button ── */
+        .profile-btn {
+            background: var(--accent-light);
+            border: 1.5px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .profile-btn:hover {
+            border-color: var(--accent);
+        }
+
+        /* ── Mobile Menu ── */
+        #mobile-menu-overlay {
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-inner {
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+        }
+
+        /* ── Hero ── */
+        .hero-section {
+            background: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            pointer-events: none;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            bottom: -80px;
+            left: 20%;
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #93c5fd;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 999px;
+        }
+
+        .hero-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.8rem, 6vw, 5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-cta-primary {
+            background: var(--accent);
+            color: white;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-cta-primary:hover {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
+        }
+
+        .hero-img {
+            border-radius: 20px;
+            transform: rotate(2deg);
+            transition: transform 0.4s ease;
+        }
+
+        .hero-img:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .hero-stat {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 14px 20px;
+        }
+
+        /* ── Section titles ── */
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--primary);
+        }
+
+        /* ── Category Cards ── */
+        .category-card {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .category-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .category-icon {
+            background: var(--accent-light);
+            height: 48px;
+            width: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s;
+            flex-shrink: 0;
+        }
+
+        .category-card:hover .category-icon {
+            background: var(--accent);
+        }
+
+        .category-card:hover .category-icon i {
+            color: white !important;
+        }
+
+        /* ── Product Cards ── */
+        .product-card {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 20px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+            transform: translateY(-4px);
+            border-color: transparent;
+        }
+
+        .product-img-wrap {
+            background: var(--surface-2);
+            border-radius: 14px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+
+        .product-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 12px;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-img-wrap img {
+            transform: scale(1.08);
+        }
+
+        .wishlist-btn {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            z-index: 20;
+            height: 34px;
+            width: 34px;
+            background: white;
+            border: 1.5px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .wishlist-btn:hover {
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .product-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--primary);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--primary);
+            letter-spacing: -0.03em;
+        }
+
+        .add-cart-btn {
+            height: 38px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.2s;
+            padding: 0 14px;
+        }
+
+        .add-cart-btn:hover {
+            background: var(--accent);
+            transform: scale(1.02);
+        }
+
+        .add-cart-btn.disabled {
+            background: var(--surface-2);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        .add-cart-btn.disabled:hover {
+            transform: none;
+        }
+
+        .out-of-stock-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(1px);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+        .out-of-stock-badge {
+            background: #fee2e2;
+            color: #b91c1c;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 999px;
+        }
+
+        /* ── Footer ── */
+        .footer-main {
+            background: var(--primary);
+            color: #94a3b8;
+        }
+
+        /* ── Auth Modal ── */
+        .auth-modal-card {
+            background: var(--surface);
+            border-radius: 24px;
+            max-width: 380px;
+            width: 100%;
+        }
+
+        /* ── Profile Dropdown ── */
+        #profile-menu {
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+            border: 1px solid var(--border);
+        }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 99px;
+        }
+
+        /* ── Animations ── */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        /* ── Nav links ── */
+        .nav-link {
+            position: relative;
+            font-weight: 600;
+            font-size: 13.5px;
+            color: var(--text-body);
+            transition: color 0.2s;
+            padding-bottom: 2px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 99px;
+            transition: width 0.25s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* ── Mobile nav links ── */
+        .mobile-nav-link {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+            color: var(--primary);
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.2s;
+        }
+
+        .mobile-nav-link:hover {
+            color: var(--accent);
+        }
+
+        .mobile-nav-link:last-child {
+            border-bottom: none;
+        }
+
+        /* ── Product Action Dropdown ── */
+        .prod-action-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            z-index: 20;
+            height: 36px;
+            width: 36px;
+            background: white;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .prod-action-btn:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .prod-action-menu {
+            position: absolute;
+            top: 56px;
+            right: 14px;
+            z-index: 30;
+            background: white;
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+            padding: 6px;
+            min-width: 170px;
+            display: none;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .prod-action-menu.open {
+            display: flex;
+        }
+
+        .prod-action-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-body);
+            transition: all 0.15s;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .prod-action-item:hover {
+            background: var(--surface-2);
+            color: var(--primary);
+        }
+
+        .prod-action-item.cart-item:hover {
+            background: #eff6ff;
+            color: var(--accent);
+        }
+
+        .prod-action-item.wish-item:hover {
+            background: #fff1f2;
+            color: #e11d48;
+        }
+
+        .prod-action-item.disabled-item {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .prod-action-item.disabled-item:hover {
+            background: none;
+            color: var(--text-muted);
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ── Support Section ── */
+        .support-card:hover {
+            background: #0d1a2e !important;
+        }
+
+        @media (max-width: 767px) {
+            .support-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .support-section-wrap {
+                padding: 0 12px !important;
+            }
+
+            .support-section-inner {
+                padding: 36px 22px !important;
+            }
+
+            .support-top-row {
+                flex-wrap: wrap;
+                gap: 8px !important;
+            }
+        }
     </style>
 </head>
+
 <body class="flex flex-col min-h-screen">
 
-    <!-- Navbar -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-            <!-- Mobile Menu Toggle (Left) -->
-            <button id="mobile-menu-btn" class="lg:hidden text-2xl text-gray-600 focus:outline-none">
+    <!-- ═══════════════════════════════════════════
+         NAVBAR
+    ═══════════════════════════════════════════ -->
+    <header class="navbar sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn"
+                class="lg:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 hover:border-blue-400 transition-all focus:outline-none">
                 <i class="fa-solid fa-bars-staggered"></i>
             </button>
 
-            <!-- Logo (Fixed: Using / to ensure a clean reload) -->
-            <a href="/" class="text-xl md:text-2xl font-black text-blue-600 tracking-tighter">ElectroMart</a>
+            <!-- Logo -->
+            <a href="/" class="flex items-center gap-2 flex-shrink-0">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-bolt text-white text-sm"></i>
+                </div>
+                <span
+                    style="font-family:'Syne',sans-serif; font-weight:800; font-size:18px; letter-spacing:-0.04em; color: var(--primary);">Electro<span
+                        style="color:var(--accent);">Mart</span></span>
+            </a>
 
-            <!-- Search Bar -->
-            <div class="hidden md:block w-1/3">
-                <div class="relative">
-                    <input type="text" id="search-input" placeholder="Search tech..." class="w-full border border-gray-200 rounded-full py-2 px-10 focus:ring-2 focus:ring-blue-500 outline-none">
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-3 text-gray-400"></i>
+            <!-- Search Bar (Desktop) -->
+            <div class="hidden md:flex flex-1 max-w-sm">
+                <div class="search-bar relative flex items-center w-full rounded-xl overflow-hidden px-4 py-2.5 gap-3">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400 text-sm"></i>
+                    <input type="text" id="search-input" placeholder="Search products..."
+                        class="w-full outline-none text-sm font-medium text-slate-700 placeholder:text-slate-400 bg-transparent">
                 </div>
             </div>
 
-            <!-- Profile & Icons -->
-            <div class="flex items-center space-x-4">
-                <nav class="hidden lg:flex space-x-6 font-bold text-gray-600 text-sm">
-                    <a href="/" class="hover:text-blue-600">Home</a>
-                    <!-- Fixed: Linked to products-section -->
-                    <a href="#products-section" class="hover:text-blue-600">Products</a>
+            <!-- Right Nav -->
+            <div class="flex items-center gap-4">
+                <nav class="hidden lg:flex items-center gap-6">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="#products-section" class="nav-link">Products</a>
                 </nav>
+
+                <!-- Profile Button -->
                 <div class="relative">
-                    <button id="profile-btn" class="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center border-2 border-transparent hover:border-blue-600 transition-all">
-                        <i class="fa-solid fa-user text-blue-600"></i>
+                    <button id="profile-btn"
+                        class="profile-btn h-10 w-10 rounded-xl flex items-center justify-center focus:outline-none">
+                        <i class="fa-solid fa-user text-blue-600 text-sm"></i>
                     </button>
-                    <div id="profile-menu" class="hidden absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-50"></div>
+                    <div id="profile-menu" class="hidden absolute right-0 mt-3 w-64 bg-white py-2 z-50"></div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- MOBILE MENU OVERLAY -->
-    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-[100] hidden opacity-0 transition-opacity">
-        <div class="bg-white w-3/4 h-full p-6 shadow-2xl flex flex-col">
-            <div class="flex justify-between items-center mb-10">
-                <span class="text-xl font-black text-blue-600">Menu</span>
-                <button id="close-menu-btn" class="text-2xl text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+    <!-- ═══════════════════════════════════════════
+         MOBILE MENU OVERLAY
+    ═══════════════════════════════════════════ -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/40 z-[100] hidden opacity-0 transition-opacity"
+        style="backdrop-filter:blur(4px)">
+        <div class="mobile-menu-inner w-[78%] max-w-xs h-full p-6 shadow-2xl flex flex-col">
+
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-8">
+                <a href="/" class="flex items-center gap-2">
+                    <div class="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-bolt text-white text-xs"></i>
+                    </div>
+                    <span
+                        style="font-family:'Syne',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.03em;">Electro<span
+                            style="color:var(--accent)">Mart</span></span>
+                </a>
+                <button id="close-menu-btn"
+                    class="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-100 text-slate-500 hover:bg-slate-200 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
+
             <!-- Mobile Search -->
-            <div class="relative mb-8">
-                <input type="text" id="mobile-search" placeholder="Search gadgets..." class="w-full bg-gray-100 border-none p-4 rounded-2xl outline-none font-bold">
-                <i class="fa-solid fa-magnifying-glass absolute right-4 top-4 text-gray-400"></i>
+            <div class="relative mb-6">
+                <input type="text" id="mobile-search" placeholder="Search products..."
+                    class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 pl-11 outline-none text-sm font-medium text-slate-700 placeholder:text-slate-400 focus:border-blue-400 transition">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-slate-400 text-sm"></i>
             </div>
-            <nav class="flex flex-col space-y-4 font-black text-slate-800 text-lg">
-                <a href="/" class="hover:text-blue-600 py-2">Home</a>
-                <a href="#products-section" onclick="closeMobileMenu()" class="hover:text-blue-600 py-2">Our Products</a>
-                <a href="/pages/cart.html" class="hover:text-blue-600 py-2">My Cart</a>
-                <a href="#" class="hover:text-blue-600 py-2">Customer Support</a>
+
+            <!-- Nav Links -->
+            <nav class="flex flex-col">
+                <a href="/" class="mobile-nav-link">
+                    <i class="fa-solid fa-house text-blue-500 text-sm w-5"></i> Home
+                </a>
+                <a href="#products-section" onclick="closeMobileMenu()" class="mobile-nav-link">
+                    <i class="fa-solid fa-tag text-blue-500 text-sm w-5"></i> Our Products
+                </a>
+                <a href="/pages/cart.html" class="mobile-nav-link">
+                    <i class="fa-solid fa-cart-shopping text-blue-500 text-sm w-5"></i> My Cart
+                </a>
+                <a href="#" class="mobile-nav-link">
+                    <i class="fa-solid fa-headset text-blue-500 text-sm w-5"></i> Customer Support
+                </a>
             </nav>
+
+            <!-- Bottom -->
+            <div class="mt-auto">
+                <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4">
+                    <p style="font-family:'Syne',sans-serif; font-weight:700; font-size:13px; color:var(--primary);">
+                        Need help?</p>
+                    <p class="text-xs text-slate-500 mt-1">Our support team is available 24/7</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="bg-blue-900 text-white py-12 md:py-20 overflow-hidden">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center text-center md:text-left">
-            <div class="md:w-1/2 mb-10 md:mb-0">
-                <h1 class="text-3xl md:text-6xl font-black mb-6 leading-tight">Digital <br><span class="text-blue-400">Lifestyle</span></h1>
-                <!-- Fixed: Added smooth scroll logic -->
-                <button onclick="document.getElementById('products-section').scrollIntoView({behavior: 'smooth'})" class="bg-white text-blue-900 px-8 py-3 rounded-full font-black shadow-xl hover:bg-gray-100 transition">Explore Deals</button>
-            </div>
-            <div class="md:w-1/2 flex justify-center md:justify-end">
-                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600" class="rounded-3xl shadow-2xl w-4/5 md:w-3/4 rotate-2">
+    <!-- ═══════════════════════════════════════════
+         HERO SECTION
+    ═══════════════════════════════════════════ -->
+    <section class="hero-section text-white py-16 md:py-24">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+
+                <!-- Left Content -->
+                <div class="md:w-1/2 text-center md:text-left">
+                    <div class="hero-badge mb-6">
+                        <i class="fa-solid fa-bolt text-xs"></i>
+                        PREMIUM ELECTRONICS
+                    </div>
+
+                    <h1 class="hero-title text-white mb-6">
+                        Your Digital<br>
+                        <span style="color:#60a5fa">Lifestyle</span><br>
+                        Starts Here
+                    </h1>
+
+                    <p style="color:#94a3b8; font-size:15px; line-height:1.7; max-width:380px; margin: 0 auto 32px; font-weight:400"
+                        class="md:mx-0">
+                        Discover the latest in tech — from smartphones to smart home devices, all in one place.
+                    </p>
+
+                    <div class="flex justify-center md:justify-start">
+                        <button
+                            onclick="document.getElementById('products-section').scrollIntoView({behavior:'smooth'})"
+                            class="hero-cta-primary px-7 py-3.5 rounded-xl text-sm">
+                            Explore Products
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="flex gap-4 mt-10 justify-center md:justify-start flex-wrap">
+                        <div class="hero-stat text-center">
+                            <p
+                                style="font-family:'Syne',sans-serif; font-weight:800; font-size:22px; letter-spacing:-0.03em">
+                                500+</p>
+                            <p
+                                style="font-size:11px; font-weight:500; color:#64748b; letter-spacing:0.05em; text-transform:uppercase">
+                                Products</p>
+                        </div>
+                        <div class="hero-stat text-center">
+                            <p
+                                style="font-family:'Syne',sans-serif; font-weight:800; font-size:22px; letter-spacing:-0.03em">
+                                10K+</p>
+                            <p
+                                style="font-size:11px; font-weight:500; color:#64748b; letter-spacing:0.05em; text-transform:uppercase">
+                                Customers</p>
+                        </div>
+                        <div class="hero-stat text-center">
+                            <p
+                                style="font-family:'Syne',sans-serif; font-weight:800; font-size:22px; letter-spacing:-0.03em">
+                                4.9★</p>
+                            <p
+                                style="font-size:11px; font-weight:500; color:#64748b; letter-spacing:0.05em; text-transform:uppercase">
+                                Rating</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right — Dynamic Banner Image -->
+                <div class="md:w-1/2 flex justify-center md:justify-end">
+                    <!-- 
+                        ╔══════════════════════════════════════════════╗
+                        ║  HERO BANNER IMAGE — HTML এ সরাসরি লিংক দাও ║
+                        ║  src="তোমার ইমেজ লিংক এখানে"                ║
+                        ║  href="ক্লিক করলে যে পেজে যাবে"             ║
+                        ╚══════════════════════════════════════════════╝
+                    -->
+                    <a href="#products-section" id="hero-banner-link" class="block relative group"
+                        style="width:100%; max-width:480px">
+                        <img id="hero-banner-img"
+                            src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600"
+                            alt="Featured Banner" class="hero-img w-full shadow-2xl"
+                            onerror="this.src='https://via.placeholder.com/480x340?text=Banner+Image'">
+                        <!-- Overlay on hover -->
+                        <div
+                            class="absolute inset-0 rounded-[20px] bg-blue-600/0 group-hover:bg-blue-600/10 transition-all duration-300">
+                        </div>
+                        <!-- Bottom label -->
+                        <div id="hero-banner-label"
+                            class="absolute -bottom-4 -right-4 z-10 bg-white text-slate-900 text-sm font-bold px-5 py-3 rounded-2xl shadow-xl"
+                            style="font-family:'Syne',sans-serif">
+                            Shop Now →
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Categories Grid -->
-    <section id="categories-section" class="container mx-auto px-4 py-12 md:py-16">
-        <h2 class="text-xl md:text-2xl font-black text-gray-800 mb-8"><span class="w-2 h-6 bg-blue-600 mr-3 rounded-full inline-block"></span>Categories</h2>
-        <div id="category-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"></div>
+    <!-- Trust Bar -->
+    <div style="background:var(--primary); border-top:1px solid rgba(255,255,255,0.06); padding:14px 0">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center md:justify-between gap-4 md:gap-0">
+                <div class="trust-item"><i class="fa-solid fa-truck-fast text-blue-400"></i> Free Shipping over $50
+                </div>
+                <div class="trust-item"><i class="fa-solid fa-shield-halved text-blue-400"></i> 2 Year Warranty</div>
+                <div class="trust-item"><i class="fa-solid fa-rotate-left text-blue-400"></i> 30-Day Returns</div>
+                <div class="trust-item"><i class="fa-solid fa-lock text-blue-400"></i> Secure Payments</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         CATEGORIES SECTION
+    ═══════════════════════════════════════════ -->
+    <section id="categories-section" class="container mx-auto px-4 py-14 md:py-20">
+        <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <p class="section-label mb-2">Browse</p>
+                <h2 class="section-title">Shop by Category</h2>
+            </div>
+            <p style="color:var(--text-muted); font-size:14px; max-width:280px; text-align:right"
+                class="hidden md:block">
+                Find exactly what you're looking for with our curated categories
+            </p>
+        </div>
+        <div id="category-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
     </section>
 
-    <!-- Products Grid (Fixed: Added id="products-section") -->
-    <section id="products-section" class="container mx-auto px-4 py-12 bg-white rounded-[2rem] md:rounded-[3rem]">
-        <h2 class="text-xl md:text-2xl font-black text-gray-800 mb-10 text-center md:text-left"><span class="hidden md:inline-block w-2 h-8 bg-blue-600 mr-4 rounded-full"></span>Top Products</h2>
-        <div id="product-container" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8"></div>
+    <!-- ═══════════════════════════════════════════
+         PRODUCTS SECTION
+    ═══════════════════════════════════════════ -->
+    <section id="products-section"
+        style="background:var(--surface); border-radius:28px; margin:0 16px 40px; padding:40px 24px"
+        class="md:mx-6 md:p-12">
+        <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <p class="section-label mb-2">Our Collection</p>
+                <h2 class="section-title">Featured Products</h2>
+            </div>
+            <div class="flex items-center gap-2">
+                <span style="width:8px; height:8px; border-radius:50%; background:#22c55e; display:inline-block"></span>
+                <span style="font-size:13px; font-weight:500; color:var(--text-muted)">In Stock & Ready to Ship</span>
+            </div>
+        </div>
+        <div id="product-container" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"></div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-white py-10 mt-auto text-center">
-        <p class="text-slate-500 font-bold text-xs uppercase">&copy; 2024 ElectroMart | Responsive Edition</p>
+    <!-- ═══════════════════════════════════════════
+         CUSTOMER SUPPORT SECTION
+    ═══════════════════════════════════════════ -->
+    <div class="support-section-wrap" style="background:var(--surface-2); padding:0 16px 0; margin-top:16px">
+        <section class="support-section-inner" style="
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            border-radius: 28px;
+            padding: 72px 48px;
+            position: relative;
+            overflow: hidden;
+            max-width: 1200px;
+            margin: 0 auto;
+        ">
+            <!-- Decorative glow blobs -->
+            <div
+                style="position:absolute; width:400px; height:400px; background:radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%); top:-100px; right:-60px; pointer-events:none">
+            </div>
+            <div
+                style="position:absolute; width:300px; height:300px; background:radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%); bottom:-80px; left:10%; pointer-events:none">
+            </div>
+
+            <!-- Top label row -->
+            <div class="support-top-row"
+                style="display:flex; align-items:center; gap:10px; margin-bottom:40px; position:relative; z-index:1">
+                <div
+                    style="width:36px; height:36px; background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0">
+                    <i class="fa-solid fa-headset" style="color:#60a5fa; font-size:15px"></i>
+                </div>
+                <span
+                    style="font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#3b82f6">Customer
+                    Support</span>
+                <div style="flex:1; height:1px; background:rgba(255,255,255,0.06)"></div>
+                <span
+                    style="font-size:12px; font-weight:600; color:#22c55e; display:flex; align-items:center; gap:6px; flex-shrink:0">
+                    <span
+                        style="width:7px; height:7px; border-radius:50%; background:#22c55e; display:inline-block; box-shadow:0 0 6px #22c55e"></span>
+                    All lines open
+                </span>
+            </div>
+
+            <!-- Main content grid -->
+            <div class="support-grid"
+                style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:rgba(255,255,255,0.07); border-radius:20px; overflow:hidden; position:relative; z-index:1">
+
+                <!-- Card 1 — Phone -->
+                <div class="support-card" style="background:#111827; padding:36px 32px; transition:background 0.25s">
+                    <div style="display:flex; align-items:flex-start; gap:18px">
+                        <div
+                            style="width:52px; height:52px; flex-shrink:0; background:rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.2); border-radius:16px; display:flex; align-items:center; justify-content:center">
+                            <i class="fa-solid fa-phone-volume" style="color:#60a5fa; font-size:20px"></i>
+                        </div>
+                        <div>
+                            <p
+                                style="font-size:11px; font-weight:700; letter-spacing:0.12em; color:#475569; text-transform:uppercase; margin:0 0 8px">
+                                Call Us Anytime</p>
+                            <a href="tel:+8801700000000"
+                                style="font-family:'Syne',sans-serif; font-weight:800; font-size:20px; color:white; text-decoration:none; letter-spacing:-0.02em; display:block; margin-bottom:6px; transition:color 0.2s"
+                                onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='white'">
+                                +880 1700-000000
+                            </a>
+                            <p style="font-size:13px; color:#475569; margin:0; font-weight:500">Sat – Thu &nbsp;·&nbsp;
+                                9am – 9pm</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 — Email (highlighted middle) -->
+                <div class="support-card"
+                    style="background:#0d1520; border-left:1px solid rgba(59,130,246,0.15); border-right:1px solid rgba(59,130,246,0.15); padding:36px 32px; transition:background 0.25s; position:relative">
+                    <div
+                        style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:60%; height:2px; background:linear-gradient(90deg, transparent, #3b82f6, transparent); border-radius:0 0 4px 4px">
+                    </div>
+                    <div style="display:flex; align-items:flex-start; gap:18px">
+                        <div
+                            style="width:52px; height:52px; flex-shrink:0; background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); border-radius:16px; display:flex; align-items:center; justify-content:center">
+                            <i class="fa-solid fa-envelope-open-text" style="color:#60a5fa; font-size:20px"></i>
+                        </div>
+                        <div>
+                            <p
+                                style="font-size:11px; font-weight:700; letter-spacing:0.12em; color:#475569; text-transform:uppercase; margin:0 0 8px">
+                                Email Support</p>
+                            <a href="mailto:support@electromart.com"
+                                style="font-family:'Syne',sans-serif; font-weight:800; font-size:17px; color:white; text-decoration:none; letter-spacing:-0.02em; display:block; margin-bottom:6px; transition:color 0.2s; word-break:break-all"
+                                onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='white'">
+                                support@electromart.com
+                            </a>
+                            <p style="font-size:13px; color:#475569; margin:0; font-weight:500">Reply within 2 hours</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 — Live Chat -->
+                <div class="support-card" style="background:#111827; padding:36px 32px; transition:background 0.25s">
+                    <div style="display:flex; align-items:flex-start; gap:18px">
+                        <div
+                            style="width:52px; height:52px; flex-shrink:0; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.2); border-radius:16px; display:flex; align-items:center; justify-content:center">
+                            <i class="fa-solid fa-comments" style="color:#4ade80; font-size:20px"></i>
+                        </div>
+                        <div>
+                            <p
+                                style="font-size:11px; font-weight:700; letter-spacing:0.12em; color:#475569; text-transform:uppercase; margin:0 0 8px">
+                                Live Chat</p>
+                            <p
+                                style="font-family:'Syne',sans-serif; font-weight:800; font-size:20px; color:white; letter-spacing:-0.02em; margin:0 0 6px; display:flex; align-items:center; gap:8px">
+                                <span
+                                    style="width:8px; height:8px; border-radius:50%; background:#22c55e; display:inline-block; box-shadow:0 0 8px rgba(34,197,94,0.6)"></span>
+                                Online Now
+                            </p>
+                            <p style="font-size:13px; color:#475569; margin:0; font-weight:500">Avg. response &lt; 2 min
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom note -->
+            <p
+                style="text-align:center; font-size:13px; color:#334155; margin:28px 0 0; position:relative; z-index:1; font-weight:500">
+                <i class="fa-solid fa-circle-info" style="color:#3b82f6; margin-right:6px"></i>
+                Our team operates 7 days a week. Emergency support available 24/7 via live chat.
+            </p>
+
+        </section>
+    </div>
+
+    <!-- Spacer between support and footer -->
+    <div style="height:60px; background:var(--surface-2)"></div>
+
+    <!-- ═══════════════════════════════════════════
+    ═══════════════════════════════════════════ -->
+    <footer class="footer-main mt-auto">
+        <!-- Main footer -->
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <a href="/" class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-bolt text-white text-sm"></i>
+                        </div>
+                        <span
+                            style="font-family:'Syne',sans-serif; font-weight:800; font-size:18px; letter-spacing:-0.04em; color:white">Electro<span
+                                style="color:#60a5fa">Mart</span></span>
+                    </a>
+                    <p style="font-size:13px; line-height:1.7; color:#64748b">Your one-stop destination for premium
+                        electronics and gadgets.</p>
+                </div>
+
+                <!-- Shop -->
+                <div>
+                    <p
+                        style="font-family:'Syne',sans-serif; font-weight:700; font-size:13px; color:white; margin-bottom:16px; letter-spacing:0.05em; text-transform:uppercase">
+                        Shop</p>
+                    <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px">
+                        <li><a href="#products-section"
+                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                                onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">All
+                                Products</a></li>
+                        <li><a href="#categories-section"
+                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                                onmouseover="this.style.color='#94a3b8'"
+                                onmouseout="this.style.color='#64748b'">Categories</a></li>
+                        <li><a href="/pages/cart.html"
+                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                                onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">My
+                                Cart</a></li>
+                        <li><a href="/pages/order-history.html"
+                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                                onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">Order
+                                History</a></li>
+                    </ul>
+                </div>
+
+                <!-- Account -->
+                <div>
+                    <p
+                        style="font-family:'Syne',sans-serif; font-weight:700; font-size:13px; color:white; margin-bottom:16px; letter-spacing:0.05em; text-transform:uppercase">
+                        Account</p>
+                    <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px">
+                        <li><a href="/pages/login.html"
+                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                                onmouseover="this.style.color='#94a3b8'"
+                                onmouseout="this.style.color='#64748b'">Login</a></li>
+                        <li><a href="/pages/register.html"
+                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                                onmouseover="this.style.color='#94a3b8'"
+                                onmouseout="this.style.color='#64748b'">Register</a></li>
+                        <li><a href="/pages/profile.html"
+                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                                onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">My
+                                Profile</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <p
+                        style="font-family:'Syne',sans-serif; font-weight:700; font-size:13px; color:white; margin-bottom:16px; letter-spacing:0.05em; text-transform:uppercase">
+                        Support</p>
+                    <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px">
+                        <li><a href="#"
+                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                                onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">Help
+                                Center</a></li>
+                        <li><a href="#"
+                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                                onmouseover="this.style.color='#94a3b8'"
+                                onmouseout="this.style.color='#64748b'">Shipping Info</a></li>
+                        <li><a href="#"
+                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                                onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">Returns
+                                Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div style="border-top:1px solid rgba(255,255,255,0.06); padding:16px 0">
+            <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-3">
+                <p style="font-size:12px; font-weight:500; color:#475569">&copy; 2024 ElectroMart. All rights reserved.
+                </p>
+                <div class="flex items-center gap-4">
+                    <i class="fa-brands fa-cc-visa text-slate-600 text-xl"></i>
+                    <i class="fa-brands fa-cc-mastercard text-slate-600 text-xl"></i>
+                    <i class="fa-brands fa-cc-paypal text-slate-600 text-xl"></i>
+                    <i class="fa-brands fa-cc-amex text-slate-600 text-xl"></i>
+                </div>
+            </div>
+        </div>
     </footer>
 
-    <!-- Auth Modal (Ensuring this matches main.js logic) -->
-    <div id="auth-modal" class="fixed inset-0 bg-black/60 z-[100] hidden items-center justify-center px-4 backdrop-blur-sm">
-        <div class="bg-white rounded-[2rem] p-10 max-w-sm w-full text-center">
-            <i class="fa-solid fa-lock text-4xl text-blue-600 mb-4"></i>
-            <h3 class="text-2xl font-black text-gray-800 mb-2">Login Required</h3>
-            <p class="text-gray-500 mb-8" id="modal-action-name">Please login to continue.</p>
-            <div class="flex flex-col space-y-3">
-                <a href="/pages/login.html" class="bg-blue-600 text-white py-4 rounded-2xl font-black text-center">Login Now</a>
-                <button onclick="window.closeAuthModal()" class="text-gray-400 font-bold">Maybe Later</button>
+    <!-- ═══════════════════════════════════════════
+         AUTH MODAL (IDs preserved exactly)
+    ═══════════════════════════════════════════ -->
+    <div id="auth-modal" class="fixed inset-0 bg-black/60 z-[100] hidden items-center justify-center px-4"
+        style="backdrop-filter:blur(8px)">
+        <div class="auth-modal-card p-8 text-center">
+            <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                <i class="fa-solid fa-lock text-2xl text-blue-600"></i>
+            </div>
+            <h3
+                style="font-family:'Syne',sans-serif; font-weight:800; font-size:22px; color:var(--primary); margin-bottom:8px">
+                Login Required</h3>
+            <p style="color:var(--text-muted); font-size:14px; margin-bottom:28px" id="modal-action-name">Please login
+                to continue.</p>
+            <div class="flex flex-col gap-3">
+                <a href="/pages/login.html"
+                    style="background:var(--accent); color:white; padding:14px; border-radius:14px; font-family:'Syne',sans-serif; font-weight:700; font-size:14px; text-decoration:none; display:block; transition:background 0.2s"
+                    onmouseover="this.style.background='var(--accent-dark)'"
+                    onmouseout="this.style.background='var(--accent)'">
+                    Login Now
+                </a>
+                <button onclick="window.closeAuthModal()"
+                    style="color:var(--text-muted); font-weight:600; font-size:13px; background:none; border:none; cursor:pointer; padding:8px; transition:color 0.2s"
+                    onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">
+                    Maybe Later
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript order is important -->
+    <!-- ═══════════════════════════════════════════
+         SCRIPTS (order preserved)
+    ═══════════════════════════════════════════ -->
     <script src="js/cart-handler.js"></script>
     <script src="js/main.js"></script>
-    
+
     <script>
-        // Helper function for mobile menu navigation
+        // ══════════════════════════════════════════════
+        // UI PATCH — Overrides main.js rendered HTML
+        // with new professional card designs.
+        // All IDs, function names, API calls stay 100% same.
+        // ══════════════════════════════════════════════
+
+        // ── 1. Override Category Rendering ──
+        const _origFetchHomeCategories = window.fetchHomeCategories;
+        window.fetchHomeCategoriesPatched = async () => {
+            const container = document.getElementById('category-container');
+            if (!container) return;
+            try {
+                const res = await fetch('/api/categories');
+                const result = await res.json();
+                const categories = (result && Array.isArray(result.data)) ? result.data : [];
+
+                if (categories.length > 0) {
+                    container.innerHTML = categories.map(cat => `
+                        <div onclick="window.filterByCategory('${cat._id}')"
+                            class="category-card group">
+                            <div class="category-icon">
+                                <i class="fa-solid fa-microchip text-lg text-blue-600 group-hover:text-white transition-all"></i>
+                            </div>
+                            <div>
+                                <h3 style="font-family:'Syne',sans-serif; font-weight:700; font-size:14px; color:var(--primary); margin:0 0 2px">${cat.name || 'Category'}</h3>
+                                <p style="font-size:11px; color:var(--text-muted); font-weight:500; letter-spacing:0.06em; text-transform:uppercase; margin:0">Explore Items</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-right ml-auto text-slate-300 group-hover:text-blue-500 text-sm transition-all"></i>
+                        </div>
+                    `).join('');
+                } else {
+                    container.innerHTML = `<p style="color:var(--text-muted); font-style:italic; padding:16px 0">No categories available.</p>`;
+                }
+            } catch (err) {
+                console.error("Category Fetch Error:", err);
+                container.innerHTML = `<p style="color:#ef4444">Service temporarily unavailable.</p>`;
+            }
+        };
+
+        // ── 2. Override Product Rendering ──
+        window.fetchHomeProductsPatched = async (queryParam = '') => {
+            const container = document.getElementById('product-container');
+            if (!container) return;
+            try {
+                const res = await fetch(`/api/products${queryParam}`);
+                const result = await res.json();
+                const products = (result && Array.isArray(result.data)) ? result.data : [];
+
+                if (products.length === 0) {
+                    container.innerHTML = `
+                        <div class="col-span-full py-20 text-center">
+                            <i class="fa-solid fa-magnifying-glass" style="font-size:48px; color:var(--border); margin-bottom:16px; display:block"></i>
+                            <p style="color:var(--text-muted); font-weight:600; letter-spacing:0.05em; text-transform:uppercase; font-size:13px">No products found.</p>
+                            <button onclick="fetchHomeProductsPatched('')" style="color:var(--accent); font-weight:700; margin-top:12px; background:none; border:none; cursor:pointer; font-size:14px; text-decoration:underline">Refresh Products</button>
+                        </div>`;
+                    return;
+                }
+
+                container.innerHTML = products.map(prod => {
+                    if (!prod) return '';
+                    const outOfStock = prod.countInStock <= 0;
+                    const img = (prod.images && prod.images.length > 0) ? prod.images[0] : 'https://via.placeholder.com/300';
+
+                    return `
+                    <div class="product-card group" style="overflow:visible">
+                        ${outOfStock ? `
+                        <div class="out-of-stock-overlay">
+                            <span class="out-of-stock-badge">Out of Stock</span>
+                        </div>` : ''}
+
+                        <!-- Action Dropdown Button -->
+                        <button
+                            onclick="event.stopPropagation(); toggleProdMenu('menu-${prod._id}')"
+                            class="prod-action-btn"
+                            aria-label="Product actions">
+                            <i class="fa-solid fa-ellipsis-vertical text-slate-500 text-sm"></i>
+                        </button>
+
+                        <!-- Action Dropdown Menu -->
+                        <div id="menu-${prod._id}" class="prod-action-menu">
+                            <button
+                                onclick="event.stopPropagation(); window.globalAddToCart('${prod._id}', ${outOfStock}); closeProdMenu('menu-${prod._id}')"
+                                class="prod-action-item cart-item ${outOfStock ? 'disabled-item' : ''}">
+                                <i class="fa-solid fa-cart-plus text-blue-500 w-4 text-center"></i>
+                                ${outOfStock ? 'Out of Stock' : 'Add to Cart'}
+                            </button>
+                            <button
+                                onclick="event.stopPropagation(); window.handleWishlistClick('${prod._id}'); closeProdMenu('menu-${prod._id}')"
+                                class="prod-action-item wish-item">
+                                <i class="fa-solid fa-heart text-rose-400 w-4 text-center"></i>
+                                Add to Wishlist
+                            </button>
+                            <div style="height:1px; background:var(--border); margin:4px 0"></div>
+                            <button
+                                onclick="event.stopPropagation(); window.location.href='/pages/product-details.html?id=${prod._id}'"
+                                class="prod-action-item">
+                                <i class="fa-solid fa-eye text-slate-400 w-4 text-center"></i>
+                                View Details
+                            </button>
+                        </div>
+
+                        <div class="product-img-wrap cursor-pointer" onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">
+                            <img src="${img}" alt="${prod.name || 'Product'}"
+                                class="${outOfStock ? 'grayscale' : ''}"
+                                onerror="this.src='https://via.placeholder.com/300'">
+                        </div>
+
+                        <div style="flex:1; display:flex; flex-direction:column; padding:0 4px">
+                            <h3 class="product-name cursor-pointer hover:text-blue-600 transition-colors mb-1"
+                                onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">
+                                ${prod.name || 'Product Title'}
+                            </h3>
+
+                            <div style="margin-top:auto; padding-top:12px; display:flex; align-items:center; justify-content:space-between; gap:8px">
+                                <p class="product-price">$${(prod.price || 0).toFixed(2)}</p>
+                                <button
+                                    onclick="event.stopPropagation(); window.globalAddToCart('${prod._id}', ${outOfStock})"
+                                    class="add-cart-btn ${outOfStock ? 'disabled' : ''}"
+                                    style="flex-shrink:0; width:auto; padding:0 14px">
+                                    <i class="fa-solid fa-cart-plus text-xs"></i>
+                                    <span class="hidden sm:inline">${outOfStock ? 'N/A' : 'Add'}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('');
+            } catch (err) {
+                console.error("Product Render Error:", err);
+                container.innerHTML = `<p class="col-span-full text-center py-10" style="color:var(--text-muted)">Unable to load products. Please refresh.</p>`;
+            }
+        };
+
+        // ── 3. Patch filterByCategory to use new renderer ──
+        window.filterByCategory = (id) => {
+            fetchHomeProductsPatched(`?category=${id}`);
+            document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+        };
+
+        // ── 4. Patch search to use new renderer ──
+        document.addEventListener('DOMContentLoaded', () => {
+            // Run patched renderers instead
+            fetchHomeCategoriesPatched();
+            fetchHomeProductsPatched();
+
+            // Patch search input
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                // Remove old listener by cloning
+                const newInput = searchInput.cloneNode(true);
+                searchInput.parentNode.replaceChild(newInput, searchInput);
+                newInput.addEventListener('keyup', (e) => {
+                    if (e.target.value.length > 2 || e.target.value.length === 0) {
+                        fetchHomeProductsPatched(`?keyword=${e.target.value}`);
+                    }
+                });
+            }
+        });
+
+        // ── Product Action Dropdown Helpers ──
+        function toggleProdMenu(menuId) {
+            // Close all other open menus first
+            document.querySelectorAll('.prod-action-menu.open').forEach(m => {
+                if (m.id !== menuId) m.classList.remove('open');
+            });
+            const menu = document.getElementById(menuId);
+            if (menu) menu.classList.toggle('open');
+        }
+        function closeProdMenu(menuId) {
+            const menu = document.getElementById(menuId);
+            if (menu) menu.classList.remove('open');
+        }
+        // Close all product menus when clicking outside
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.prod-action-menu.open').forEach(m => m.classList.remove('open'));
+        });
+
+        // ── Mobile menu helpers (same logic as original) ──
         function closeMobileMenu() {
             const overlay = document.getElementById('mobile-menu-overlay');
             overlay.classList.remove('opacity-100');
@@ -128,4 +1306,5 @@
         }
     </script>
 </body>
+
 </html>
