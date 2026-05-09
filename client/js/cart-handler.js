@@ -10,13 +10,13 @@ const CartHandler = {
 
         const toast = document.createElement('div');
         toast.className = `toast-popup fixed bottom-10 right-10 px-8 py-4 rounded-2xl text-white font-black shadow-2xl z-[10000] transition-all duration-500 transform translate-y-20 flex items-center space-x-3`;
-        
+
         // Success = Blue (Professional), Error = Red
         toast.style.backgroundColor = type === 'success' ? '#2563eb' : '#dc2626';
-        
+
         const icon = type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation';
         toast.innerHTML = `<i class="fa-solid ${icon} text-xl"></i> <span>${message}</span>`;
-        
+
         document.body.appendChild(toast);
 
         // Slide Up Animation
