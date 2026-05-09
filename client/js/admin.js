@@ -1,11 +1,9 @@
 /**
- * MASTER ADMIN ENGINE - VERSION 3.0
+ * MASTER ADMIN ENGINE - VERSION 3.1 (Render Optimized)
  * Handles: Dashboard, User Management, Orders, Product CRUD, and Category CRUD.
  */
 
-
-
-// --- 1. CONFIGURATION & SECURITY ---
+// --- 1. CONFIGURATION & HELPERS ---
 const getAdmin = () => {
     const user = localStorage.getItem('userInfo');
     return user ? JSON.parse(user) : null;
@@ -13,6 +11,8 @@ const getAdmin = () => {
 
 const getAuthHeaders = (isJson = true) => {
     const admin = getAdmin();
+    if (!admin || !admin.token) return {};
+    
     const headers = { 'Authorization': `Bearer ${admin.token}` };
     if (isJson) headers['Content-Type'] = 'application/json';
     return headers;
@@ -39,25 +39,20 @@ const loadEditPageData = async () => {
             const result = await res.json();
             const p = result.data;
 
-            // Update the "Product ID Badge" in the new UI
             const badge = document.getElementById('product-id-badge');
             if (badge) badge.innerText = `Product ID: ${p._id}`;
 
-            // Pre-fill text fields
-            prodForm.name.value = p.name;
-            prodForm.price.value = p.price;
-            prodForm.brand.value = p.brand;
-            prodForm.countInStock.value = p.countInStock;
-            prodForm.description.value = p.description;
+            prodForm.name.value = p.name || '';
+            prodForm.price.value = p.price || '';
+            prodForm.brand.value = p.brand || '';
+            prodForm.countInStock.value = p.countInStock || '';
+            prodForm.description.value = p.description || '';
 
-            // Load categories into dropdown first, then select the product's category
             await fetchAdminCategories();
             const select = document.getElementById('category-select');
-            if (select) select.value = p.category._id;
+            if (select && p.category) select.value = p.category._id || p.category;
             
-        } catch (e) {
-            console.error("Failed to sync product data:", e);
-        }
+        } catch (e) { console.error("Sync Error:", e); }
     }
 
     // B. CATEGORY EDIT SYNC
@@ -67,25 +62,22 @@ const loadEditPageData = async () => {
             const res = await fetch(`/api/categories/${id}`);
             const result = await res.json();
             const c = result.data;
-
-            catForm.name.value = c.name;
-            catForm.description.value = c.description;
-        } catch (e) {
-            console.error("Failed to sync category data:", e);
-        }
+            catForm.name.value = c.name || '';
+            catForm.description.value = c.description || '';
+        } catch (e) { console.error("Sync Error:", e); }
     }
 };
 
 // --- 3. DASHBOARD STATS & USER MANAGEMENT ---
 const fetchDashboardData = async () => {
     const userTable = document.getElementById('user-table-body');
-    const userCount = document.getElementById('total-users-count');
-    const prodCount = document.getElementById('total-products-count');
     if (!userTable) return;
 
     try {
         const uRes = await fetch('/api/users', { headers: getAuthHeaders() });
         const uData = await uRes.json();
+        
+        const userCount = document.getElementById('total-users-count');
         if (userCount) userCount.innerText = uData.data.length;
 
         userTable.innerHTML = uData.data.map(u => {
@@ -106,12 +98,14 @@ const fetchDashboardData = async () => {
 
         const pRes = await fetch('/api/products');
         const pData = await pRes.json();
+        const prodCount = document.getElementById('total-products-count');
         if (prodCount) prodCount.innerText = pData.count;
     } catch (e) { console.error(e); }
 };
 
 window.toggleUserStatus = async (id, status) => {
     const newStatus = status === 'active' ? 'banned' : 'active';
+    if (!confirm(`Change user status to ${newStatus}?`)) return;
     await fetch(`/api/users/${id}/status`, {
         method: 'PUT',
         headers: getAuthHeaders(true),
@@ -137,7 +131,7 @@ const fetchAdminProducts = async () => {
         tbody.innerHTML = result.data.map(p => `
             <tr class="border-b hover:bg-slate-50 transition">
                 <td class="p-4 flex items-center space-x-3">
-                    <img src="${p.images[0]}" class="h-10 w-10 object-cover rounded shadow-sm">
+                    <img src="${p.images[0]}" class="h-10 w-10 object-cover rounded shadow-sm" onerror="this.src='https://via.placeholder.com/50'">
                     <span class="font-bold text-slate-700">${p.name}</span>
                 </td>
                 <td class="p-4 font-black text-blue-600">$${p.price.toFixed(2)}</td>
@@ -149,18 +143,6 @@ const fetchAdminProducts = async () => {
             </tr>`).join('');
     } catch (e) { console.error(e); }
 };
-
-document.getElementById('edit-product-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const id = new URLSearchParams(window.location.search).get('id');
-    const formData = new FormData(e.target);
-    const res = await fetch(`/api/products/${id}`, { 
-        method: 'PUT', 
-        headers: { 'Authorization': `Bearer ${getAdmin().token}` }, 
-        body: formData 
-    });
-    if (res.ok) { alert("Product Updated!"); window.location.href = 'products.html'; }
-});
 
 // --- 5. CATEGORY MANAGEMENT ---
 const fetchAdminCategories = async () => {
@@ -186,18 +168,6 @@ const fetchAdminCategories = async () => {
         }
     } catch (e) { console.error(e); }
 };
-
-document.getElementById('edit-category-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const id = new URLSearchParams(window.location.search).get('id');
-    const body = { name: e.target.name.value, description: e.target.description.value };
-    const res = await fetch(`/api/categories/${id}`, { 
-        method: 'PUT', 
-        headers: getAuthHeaders(true), 
-        body: JSON.stringify(body) 
-    });
-    if (res.ok) { alert("Category Updated!"); window.location.href = 'categories.html'; }
-});
 
 // --- 6. ORDER MANAGEMENT ---
 const fetchAdminOrders = async () => {
@@ -233,30 +203,75 @@ window.updateOrderStatus = async (id, status) => {
     fetchAdminOrders();
 };
 
-// --- 7. GLOBAL ACTIONS & INIT ---
-window.deleteProduct = async (id) => { if(confirm("Delete Product?")) { await fetch(`/api/products/${id}`, { method: 'DELETE', headers: getAuthHeaders() }); fetchAdminProducts(); }};
-window.deleteCategory = async (id) => { if(confirm("Delete Category?")) { await fetch(`/api/categories/${id}`, { method: 'DELETE', headers: getAuthHeaders() }); fetchAdminCategories(); }};
+// --- 7. FORM SUBMISSIONS ---
+
+// Add Category
+document.getElementById('add-category-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const body = { name: e.target.name.value, description: e.target.description.value };
+    const res = await fetch('/api/categories', { 
+        method: 'POST', 
+        headers: getAuthHeaders(true), 
+        body: JSON.stringify(body) 
+    });
+    if (res.ok) { alert("Category Added!"); window.location.href = 'categories.html'; }
+    else { const err = await res.json(); alert("Error: " + err.message); }
+});
+
+// Add Product
+document.getElementById('add-product-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const res = await fetch('/api/products', { 
+        method: 'POST', 
+        headers: { 'Authorization': `Bearer ${getAdmin().token}` }, 
+        body: formData 
+    });
+    if (res.ok) { alert("Product Published!"); window.location.href = 'products.html'; }
+    else { const error = await res.json(); alert("Error: " + error.message); }
+});
+
+// Edit Category Update
+document.getElementById('edit-category-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = new URLSearchParams(window.location.search).get('id');
+    const body = { name: e.target.name.value, description: e.target.description.value };
+    const res = await fetch(`/api/categories/${id}`, { 
+        method: 'PUT', 
+        headers: getAuthHeaders(true), 
+        body: JSON.stringify(body) 
+    });
+    if (res.ok) { alert("Category Updated!"); window.location.href = 'categories.html'; }
+});
+
+// Edit Product Update
+document.getElementById('edit-product-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = new URLSearchParams(window.location.search).get('id');
+    const formData = new FormData(e.target);
+    const res = await fetch(`/api/products/${id}`, { 
+        method: 'PUT', 
+        headers: { 'Authorization': `Bearer ${getAdmin().token}` }, 
+        body: formData 
+    });
+    if (res.ok) { alert("Product Updated!"); window.location.href = 'products.html'; }
+});
+
+// --- 8. GLOBAL ACTIONS & INIT ---
+window.deleteProduct = async (id) => { if(confirm("Delete Product?")) { await fetch(`/api/products/${id}`, { method: 'DELETE', headers: getAuthHeaders(false) }); fetchAdminProducts(); }};
+window.deleteCategory = async (id) => { if(confirm("Delete Category?")) { await fetch(`/api/categories/${id}`, { method: 'DELETE', headers: getAuthHeaders(false) }); fetchAdminCategories(); }};
 window.handleLogout = () => { localStorage.removeItem('userInfo'); window.location.href = '/'; };
 
-document.addEventListener('DOMContentLoaded', () => {
-    checkAdminAuth();
-    fetchDashboardData();
-    fetchAdminProducts();
-    fetchAdminCategories();
-    fetchAdminOrders();
-    loadEditPageData(); // Crucial for filling the forms
-});
-// --- MOBILE SIDEBAR TOGGLE ---
 const setupAdminSidebar = () => {
     const toggleBtn = document.getElementById('admin-sidebar-toggle');
     const sidebar = document.getElementById('admin-sidebar');
+    if (!toggleBtn || !sidebar) return;
     
-    toggleBtn?.addEventListener('click', () => {
+    toggleBtn.addEventListener('click', () => {
         sidebar.classList.toggle('sidebar-hidden');
         sidebar.classList.toggle('sidebar-visible');
     });
 
-    // Close when clicking outside on mobile
     window.addEventListener('click', (e) => {
         if (window.innerWidth < 1024 && !sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
             sidebar.classList.add('sidebar-hidden');
@@ -265,9 +280,12 @@ const setupAdminSidebar = () => {
     });
 };
 
-// Update your DOMContentLoaded to include this:
 document.addEventListener('DOMContentLoaded', () => {
-    setupAdminSidebar(); // <--- ADD THIS
     checkAdminAuth();
-    // ... rest of your existing init code
+    setupAdminSidebar();
+    fetchDashboardData();
+    fetchAdminProducts();
+    fetchAdminCategories();
+    fetchAdminOrders();
+    loadEditPageData();
 });
