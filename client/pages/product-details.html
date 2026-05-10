@@ -34,7 +34,7 @@
     </header>
 
     <main class="container mx-auto px-4 py-8 flex-1">
-        
+
         <!-- Breadcrumbs (Professional Addition) -->
         <nav class="flex items-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">
             <a href="/" class="hover:text-blue-600">Home</a>
@@ -51,34 +51,39 @@
         </button>
 
         <!-- Main Product Card -->
-        <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden flex flex-col md:flex-row mb-20">
+        <div
+            class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden flex flex-col md:flex-row mb-20">
             <!-- Image Area -->
             <div class="md:w-1/2 p-6 md:p-10 flex items-center justify-center bg-white border-r border-slate-50">
                 <img id="main-product-image" src="https://via.placeholder.com/600x600?text=Loading..."
-                    class="max-w-full h-auto rounded-3xl transition-transform duration-700 hover:scale-105" alt="Product Image">
+                    class="max-w-full h-auto rounded-3xl transition-transform duration-700 hover:scale-105"
+                    alt="Product Image">
             </div>
-            
+
             <!-- Details Area -->
             <div class="md:w-1/2 p-8 md:p-16 flex flex-col justify-center">
                 <span id="product-brand"
                     class="bg-blue-50 text-blue-600 text-[10px] font-black uppercase px-4 py-1.5 rounded-full w-fit tracking-widest mb-6 border border-blue-100">Brand</span>
-                
-                <h1 id="product-name" class="text-3xl md:text-5xl font-black text-slate-900 leading-tight mb-4 tracking-tighter">Loading Product...</h1>
-                
+
+                <h1 id="product-name"
+                    class="text-3xl md:text-5xl font-black text-slate-900 leading-tight mb-4 tracking-tighter">Loading
+                    Product...</h1>
+
                 <div class="flex items-baseline space-x-3 mb-8">
                     <p id="product-price" class="text-5xl font-black text-blue-600">$0.00</p>
                     <p class="text-lg text-slate-300 font-bold line-through">$0.00</p>
                 </div>
 
                 <div class="bg-slate-50 p-6 rounded-3xl mb-8 border border-slate-100">
-                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Product Description</h4>
+                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Product Description
+                    </h4>
                     <p id="product-description" class="text-slate-600 leading-relaxed text-sm font-medium">
                         Fetching latest specifications from server...
                     </p>
                 </div>
 
                 <div id="stock-status-container" class="mb-10 text-sm font-black uppercase tracking-tighter"></div>
-                
+
                 <div class="flex flex-col sm:flex-row gap-4">
                     <button id="add-to-cart-btn"
                         class="flex-1 bg-blue-600 text-white py-5 rounded-[1.5rem] font-black hover:bg-blue-700 transition shadow-xl shadow-blue-100 flex items-center justify-center active:scale-95">
@@ -115,7 +120,8 @@
         </section>
     </main>
 
-    <footer class="bg-slate-900 text-white py-12 text-center text-slate-500 font-bold mt-auto">&copy; 2024 ElectroMart</footer>
+    <footer class="bg-slate-900 text-white py-12 text-center text-slate-500 font-bold mt-auto">&copy; 2024 ElectroMart
+    </footer>
 
     <!-- Scripts -->
     <script src="../js/cart-handler.js"></script>

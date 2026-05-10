@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
-        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap"
         rel="stylesheet">
 
     <style>
@@ -25,7 +25,9 @@
             --text-body: #475569;
         }
 
-        * {
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
         }
 
@@ -33,9 +35,10 @@
             margin: 0;
             padding: 0;
             scroll-behavior: smooth;
-            background-color: var(--surface-2);
+            background: var(--surface-2);
             font-family: 'DM Sans', sans-serif;
             color: var(--primary);
+            -webkit-font-smoothing: antialiased;
         }
 
         h1,
@@ -47,7 +50,7 @@
 
         /* ── Navbar ── */
         .navbar {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, .92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
@@ -56,32 +59,30 @@
         .search-bar {
             background: var(--surface-2);
             border: 1.5px solid var(--border);
-            transition: border-color 0.2s, box-shadow 0.2s;
+            transition: border-color .2s, box-shadow .2s;
         }
 
         .search-bar:focus-within {
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, .1);
         }
 
         .search-bar input {
             background: transparent;
         }
 
-        /* ── Profile Button ── */
         .profile-btn {
             background: var(--accent-light);
             border: 1.5px solid transparent;
-            transition: all 0.2s;
+            transition: all .2s;
         }
 
         .profile-btn:hover {
             border-color: var(--accent);
         }
 
-        /* ── Mobile Menu ── */
         #mobile-menu-overlay {
-            transition: opacity 0.3s ease;
+            transition: opacity .3s ease;
         }
 
         .mobile-menu-inner {
@@ -101,7 +102,7 @@
             position: absolute;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(59, 130, 246, .15) 0%, transparent 70%);
             top: -100px;
             right: -100px;
             pointer-events: none;
@@ -112,18 +113,18 @@
             position: absolute;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(99, 102, 241, .1) 0%, transparent 70%);
             bottom: -80px;
             left: 20%;
             pointer-events: none;
         }
 
         .hero-badge {
-            background: rgba(59, 130, 246, 0.15);
-            border: 1px solid rgba(59, 130, 246, 0.3);
+            background: rgba(59, 130, 246, .15);
+            border: 1px solid rgba(59, 130, 246, .3);
             color: #93c5fd;
             font-size: 11px;
-            letter-spacing: 0.1em;
+            letter-spacing: .1em;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
@@ -137,7 +138,7 @@
             font-size: clamp(2.8rem, 6vw, 5rem);
             font-weight: 800;
             line-height: 1.05;
-            letter-spacing: -0.03em;
+            letter-spacing: -.03em;
         }
 
         .hero-cta-primary {
@@ -145,10 +146,10 @@
             color: white;
             font-family: 'Syne', sans-serif;
             font-weight: 700;
-            letter-spacing: -0.01em;
+            letter-spacing: -.01em;
             border: none;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all .2s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -162,7 +163,7 @@
         .hero-img {
             border-radius: 20px;
             transform: rotate(2deg);
-            transition: transform 0.4s ease;
+            transition: transform .4s ease;
         }
 
         .hero-img:hover {
@@ -170,96 +171,210 @@
         }
 
         .hero-stat {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .1);
             border-radius: 14px;
             padding: 14px 20px;
         }
 
-        /* ── Section titles ── */
+        /* ── Section labels ── */
         .section-label {
             font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.12em;
+            font-weight: 700;
+            letter-spacing: .14em;
             text-transform: uppercase;
             color: var(--accent);
         }
 
         .section-title {
             font-family: 'Syne', sans-serif;
-            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            font-size: clamp(1.5rem, 3vw, 2rem);
             font-weight: 800;
-            letter-spacing: -0.02em;
+            letter-spacing: -.025em;
             color: var(--primary);
+            margin: 0;
         }
 
-        /* ── Category Cards ── */
+        /* ════════════════════════════════════════
+           CATEGORY CARDS — PREMIUM
+        ════════════════════════════════════════ */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
         .category-card {
             background: var(--surface);
             border: 1.5px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 18px 20px;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
             cursor: pointer;
-            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .25s, box-shadow .25s, transform .25s;
+            animation: slideUp .45s cubic-bezier(.22, .68, 0, 1.15) both;
+        }
+
+        /* Shimmer on hover */
+        .category-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(105deg, transparent 40%, rgba(59, 130, 246, .06) 50%, transparent 60%);
+            transform: translateX(-100%);
+            transition: transform .5s ease;
+        }
+
+        .category-card:hover::after {
+            transform: translateX(100%);
+        }
+
+        /* Left accent bar */
+        .category-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 18%;
+            bottom: 18%;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent), #60a5fa);
+            border-radius: 0 3px 3px 0;
+            transform: scaleY(0);
+            transform-origin: center;
+            transition: transform .25s ease;
+        }
+
+        .category-card:hover::before {
+            transform: scaleY(1);
         }
 
         .category-card:hover {
-            border-color: var(--accent);
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.12);
-            transform: translateY(-2px);
+            border-color: #bfdbfe;
+            box-shadow: 0 12px 36px rgba(59, 130, 246, .12);
+            transform: translateY(-3px);
         }
 
-        .category-icon {
-            background: var(--accent-light);
-            height: 48px;
-            width: 48px;
-            border-radius: 12px;
+        .cat-icon-wrap {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.25s;
-            flex-shrink: 0;
+            background: var(--accent-light);
+            border: 1.5px solid #dbeafe;
+            transition: background .25s, border-color .25s, box-shadow .25s;
         }
 
-        .category-card:hover .category-icon {
+        .category-card:hover .cat-icon-wrap {
             background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 6px 18px rgba(59, 130, 246, .4);
         }
 
-        .category-card:hover .category-icon i {
-            color: white !important;
+        .cat-icon-wrap i {
+            font-size: 18px;
+            color: var(--accent);
+            transition: color .25s, transform .3s;
         }
 
-        /* ── Product Cards ── */
+        .category-card:hover .cat-icon-wrap i {
+            color: white;
+            transform: scale(1.15);
+        }
+
+        .cat-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--primary);
+            margin: 0 0 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: color .2s;
+        }
+
+        .cat-sub {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .category-card:hover .cat-name {
+            color: var(--accent);
+        }
+
+        .cat-arrow {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: border-color .25s, background .25s, color .25s, transform .25s;
+        }
+
+        .category-card:hover .cat-arrow {
+            border-color: var(--accent);
+            background: var(--accent-light);
+            color: var(--accent);
+            transform: translateX(3px);
+        }
+
+        /* ════════════════════════════════════════
+           PRODUCT CARDS — PREMIUM
+        ════════════════════════════════════════ */
         .product-card {
             background: var(--surface);
             border: 1.5px solid var(--border);
-            border-radius: 20px;
+            border-radius: 22px;
             padding: 14px;
             display: flex;
             flex-direction: column;
             height: 100%;
             position: relative;
-            transition: all 0.3s ease;
+            overflow: visible;
+            transition: border-color .3s, box-shadow .3s, transform .3s;
         }
 
         .product-card:hover {
-            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
-            transform: translateY(-4px);
-            border-color: transparent;
+            border-color: #dbeafe;
+            box-shadow: 0 24px 48px rgba(15, 23, 42, .1);
+            transform: translateY(-6px);
         }
 
         .product-img-wrap {
             background: var(--surface-2);
-            border-radius: 14px;
+            border-radius: 16px;
             overflow: hidden;
             aspect-ratio: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
+            transition: background .3s;
+        }
+
+        .product-card:hover .product-img-wrap {
+            background: #eff6ff;
         }
 
         .product-img-wrap img {
@@ -267,57 +382,128 @@
             height: 100%;
             object-fit: contain;
             padding: 12px;
-            transition: transform 0.5s ease;
+            transition: transform .55s cubic-bezier(.25, .46, .45, .94);
         }
 
         .product-card:hover .product-img-wrap img {
             transform: scale(1.08);
         }
 
-        .wishlist-btn {
+        /* Featured ribbon */
+        .feat-ribbon {
             position: absolute;
-            top: 22px;
-            right: 22px;
-            z-index: 20;
-            height: 34px;
-            width: 34px;
-            background: white;
-            border: 1.5px solid var(--border);
-            border-radius: 50%;
+            top: 14px;
+            left: 14px;
+            z-index: 5;
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: #78350f;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, .35);
+        }
+
+        /* OOS */
+        .oos-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, .82);
+            backdrop-filter: blur(2px);
+            z-index: 10;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
+            border-radius: 22px;
+            pointer-events: none;
         }
 
-        .wishlist-btn:hover {
-            border-color: #ef4444;
-            color: #ef4444;
+        .oos-badge {
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 999px;
         }
 
+        /* Brand pill */
+        .prod-brand {
+            display: inline-block;
+            background: var(--accent-light);
+            border: 1px solid #dbeafe;
+            color: var(--accent);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 3px 9px;
+            border-radius: 999px;
+            margin-bottom: 5px;
+        }
+
+        /* Name */
         .product-name {
             font-family: 'Syne', sans-serif;
             font-weight: 700;
             font-size: 13px;
             color: var(--primary);
-            line-height: 1.4;
+            line-height: 1.45;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            margin: 0 0 6px;
+            transition: color .2s;
         }
 
+        .product-card:hover .product-name {
+            color: var(--accent);
+        }
+
+        /* Stars */
+        .prod-stars {
+            display: flex;
+            align-items: center;
+            gap: 1px;
+        }
+
+        .prod-stars i {
+            font-size: 10px;
+            color: #f59e0b;
+        }
+
+        .prod-stars i.empty-star {
+            color: #e2e8f0;
+        }
+
+        .prod-rev-count {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-left: 5px;
+        }
+
+        /* Price */
         .product-price {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
             font-size: 18px;
             color: var(--primary);
-            letter-spacing: -0.03em;
+            letter-spacing: -.03em;
         }
 
+        /* Cart button */
         .add-cart-btn {
-            height: 38px;
+            height: 36px;
             background: var(--primary);
             color: white;
             border: none;
@@ -326,17 +512,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 5px;
             font-family: 'DM Sans', sans-serif;
             font-weight: 600;
             font-size: 12px;
-            transition: all 0.2s;
+            transition: background .2s, transform .15s, box-shadow .2s;
             padding: 0 14px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
-        .add-cart-btn:hover {
+        .add-cart-btn:hover:not(.disabled) {
             background: var(--accent);
-            transform: scale(1.02);
+            box-shadow: 0 4px 14px rgba(59, 130, 246, .35);
+            transform: scale(1.03);
         }
 
         .add-cart-btn.disabled {
@@ -345,155 +534,23 @@
             cursor: not-allowed;
         }
 
-        .add-cart-btn.disabled:hover {
-            transform: none;
-        }
-
-        .out-of-stock-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(1px);
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 20px;
-            pointer-events: none;
-        }
-
-        .out-of-stock-badge {
-            background: #fee2e2;
-            color: #b91c1c;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 6px 14px;
-            border-radius: 999px;
-        }
-
-        /* ── Footer ── */
-        .footer-main {
-            background: var(--primary);
-            color: #94a3b8;
-        }
-
-        /* ── Auth Modal ── */
-        .auth-modal-card {
-            background: var(--surface);
-            border-radius: 24px;
-            max-width: 380px;
-            width: 100%;
-        }
-
-        /* ── Profile Dropdown ── */
-        #profile-menu {
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-            border: 1px solid var(--border);
-        }
-
-        /* ── Scrollbar ── */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 99px;
-        }
-
-        /* ── Animations ── */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-in {
-            animation: fadeInUp 0.5s ease forwards;
-        }
-
-        /* ── Nav links ── */
-        .nav-link {
-            position: relative;
-            font-weight: 600;
-            font-size: 13.5px;
-            color: var(--text-body);
-            transition: color 0.2s;
-            padding-bottom: 2px;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 99px;
-            transition: width 0.25s ease;
-        }
-
-        .nav-link:hover {
-            color: var(--accent);
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        /* ── Mobile nav links ── */
-        .mobile-nav-link {
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 17px;
-            color: var(--primary);
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.2s;
-        }
-
-        .mobile-nav-link:hover {
-            color: var(--accent);
-        }
-
-        .mobile-nav-link:last-child {
-            border-bottom: none;
-        }
-
-        /* ── Product Action Dropdown ── */
+        /* ⋮ dropdown */
         .prod-action-btn {
             position: absolute;
             top: 14px;
             right: 14px;
             z-index: 20;
-            height: 36px;
-            width: 36px;
+            height: 32px;
+            width: 32px;
             background: white;
             border: 1.5px solid var(--border);
-            border-radius: 10px;
+            border-radius: 9px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all .2s;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, .05);
         }
 
         .prod-action-btn:hover {
@@ -503,13 +560,13 @@
 
         .prod-action-menu {
             position: absolute;
-            top: 56px;
+            top: 52px;
             right: 14px;
             z-index: 30;
             background: white;
             border: 1.5px solid var(--border);
             border-radius: 14px;
-            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+            box-shadow: 0 12px 32px rgba(15, 23, 42, .12);
             padding: 6px;
             min-width: 170px;
             display: none;
@@ -532,7 +589,7 @@
             font-weight: 600;
             font-size: 13px;
             color: var(--text-body);
-            transition: all 0.15s;
+            transition: all .15s;
             border: none;
             background: none;
             width: 100%;
@@ -555,13 +612,95 @@
         }
 
         .prod-action-item.disabled-item {
-            opacity: 0.4;
+            opacity: .4;
             cursor: not-allowed;
         }
 
         .prod-action-item.disabled-item:hover {
             background: none;
             color: var(--text-muted);
+        }
+
+        /* ── Other ── */
+        .footer-main {
+            background: var(--primary);
+            color: #94a3b8;
+        }
+
+        .auth-modal-card {
+            background: var(--surface);
+            border-radius: 24px;
+            max-width: 380px;
+            width: 100%;
+        }
+
+        #profile-menu {
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .12);
+            border: 1px solid var(--border);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 99px;
+        }
+
+        .nav-link {
+            position: relative;
+            font-weight: 600;
+            font-size: 13.5px;
+            color: var(--text-body);
+            transition: color .2s;
+            padding-bottom: 2px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 99px;
+            transition: width .25s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-nav-link {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+            color: var(--primary);
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color .2s;
+        }
+
+        .mobile-nav-link:hover {
+            color: var(--accent);
+        }
+
+        .mobile-nav-link:last-child {
+            border-bottom: none;
         }
 
         .trust-item {
@@ -573,12 +712,11 @@
             font-weight: 500;
         }
 
-        /* ── Support Section ── */
         .support-card:hover {
             background: #0d1a2e !important;
         }
 
-        @media (max-width: 767px) {
+        @media (max-width:767px) {
             .support-grid {
                 grid-template-columns: 1fr !important;
             }
@@ -601,45 +739,32 @@
 
 <body class="flex flex-col min-h-screen">
 
-    <!-- ═══════════════════════════════════════════
-         NAVBAR
-    ═══════════════════════════════════════════ -->
+    <!-- NAVBAR -->
     <header class="navbar sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
-
-            <!-- Mobile Menu Toggle -->
             <button id="mobile-menu-btn"
                 class="lg:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 hover:border-blue-400 transition-all focus:outline-none">
                 <i class="fa-solid fa-bars-staggered"></i>
             </button>
-
-            <!-- Logo -->
             <a href="/" class="flex items-center gap-2 flex-shrink-0">
-                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                    <i class="fa-solid fa-bolt text-white text-sm"></i>
-                </div>
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center"><i
+                        class="fa-solid fa-bolt text-white text-sm"></i></div>
                 <span
-                    style="font-family:'Syne',sans-serif; font-weight:800; font-size:18px; letter-spacing:-0.04em; color: var(--primary);">Electro<span
-                        style="color:var(--accent);">Mart</span></span>
+                    style="font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:-.04em;color:var(--primary)">Electro<span
+                        style="color:var(--accent)">Mart</span></span>
             </a>
-
-            <!-- Search Bar (Desktop) -->
             <div class="hidden md:flex flex-1 max-w-sm">
                 <div class="search-bar relative flex items-center w-full rounded-xl overflow-hidden px-4 py-2.5 gap-3">
                     <i class="fa-solid fa-magnifying-glass text-slate-400 text-sm"></i>
                     <input type="text" id="search-input" placeholder="Search products..."
-                        class="w-full outline-none text-sm font-medium text-slate-700 placeholder:text-slate-400 bg-transparent">
+                        class="w-full outline-none text-sm font-medium text-slate-700 placeholder:text-slate-400">
                 </div>
             </div>
-
-            <!-- Right Nav -->
             <div class="flex items-center gap-4">
                 <nav class="hidden lg:flex items-center gap-6">
                     <a href="/" class="nav-link">Home</a>
                     <a href="#products-section" class="nav-link">Products</a>
                 </nav>
-
-                <!-- Profile Button -->
                 <div class="relative">
                     <button id="profile-btn"
                         class="profile-btn h-10 w-10 rounded-xl flex items-center justify-center focus:outline-none">
@@ -651,151 +776,104 @@
         </div>
     </header>
 
-    <!-- ═══════════════════════════════════════════
-         MOBILE MENU OVERLAY
-    ═══════════════════════════════════════════ -->
+    <!-- MOBILE MENU -->
     <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/40 z-[100] hidden opacity-0 transition-opacity"
         style="backdrop-filter:blur(4px)">
         <div class="mobile-menu-inner w-[78%] max-w-xs h-full p-6 shadow-2xl flex flex-col">
-
-            <!-- Header -->
             <div class="flex justify-between items-center mb-8">
                 <a href="/" class="flex items-center gap-2">
-                    <div class="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
-                        <i class="fa-solid fa-bolt text-white text-xs"></i>
-                    </div>
+                    <div class="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center"><i
+                            class="fa-solid fa-bolt text-white text-xs"></i></div>
                     <span
-                        style="font-family:'Syne',sans-serif; font-weight:800; font-size:16px; letter-spacing:-0.03em;">Electro<span
+                        style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;letter-spacing:-.03em">Electro<span
                             style="color:var(--accent)">Mart</span></span>
                 </a>
                 <button id="close-menu-btn"
-                    class="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-100 text-slate-500 hover:bg-slate-200 transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                    class="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-100 text-slate-500 hover:bg-slate-200 transition"><i
+                        class="fa-solid fa-xmark"></i></button>
             </div>
-
-            <!-- Mobile Search -->
             <div class="relative mb-6">
                 <input type="text" id="mobile-search" placeholder="Search products..."
                     class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 pl-11 outline-none text-sm font-medium text-slate-700 placeholder:text-slate-400 focus:border-blue-400 transition">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-slate-400 text-sm"></i>
             </div>
-
-            <!-- Nav Links -->
             <nav class="flex flex-col">
-                <a href="/" class="mobile-nav-link">
-                    <i class="fa-solid fa-house text-blue-500 text-sm w-5"></i> Home
-                </a>
-                <a href="#products-section" onclick="closeMobileMenu()" class="mobile-nav-link">
-                    <i class="fa-solid fa-tag text-blue-500 text-sm w-5"></i> Our Products
-                </a>
-                <a href="/pages/cart.html" class="mobile-nav-link">
-                    <i class="fa-solid fa-cart-shopping text-blue-500 text-sm w-5"></i> My Cart
-                </a>
-                <a href="#" class="mobile-nav-link">
-                    <i class="fa-solid fa-headset text-blue-500 text-sm w-5"></i> Customer Support
-                </a>
+                <a href="/" class="mobile-nav-link"><i class="fa-solid fa-house text-blue-500 text-sm w-5"></i> Home</a>
+                <a href="#products-section" onclick="closeMobileMenu()" class="mobile-nav-link"><i
+                        class="fa-solid fa-tag text-blue-500 text-sm w-5"></i> Our Products</a>
+                <a href="/pages/cart.html" class="mobile-nav-link"><i
+                        class="fa-solid fa-cart-shopping text-blue-500 text-sm w-5"></i> My Cart</a>
+                <a href="#" class="mobile-nav-link"><i class="fa-solid fa-headset text-blue-500 text-sm w-5"></i>
+                    Customer Support</a>
             </nav>
-
-            <!-- Bottom -->
             <div class="mt-auto">
                 <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4">
-                    <p style="font-family:'Syne',sans-serif; font-weight:700; font-size:13px; color:var(--primary);">
-                        Need help?</p>
+                    <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--primary)">Need
+                        help?</p>
                     <p class="text-xs text-slate-500 mt-1">Our support team is available 24/7</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         HERO SECTION
-    ═══════════════════════════════════════════ -->
+    <!-- HERO -->
     <section class="hero-section text-white py-16 md:py-24">
         <div class="container mx-auto px-4 relative z-10">
             <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
-
-                <!-- Left Content -->
                 <div class="md:w-1/2 text-center md:text-left">
-                    <div class="hero-badge mb-6">
-                        <i class="fa-solid fa-bolt text-xs"></i>
-                        PREMIUM ELECTRONICS
-                    </div>
-
-                    <h1 class="hero-title text-white mb-6">
-                        Your Digital<br>
-                        <span style="color:#60a5fa">Lifestyle</span><br>
-                        Starts Here
-                    </h1>
-
-                    <p style="color:#94a3b8; font-size:15px; line-height:1.7; max-width:380px; margin: 0 auto 32px; font-weight:400"
-                        class="md:mx-0">
-                        Discover the latest in tech — from smartphones to smart home devices, all in one place.
-                    </p>
-
+                    <div class="hero-badge mb-6"><i class="fa-solid fa-bolt text-xs"></i> PREMIUM ELECTRONICS</div>
+                    <h1 class="hero-title text-white mb-6">Your Digital<br><span
+                            style="color:#60a5fa">Lifestyle</span><br>Starts Here</h1>
+                    <p style="color:#94a3b8;font-size:15px;line-height:1.7;max-width:380px;margin:0 auto 32px;font-weight:400"
+                        class="md:mx-0">Discover the latest in tech — from smartphones to smart home devices, all in one
+                        place.</p>
                     <div class="flex justify-center md:justify-start">
                         <button
                             onclick="document.getElementById('products-section').scrollIntoView({behavior:'smooth'})"
                             class="hero-cta-primary px-7 py-3.5 rounded-xl text-sm">
-                            Explore Products
-                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                            Explore Products <i class="fa-solid fa-arrow-right text-xs"></i>
                         </button>
                     </div>
-
-                    <!-- Stats -->
                     <div class="flex gap-4 mt-10 justify-center md:justify-start flex-wrap">
                         <div class="hero-stat text-center">
                             <p
-                                style="font-family:'Syne',sans-serif; font-weight:800; font-size:22px; letter-spacing:-0.03em">
+                                style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.03em">
                                 500+</p>
                             <p
-                                style="font-size:11px; font-weight:500; color:#64748b; letter-spacing:0.05em; text-transform:uppercase">
+                                style="font-size:11px;font-weight:500;color:#64748b;letter-spacing:.05em;text-transform:uppercase">
                                 Products</p>
                         </div>
                         <div class="hero-stat text-center">
                             <p
-                                style="font-family:'Syne',sans-serif; font-weight:800; font-size:22px; letter-spacing:-0.03em">
+                                style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.03em">
                                 10K+</p>
                             <p
-                                style="font-size:11px; font-weight:500; color:#64748b; letter-spacing:0.05em; text-transform:uppercase">
+                                style="font-size:11px;font-weight:500;color:#64748b;letter-spacing:.05em;text-transform:uppercase">
                                 Customers</p>
                         </div>
                         <div class="hero-stat text-center">
                             <p
-                                style="font-family:'Syne',sans-serif; font-weight:800; font-size:22px; letter-spacing:-0.03em">
+                                style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.03em">
                                 4.9★</p>
                             <p
-                                style="font-size:11px; font-weight:500; color:#64748b; letter-spacing:0.05em; text-transform:uppercase">
+                                style="font-size:11px;font-weight:500;color:#64748b;letter-spacing:.05em;text-transform:uppercase">
                                 Rating</p>
                         </div>
                     </div>
                 </div>
-
-                <!-- Right — Dynamic Banner Image -->
                 <div class="md:w-1/2 flex justify-center md:justify-end">
-                    <!-- 
-                        ╔══════════════════════════════════════════════╗
-                        ║  HERO BANNER IMAGE — HTML এ সরাসরি লিংক দাও ║
-                        ║  src="তোমার ইমেজ লিংক এখানে"                ║
-                        ║  href="ক্লিক করলে যে পেজে যাবে"             ║
-                        ╚══════════════════════════════════════════════╝
-                    -->
                     <a href="#products-section" id="hero-banner-link" class="block relative group"
-                        style="width:100%; max-width:480px">
+                        style="width:100%;max-width:480px">
                         <img id="hero-banner-img"
                             src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600"
                             alt="Featured Banner" class="hero-img w-full shadow-2xl"
                             onerror="this.src='https://via.placeholder.com/480x340?text=Banner+Image'">
-                        <!-- Overlay on hover -->
                         <div
                             class="absolute inset-0 rounded-[20px] bg-blue-600/0 group-hover:bg-blue-600/10 transition-all duration-300">
                         </div>
-                        <!-- Bottom label -->
                         <div id="hero-banner-label"
                             class="absolute -bottom-4 -right-4 z-10 bg-white text-slate-900 text-sm font-bold px-5 py-3 rounded-2xl shadow-xl"
-                            style="font-family:'Syne',sans-serif">
-                            Shop Now →
-                        </div>
+                            style="font-family:'Syne',sans-serif">Shop Now →</div>
                     </a>
                 </div>
             </div>
@@ -803,7 +881,7 @@
     </section>
 
     <!-- Trust Bar -->
-    <div style="background:var(--primary); border-top:1px solid rgba(255,255,255,0.06); padding:14px 0">
+    <div style="background:var(--primary);border-top:1px solid rgba(255,255,255,.06);padding:14px 0">
         <div class="container mx-auto px-4">
             <div class="flex flex-wrap justify-center md:justify-between gap-4 md:gap-0">
                 <div class="trust-item"><i class="fa-solid fa-truck-fast text-blue-400"></i> Free Shipping over $50
@@ -815,265 +893,204 @@
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         CATEGORIES SECTION
-    ═══════════════════════════════════════════ -->
+    <!-- ══════════════════════════════════════
+         CATEGORIES SECTION ★ PREMIUM
+    ══════════════════════════════════════ -->
     <section id="categories-section" class="container mx-auto px-4 py-14 md:py-20">
         <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
                 <p class="section-label mb-2">Browse</p>
                 <h2 class="section-title">Shop by Category</h2>
             </div>
-            <p style="color:var(--text-muted); font-size:14px; max-width:280px; text-align:right"
+            <p style="color:var(--text-muted);font-size:14px;max-width:260px;text-align:right;line-height:1.6"
                 class="hidden md:block">
-                Find exactly what you're looking for with our curated categories
+                Find exactly what you're looking for<br>with our curated categories
             </p>
         </div>
         <div id="category-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         PRODUCTS SECTION
-    ═══════════════════════════════════════════ -->
+    <!-- ══════════════════════════════════════
+         PRODUCTS SECTION ★ PREMIUM
+    ══════════════════════════════════════ -->
     <section id="products-section"
-        style="background:var(--surface); border-radius:28px; margin:0 16px 40px; padding:40px 24px"
+        style="background:var(--surface);border-radius:28px;margin:0 16px 40px;padding:40px 24px"
         class="md:mx-6 md:p-12">
         <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
                 <p class="section-label mb-2">Our Collection</p>
                 <h2 class="section-title">Featured Products</h2>
             </div>
-            <div class="flex items-center gap-2">
-                <span style="width:8px; height:8px; border-radius:50%; background:#22c55e; display:inline-block"></span>
-                <span style="font-size:13px; font-weight:500; color:var(--text-muted)">In Stock & Ready to Ship</span>
+            <div class="flex items-center gap-2.5">
+                <span
+                    style="width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;box-shadow:0 0 0 3px rgba(34,197,94,.18)"></span>
+                <span style="font-size:13px;font-weight:500;color:var(--text-muted)">In Stock &amp; Ready to Ship</span>
             </div>
         </div>
         <div id="product-container" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"></div>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         CUSTOMER SUPPORT SECTION
-    ═══════════════════════════════════════════ -->
-    <div class="support-section-wrap" style="background:var(--surface-2); padding:0 16px 0; margin-top:16px">
-        <section class="support-section-inner" style="
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-            border-radius: 28px;
-            padding: 72px 48px;
-            position: relative;
-            overflow: hidden;
-            max-width: 1200px;
-            margin: 0 auto;
-        ">
-            <!-- Decorative glow blobs -->
+    <!-- SUPPORT -->
+    <div class="support-section-wrap" style="background:var(--surface-2);padding:0 16px 0;margin-top:16px">
+        <section class="support-section-inner"
+            style="background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#0f172a 100%);border-radius:28px;padding:72px 48px;position:relative;overflow:hidden;max-width:1200px;margin:0 auto">
             <div
-                style="position:absolute; width:400px; height:400px; background:radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%); top:-100px; right:-60px; pointer-events:none">
+                style="position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(59,130,246,.12) 0%,transparent 70%);top:-100px;right:-60px;pointer-events:none">
             </div>
             <div
-                style="position:absolute; width:300px; height:300px; background:radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%); bottom:-80px; left:10%; pointer-events:none">
+                style="position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(99,102,241,.08) 0%,transparent 70%);bottom:-80px;left:10%;pointer-events:none">
             </div>
-
-            <!-- Top label row -->
             <div class="support-top-row"
-                style="display:flex; align-items:center; gap:10px; margin-bottom:40px; position:relative; z-index:1">
+                style="display:flex;align-items:center;gap:10px;margin-bottom:40px;position:relative;z-index:1">
                 <div
-                    style="width:36px; height:36px; background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0">
-                    <i class="fa-solid fa-headset" style="color:#60a5fa; font-size:15px"></i>
-                </div>
+                    style="width:36px;height:36px;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <i class="fa-solid fa-headset" style="color:#60a5fa;font-size:15px"></i></div>
                 <span
-                    style="font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#3b82f6">Customer
+                    style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3b82f6">Customer
                     Support</span>
-                <div style="flex:1; height:1px; background:rgba(255,255,255,0.06)"></div>
+                <div style="flex:1;height:1px;background:rgba(255,255,255,.06)"></div>
                 <span
-                    style="font-size:12px; font-weight:600; color:#22c55e; display:flex; align-items:center; gap:6px; flex-shrink:0">
-                    <span
-                        style="width:7px; height:7px; border-radius:50%; background:#22c55e; display:inline-block; box-shadow:0 0 6px #22c55e"></span>
-                    All lines open
-                </span>
+                    style="font-size:12px;font-weight:600;color:#22c55e;display:flex;align-items:center;gap:6px;flex-shrink:0"><span
+                        style="width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block;box-shadow:0 0 6px #22c55e"></span>All
+                    lines open</span>
             </div>
-
-            <!-- Main content grid -->
             <div class="support-grid"
-                style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:rgba(255,255,255,0.07); border-radius:20px; overflow:hidden; position:relative; z-index:1">
-
-                <!-- Card 1 — Phone -->
-                <div class="support-card" style="background:#111827; padding:36px 32px; transition:background 0.25s">
-                    <div style="display:flex; align-items:flex-start; gap:18px">
+                style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,.07);border-radius:20px;overflow:hidden;position:relative;z-index:1">
+                <div class="support-card" style="background:#111827;padding:36px 32px;transition:background .25s">
+                    <div style="display:flex;align-items:flex-start;gap:18px">
                         <div
-                            style="width:52px; height:52px; flex-shrink:0; background:rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.2); border-radius:16px; display:flex; align-items:center; justify-content:center">
-                            <i class="fa-solid fa-phone-volume" style="color:#60a5fa; font-size:20px"></i>
-                        </div>
+                            style="width:52px;height:52px;flex-shrink:0;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:16px;display:flex;align-items:center;justify-content:center">
+                            <i class="fa-solid fa-phone-volume" style="color:#60a5fa;font-size:20px"></i></div>
                         <div>
                             <p
-                                style="font-size:11px; font-weight:700; letter-spacing:0.12em; color:#475569; text-transform:uppercase; margin:0 0 8px">
-                                Call Us Anytime</p>
-                            <a href="tel:+8801700000000"
-                                style="font-family:'Syne',sans-serif; font-weight:800; font-size:20px; color:white; text-decoration:none; letter-spacing:-0.02em; display:block; margin-bottom:6px; transition:color 0.2s"
-                                onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='white'">
-                                +880 1700-000000
-                            </a>
-                            <p style="font-size:13px; color:#475569; margin:0; font-weight:500">Sat – Thu &nbsp;·&nbsp;
-                                9am – 9pm</p>
+                                style="font-size:11px;font-weight:700;letter-spacing:.12em;color:#475569;text-transform:uppercase;margin:0 0 8px">
+                                Call Us Anytime</p><a href="tel:+8801700000000"
+                                style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:white;text-decoration:none;display:block;margin-bottom:6px"
+                                onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='white'">+880
+                                1700-000000</a>
+                            <p style="font-size:13px;color:#475569;margin:0;font-weight:500">Sat – Thu · 9am – 9pm</p>
                         </div>
                     </div>
                 </div>
-
-                <!-- Card 2 — Email (highlighted middle) -->
                 <div class="support-card"
-                    style="background:#0d1520; border-left:1px solid rgba(59,130,246,0.15); border-right:1px solid rgba(59,130,246,0.15); padding:36px 32px; transition:background 0.25s; position:relative">
+                    style="background:#0d1520;border-left:1px solid rgba(59,130,246,.15);border-right:1px solid rgba(59,130,246,.15);padding:36px 32px;position:relative">
                     <div
-                        style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:60%; height:2px; background:linear-gradient(90deg, transparent, #3b82f6, transparent); border-radius:0 0 4px 4px">
+                        style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:2px;background:linear-gradient(90deg,transparent,#3b82f6,transparent)">
                     </div>
-                    <div style="display:flex; align-items:flex-start; gap:18px">
+                    <div style="display:flex;align-items:flex-start;gap:18px">
                         <div
-                            style="width:52px; height:52px; flex-shrink:0; background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); border-radius:16px; display:flex; align-items:center; justify-content:center">
-                            <i class="fa-solid fa-envelope-open-text" style="color:#60a5fa; font-size:20px"></i>
-                        </div>
+                            style="width:52px;height:52px;flex-shrink:0;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);border-radius:16px;display:flex;align-items:center;justify-content:center">
+                            <i class="fa-solid fa-envelope-open-text" style="color:#60a5fa;font-size:20px"></i></div>
                         <div>
                             <p
-                                style="font-size:11px; font-weight:700; letter-spacing:0.12em; color:#475569; text-transform:uppercase; margin:0 0 8px">
-                                Email Support</p>
-                            <a href="mailto:support@electromart.com"
-                                style="font-family:'Syne',sans-serif; font-weight:800; font-size:17px; color:white; text-decoration:none; letter-spacing:-0.02em; display:block; margin-bottom:6px; transition:color 0.2s; word-break:break-all"
-                                onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='white'">
-                                support@electromart.com
-                            </a>
-                            <p style="font-size:13px; color:#475569; margin:0; font-weight:500">Reply within 2 hours</p>
+                                style="font-size:11px;font-weight:700;letter-spacing:.12em;color:#475569;text-transform:uppercase;margin:0 0 8px">
+                                Email Support</p><a href="mailto:support@electromart.com"
+                                style="font-family:'Syne',sans-serif;font-weight:800;font-size:17px;color:white;text-decoration:none;display:block;margin-bottom:6px;word-break:break-all"
+                                onmouseover="this.style.color='#60a5fa'"
+                                onmouseout="this.style.color='white'">support@electromart.com</a>
+                            <p style="font-size:13px;color:#475569;margin:0;font-weight:500">Reply within 2 hours</p>
                         </div>
                     </div>
                 </div>
-
-                <!-- Card 3 — Live Chat -->
-                <div class="support-card" style="background:#111827; padding:36px 32px; transition:background 0.25s">
-                    <div style="display:flex; align-items:flex-start; gap:18px">
+                <div class="support-card" style="background:#111827;padding:36px 32px;transition:background .25s">
+                    <div style="display:flex;align-items:flex-start;gap:18px">
                         <div
-                            style="width:52px; height:52px; flex-shrink:0; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.2); border-radius:16px; display:flex; align-items:center; justify-content:center">
-                            <i class="fa-solid fa-comments" style="color:#4ade80; font-size:20px"></i>
-                        </div>
+                            style="width:52px;height:52px;flex-shrink:0;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:16px;display:flex;align-items:center;justify-content:center">
+                            <i class="fa-solid fa-comments" style="color:#4ade80;font-size:20px"></i></div>
                         <div>
                             <p
-                                style="font-size:11px; font-weight:700; letter-spacing:0.12em; color:#475569; text-transform:uppercase; margin:0 0 8px">
+                                style="font-size:11px;font-weight:700;letter-spacing:.12em;color:#475569;text-transform:uppercase;margin:0 0 8px">
                                 Live Chat</p>
                             <p
-                                style="font-family:'Syne',sans-serif; font-weight:800; font-size:20px; color:white; letter-spacing:-0.02em; margin:0 0 6px; display:flex; align-items:center; gap:8px">
+                                style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:white;letter-spacing:-.02em;margin:0 0 6px;display:flex;align-items:center;gap:8px">
                                 <span
-                                    style="width:8px; height:8px; border-radius:50%; background:#22c55e; display:inline-block; box-shadow:0 0 8px rgba(34,197,94,0.6)"></span>
-                                Online Now
-                            </p>
-                            <p style="font-size:13px; color:#475569; margin:0; font-weight:500">Avg. response &lt; 2 min
+                                    style="width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;box-shadow:0 0 8px rgba(34,197,94,.6)"></span>Online
+                                Now</p>
+                            <p style="font-size:13px;color:#475569;margin:0;font-weight:500">Avg. response &lt; 2 min
                             </p>
                         </div>
                     </div>
                 </div>
-
             </div>
-
-            <!-- Bottom note -->
             <p
-                style="text-align:center; font-size:13px; color:#334155; margin:28px 0 0; position:relative; z-index:1; font-weight:500">
-                <i class="fa-solid fa-circle-info" style="color:#3b82f6; margin-right:6px"></i>
-                Our team operates 7 days a week. Emergency support available 24/7 via live chat.
-            </p>
-
+                style="text-align:center;font-size:13px;color:#334155;margin:28px 0 0;position:relative;z-index:1;font-weight:500">
+                <i class="fa-solid fa-circle-info" style="color:#3b82f6;margin-right:6px"></i>Our team operates 7 days a
+                week. Emergency support available 24/7 via live chat.</p>
         </section>
     </div>
+    <div style="height:60px;background:var(--surface-2)"></div>
 
-    <!-- Spacer between support and footer -->
-    <div style="height:60px; background:var(--surface-2)"></div>
-
-    <!-- ═══════════════════════════════════════════
-    ═══════════════════════════════════════════ -->
+    <!-- FOOTER -->
     <footer class="footer-main mt-auto">
-        <!-- Main footer -->
         <div class="container mx-auto px-4 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
-
-                <!-- Brand -->
                 <div class="md:col-span-1">
                     <a href="/" class="flex items-center gap-2 mb-4">
-                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                            <i class="fa-solid fa-bolt text-white text-sm"></i>
-                        </div>
-                        <span
-                            style="font-family:'Syne',sans-serif; font-weight:800; font-size:18px; letter-spacing:-0.04em; color:white">Electro<span
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center"><i
+                                class="fa-solid fa-bolt text-white text-sm"></i></div><span
+                            style="font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:-.04em;color:white">Electro<span
                                 style="color:#60a5fa">Mart</span></span>
                     </a>
-                    <p style="font-size:13px; line-height:1.7; color:#64748b">Your one-stop destination for premium
+                    <p style="font-size:13px;line-height:1.7;color:#64748b">Your one-stop destination for premium
                         electronics and gadgets.</p>
                 </div>
-
-                <!-- Shop -->
                 <div>
                     <p
-                        style="font-family:'Syne',sans-serif; font-weight:700; font-size:13px; color:white; margin-bottom:16px; letter-spacing:0.05em; text-transform:uppercase">
+                        style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:white;margin-bottom:16px;letter-spacing:.05em;text-transform:uppercase">
                         Shop</p>
-                    <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px">
-                        <li><a href="#products-section"
-                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px">
+                        <li><a href="#products-section" style="font-size:13px;color:#64748b;text-decoration:none"
                                 onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">All
                                 Products</a></li>
-                        <li><a href="#categories-section"
-                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                        <li><a href="#categories-section" style="font-size:13px;color:#64748b;text-decoration:none"
                                 onmouseover="this.style.color='#94a3b8'"
                                 onmouseout="this.style.color='#64748b'">Categories</a></li>
-                        <li><a href="/pages/cart.html"
-                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                        <li><a href="/pages/cart.html" style="font-size:13px;color:#64748b;text-decoration:none"
                                 onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">My
                                 Cart</a></li>
                         <li><a href="/pages/order-history.html"
-                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                                style="font-size:13px;color:#64748b;text-decoration:none"
                                 onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">Order
                                 History</a></li>
                     </ul>
                 </div>
-
-                <!-- Account -->
                 <div>
                     <p
-                        style="font-family:'Syne',sans-serif; font-weight:700; font-size:13px; color:white; margin-bottom:16px; letter-spacing:0.05em; text-transform:uppercase">
+                        style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:white;margin-bottom:16px;letter-spacing:.05em;text-transform:uppercase">
                         Account</p>
-                    <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px">
-                        <li><a href="/pages/login.html"
-                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px">
+                        <li><a href="/pages/login.html" style="font-size:13px;color:#64748b;text-decoration:none"
                                 onmouseover="this.style.color='#94a3b8'"
                                 onmouseout="this.style.color='#64748b'">Login</a></li>
-                        <li><a href="/pages/register.html"
-                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                        <li><a href="/pages/register.html" style="font-size:13px;color:#64748b;text-decoration:none"
                                 onmouseover="this.style.color='#94a3b8'"
                                 onmouseout="this.style.color='#64748b'">Register</a></li>
-                        <li><a href="/pages/profile.html"
-                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                        <li><a href="/pages/profile.html" style="font-size:13px;color:#64748b;text-decoration:none"
                                 onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">My
                                 Profile</a></li>
                     </ul>
                 </div>
-
-                <!-- Support -->
                 <div>
                     <p
-                        style="font-family:'Syne',sans-serif; font-weight:700; font-size:13px; color:white; margin-bottom:16px; letter-spacing:0.05em; text-transform:uppercase">
+                        style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:white;margin-bottom:16px;letter-spacing:.05em;text-transform:uppercase">
                         Support</p>
-                    <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px">
-                        <li><a href="#"
-                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px">
+                        <li><a href="#" style="font-size:13px;color:#64748b;text-decoration:none"
                                 onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">Help
                                 Center</a></li>
-                        <li><a href="#"
-                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                        <li><a href="#" style="font-size:13px;color:#64748b;text-decoration:none"
                                 onmouseover="this.style.color='#94a3b8'"
                                 onmouseout="this.style.color='#64748b'">Shipping Info</a></li>
-                        <li><a href="#"
-                                style="font-size:13px; color:#64748b; text-decoration:none; transition:color 0.2s"
+                        <li><a href="#" style="font-size:13px;color:#64748b;text-decoration:none"
                                 onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">Returns
                                 Policy</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-
-        <!-- Footer Bottom -->
-        <div style="border-top:1px solid rgba(255,255,255,0.06); padding:16px 0">
+        <div style="border-top:1px solid rgba(255,255,255,.06);padding:16px 0">
             <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-3">
-                <p style="font-size:12px; font-weight:500; color:#475569">&copy; 2024 ElectroMart. All rights reserved.
+                <p style="font-size:12px;font-weight:500;color:#475569">&copy; 2024 ElectroMart. All rights reserved.
                 </p>
                 <div class="flex items-center gap-4">
                     <i class="fa-brands fa-cc-visa text-slate-600 text-xl"></i>
@@ -1085,224 +1102,226 @@
         </div>
     </footer>
 
-    <!-- ═══════════════════════════════════════════
-         AUTH MODAL (IDs preserved exactly)
-    ═══════════════════════════════════════════ -->
+    <!-- AUTH MODAL -->
     <div id="auth-modal" class="fixed inset-0 bg-black/60 z-[100] hidden items-center justify-center px-4"
         style="backdrop-filter:blur(8px)">
         <div class="auth-modal-card p-8 text-center">
-            <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                <i class="fa-solid fa-lock text-2xl text-blue-600"></i>
-            </div>
+            <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-5"><i
+                    class="fa-solid fa-lock text-2xl text-blue-600"></i></div>
             <h3
-                style="font-family:'Syne',sans-serif; font-weight:800; font-size:22px; color:var(--primary); margin-bottom:8px">
+                style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:var(--primary);margin-bottom:8px">
                 Login Required</h3>
-            <p style="color:var(--text-muted); font-size:14px; margin-bottom:28px" id="modal-action-name">Please login
-                to continue.</p>
+            <p style="color:var(--text-muted);font-size:14px;margin-bottom:28px" id="modal-action-name">Please login to
+                continue.</p>
             <div class="flex flex-col gap-3">
                 <a href="/pages/login.html"
-                    style="background:var(--accent); color:white; padding:14px; border-radius:14px; font-family:'Syne',sans-serif; font-weight:700; font-size:14px; text-decoration:none; display:block; transition:background 0.2s"
+                    style="background:var(--accent);color:white;padding:14px;border-radius:14px;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;text-decoration:none;display:block"
                     onmouseover="this.style.background='var(--accent-dark)'"
-                    onmouseout="this.style.background='var(--accent)'">
-                    Login Now
-                </a>
+                    onmouseout="this.style.background='var(--accent)'">Login Now</a>
                 <button onclick="window.closeAuthModal()"
-                    style="color:var(--text-muted); font-weight:600; font-size:13px; background:none; border:none; cursor:pointer; padding:8px; transition:color 0.2s"
-                    onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">
-                    Maybe Later
-                </button>
+                    style="color:var(--text-muted);font-weight:600;font-size:13px;background:none;border:none;cursor:pointer;padding:8px"
+                    onmouseover="this.style.color='var(--primary)'"
+                    onmouseout="this.style.color='var(--text-muted)'">Maybe Later</button>
             </div>
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         SCRIPTS (order preserved)
-    ═══════════════════════════════════════════ -->
+    <!-- SCRIPTS — order preserved -->
     <script src="js/cart-handler.js"></script>
     <script src="js/main.js"></script>
 
     <script>
-        // ══════════════════════════════════════════════
-        // UI PATCH — Overrides main.js rendered HTML
-        // with new professional card designs.
-        // All IDs, function names, API calls stay 100% same.
-        // ══════════════════════════════════════════════
+        /* ════════════════════════════════════════════════════════════
+           UI PATCH — All IDs, API calls, function names: 100% intact.
+           Only card templates + CSS classes redesigned.
+        ════════════════════════════════════════════════════════════ */
 
-        // ── 1. Override Category Rendering ──
-        const _origFetchHomeCategories = window.fetchHomeCategories;
+        /* ── Star helper ── */
+        function buildStars(rating) {
+            let h = '';
+            const f = Math.floor(rating), half = (rating % 1) >= .5, e = 5 - f - (half ? 1 : 0);
+            for (let i = 0; i < f; i++)    h += '<i class="fa-solid fa-star"></i>';
+            if (half) h += '<i class="fa-solid fa-star-half-stroke"></i>';
+            for (let i = 0; i < e; i++)    h += '<i class="fa-regular fa-star empty-star"></i>';
+            return h;
+        }
+
+        /* ═══════════════════════════════════════════
+           1. CATEGORY RENDERER
+        ═══════════════════════════════════════════ */
         window.fetchHomeCategoriesPatched = async () => {
-            const container = document.getElementById('category-container');
-            if (!container) return;
+            const el = document.getElementById('category-container');
+            if (!el) return;
             try {
-                const res = await fetch('/api/categories');
-                const result = await res.json();
-                const categories = (result && Array.isArray(result.data)) ? result.data : [];
+                const r = await fetch('/api/categories');
+                const json = await r.json();
+                const cats = Array.isArray(json.data) ? json.data : [];
 
-                if (categories.length > 0) {
-                    container.innerHTML = categories.map(cat => `
-                        <div onclick="window.filterByCategory('${cat._id}')"
-                            class="category-card group">
-                            <div class="category-icon">
-                                <i class="fa-solid fa-microchip text-lg text-blue-600 group-hover:text-white transition-all"></i>
-                            </div>
-                            <div>
-                                <h3 style="font-family:'Syne',sans-serif; font-weight:700; font-size:14px; color:var(--primary); margin:0 0 2px">${cat.name || 'Category'}</h3>
-                                <p style="font-size:11px; color:var(--text-muted); font-weight:500; letter-spacing:0.06em; text-transform:uppercase; margin:0">Explore Items</p>
-                            </div>
-                            <i class="fa-solid fa-arrow-right ml-auto text-slate-300 group-hover:text-blue-500 text-sm transition-all"></i>
-                        </div>
-                    `).join('');
-                } else {
-                    container.innerHTML = `<p style="color:var(--text-muted); font-style:italic; padding:16px 0">No categories available.</p>`;
-                }
-            } catch (err) {
-                console.error("Category Fetch Error:", err);
-                container.innerHTML = `<p style="color:#ef4444">Service temporarily unavailable.</p>`;
-            }
-        };
-
-        // ── 2. Override Product Rendering ──
-        window.fetchHomeProductsPatched = async (queryParam = '') => {
-            const container = document.getElementById('product-container');
-            if (!container) return;
-            try {
-                const res = await fetch(`/api/products${queryParam}`);
-                const result = await res.json();
-                const products = (result && Array.isArray(result.data)) ? result.data : [];
-
-                if (products.length === 0) {
-                    container.innerHTML = `
-                        <div class="col-span-full py-20 text-center">
-                            <i class="fa-solid fa-magnifying-glass" style="font-size:48px; color:var(--border); margin-bottom:16px; display:block"></i>
-                            <p style="color:var(--text-muted); font-weight:600; letter-spacing:0.05em; text-transform:uppercase; font-size:13px">No products found.</p>
-                            <button onclick="fetchHomeProductsPatched('')" style="color:var(--accent); font-weight:700; margin-top:12px; background:none; border:none; cursor:pointer; font-size:14px; text-decoration:underline">Refresh Products</button>
-                        </div>`;
+                if (!cats.length) {
+                    el.innerHTML = `<p style="color:var(--text-muted);font-style:italic;padding:16px 0">No categories available.</p>`;
                     return;
                 }
 
-                container.innerHTML = products.map(prod => {
-                    if (!prod) return '';
-                    const outOfStock = prod.countInStock <= 0;
-                    const img = (prod.images && prod.images.length > 0) ? prod.images[0] : 'https://via.placeholder.com/300';
+                el.innerHTML = cats.map((cat, i) => `
+                <div onclick="window.filterByCategory('${cat._id}')"
+                     class="category-card group"
+                     style="animation-delay:${i * 70}ms">
 
-                    return `
-                    <div class="product-card group" style="overflow:visible">
-                        ${outOfStock ? `
-                        <div class="out-of-stock-overlay">
-                            <span class="out-of-stock-badge">Out of Stock</span>
-                        </div>` : ''}
+                    <div class="cat-icon-wrap">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
 
-                        <!-- Action Dropdown Button -->
-                        <button
-                            onclick="event.stopPropagation(); toggleProdMenu('menu-${prod._id}')"
-                            class="prod-action-btn"
-                            aria-label="Product actions">
-                            <i class="fa-solid fa-ellipsis-vertical text-slate-500 text-sm"></i>
-                        </button>
+                    <div style="flex:1;min-width:0">
+                        <p class="cat-name">${cat.name || 'Category'}</p>
+                        <p class="cat-sub">Explore items</p>
+                    </div>
 
-                        <!-- Action Dropdown Menu -->
-                        <div id="menu-${prod._id}" class="prod-action-menu">
-                            <button
-                                onclick="event.stopPropagation(); window.globalAddToCart('${prod._id}', ${outOfStock}); closeProdMenu('menu-${prod._id}')"
-                                class="prod-action-item cart-item ${outOfStock ? 'disabled-item' : ''}">
-                                <i class="fa-solid fa-cart-plus text-blue-500 w-4 text-center"></i>
-                                ${outOfStock ? 'Out of Stock' : 'Add to Cart'}
-                            </button>
-                            <button
-                                onclick="event.stopPropagation(); window.handleWishlistClick('${prod._id}'); closeProdMenu('menu-${prod._id}')"
-                                class="prod-action-item wish-item">
-                                <i class="fa-solid fa-heart text-rose-400 w-4 text-center"></i>
-                                Add to Wishlist
-                            </button>
-                            <div style="height:1px; background:var(--border); margin:4px 0"></div>
-                            <button
-                                onclick="event.stopPropagation(); window.location.href='/pages/product-details.html?id=${prod._id}'"
-                                class="prod-action-item">
-                                <i class="fa-solid fa-eye text-slate-400 w-4 text-center"></i>
-                                View Details
-                            </button>
-                        </div>
+                    <span class="cat-arrow">
+                        <i class="fa-solid fa-arrow-right" style="font-size:11px"></i>
+                    </span>
+                </div>
+            `).join('');
 
-                        <div class="product-img-wrap cursor-pointer" onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">
-                            <img src="${img}" alt="${prod.name || 'Product'}"
-                                class="${outOfStock ? 'grayscale' : ''}"
-                                onerror="this.src='https://via.placeholder.com/300'">
-                        </div>
-
-                        <div style="flex:1; display:flex; flex-direction:column; padding:0 4px">
-                            <h3 class="product-name cursor-pointer hover:text-blue-600 transition-colors mb-1"
-                                onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">
-                                ${prod.name || 'Product Title'}
-                            </h3>
-
-                            <div style="margin-top:auto; padding-top:12px; display:flex; align-items:center; justify-content:space-between; gap:8px">
-                                <p class="product-price">$${(prod.price || 0).toFixed(2)}</p>
-                                <button
-                                    onclick="event.stopPropagation(); window.globalAddToCart('${prod._id}', ${outOfStock})"
-                                    class="add-cart-btn ${outOfStock ? 'disabled' : ''}"
-                                    style="flex-shrink:0; width:auto; padding:0 14px">
-                                    <i class="fa-solid fa-cart-plus text-xs"></i>
-                                    <span class="hidden sm:inline">${outOfStock ? 'N/A' : 'Add'}</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>`;
-                }).join('');
-            } catch (err) {
-                console.error("Product Render Error:", err);
-                container.innerHTML = `<p class="col-span-full text-center py-10" style="color:var(--text-muted)">Unable to load products. Please refresh.</p>`;
+            } catch (e) {
+                console.error('Category error:', e);
+                document.getElementById('category-container').innerHTML =
+                    `<p style="color:#ef4444">Service temporarily unavailable.</p>`;
             }
         };
 
-        // ── 3. Patch filterByCategory to use new renderer ──
+        /* ═══════════════════════════════════════════
+           2. PRODUCT RENDERER
+        ═══════════════════════════════════════════ */
+        window.fetchHomeProductsPatched = async (q = '') => {
+            const el = document.getElementById('product-container');
+            if (!el) return;
+            try {
+                const r = await fetch(`/api/products${q}`);
+                const json = await r.json();
+                const prods = Array.isArray(json.data) ? json.data : [];
+
+                if (!prods.length) {
+                    el.innerHTML = `
+                    <div class="col-span-full py-20 text-center">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size:44px;color:var(--border);display:block;margin-bottom:14px"></i>
+                        <p style="color:var(--text-muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:12px">No products found.</p>
+                        <button onclick="fetchHomeProductsPatched('')" style="color:var(--accent);font-weight:700;margin-top:12px;background:none;border:none;cursor:pointer;font-size:14px;text-decoration:underline">Refresh</button>
+                    </div>`;
+                    return;
+                }
+
+                el.innerHTML = prods.map(prod => {
+                    if (!prod) return '';
+                    const oos = prod.countInStock <= 0;
+                    const img = prod.images?.length ? prod.images[0] : 'https://via.placeholder.com/300';
+                    const stars = buildStars(prod.rating || 0);
+
+                    return `
+                <div class="product-card group">
+
+                    ${oos ? `<div class="oos-overlay"><span class="oos-badge">Out of Stock</span></div>` : ''}
+                    ${prod.isFeatured ? `<div class="feat-ribbon"><i class="fa-solid fa-bolt" style="font-size:8px"></i> Featured</div>` : ''}
+
+                    <!-- ⋮ button -->
+                    <button onclick="event.stopPropagation();toggleProdMenu('menu-${prod._id}')" class="prod-action-btn" aria-label="Actions">
+                        <i class="fa-solid fa-ellipsis-vertical text-slate-400 text-sm"></i>
+                    </button>
+
+                    <!-- Dropdown -->
+                    <div id="menu-${prod._id}" class="prod-action-menu">
+                        <button onclick="event.stopPropagation();window.globalAddToCart('${prod._id}',${oos});closeProdMenu('menu-${prod._id}')"
+                            class="prod-action-item cart-item ${oos ? 'disabled-item' : ''}">
+                            <i class="fa-solid fa-cart-plus text-blue-500 w-4 text-center"></i>${oos ? 'Out of Stock' : 'Add to Cart'}
+                        </button>
+                        <button onclick="event.stopPropagation();window.handleWishlistClick('${prod._id}');closeProdMenu('menu-${prod._id}')"
+                            class="prod-action-item wish-item">
+                            <i class="fa-solid fa-heart text-rose-400 w-4 text-center"></i>Add to Wishlist
+                        </button>
+                        <div style="height:1px;background:var(--border);margin:4px 0"></div>
+                        <button onclick="event.stopPropagation();window.location.href='/pages/product-details.html?id=${prod._id}'"
+                            class="prod-action-item">
+                            <i class="fa-solid fa-eye text-slate-400 w-4 text-center"></i>View Details
+                        </button>
+                    </div>
+
+                    <!-- Image -->
+                    <div class="product-img-wrap cursor-pointer"
+                         onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">
+                        <img src="${img}" alt="${prod.name || 'Product'}"
+                             class="${oos ? 'grayscale' : ''}"
+                             onerror="this.src='https://via.placeholder.com/300'">
+                    </div>
+
+                    <!-- Info -->
+                    <div style="flex:1;display:flex;flex-direction:column;padding:0 2px">
+
+                        ${prod.brand ? `<span class="prod-brand">${prod.brand}</span>` : ''}
+
+                        <h3 class="product-name cursor-pointer"
+                            onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">
+                            ${prod.name || 'Product'}
+                        </h3>
+
+                        <div style="display:flex;align-items:center;margin-bottom:10px">
+                            <div class="prod-stars">${stars}</div>
+                            <span class="prod-rev-count">(${prod.numReviews || 0})</span>
+                        </div>
+
+                        <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px">
+                            <p class="product-price">$${(prod.price || 0).toFixed(2)}</p>
+                            <button onclick="event.stopPropagation();window.globalAddToCart('${prod._id}',${oos})"
+                                class="add-cart-btn ${oos ? 'disabled' : ''}" ${oos ? 'disabled' : ''}>
+                                <i class="fa-solid fa-cart-plus text-xs"></i>
+                                <span class="hidden sm:inline">${oos ? 'N/A' : 'Add'}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+                }).join('');
+
+            } catch (e) {
+                console.error('Product error:', e);
+                el.innerHTML = `<p class="col-span-full text-center py-10" style="color:var(--text-muted)">Unable to load products. Please refresh.</p>`;
+            }
+        };
+
+        /* ── filterByCategory ── */
         window.filterByCategory = (id) => {
             fetchHomeProductsPatched(`?category=${id}`);
             document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
         };
 
-        // ── 4. Patch search to use new renderer ──
+        /* ── Init ── */
         document.addEventListener('DOMContentLoaded', () => {
-            // Run patched renderers instead
             fetchHomeCategoriesPatched();
             fetchHomeProductsPatched();
 
-            // Patch search input
-            const searchInput = document.getElementById('search-input');
-            if (searchInput) {
-                // Remove old listener by cloning
-                const newInput = searchInput.cloneNode(true);
-                searchInput.parentNode.replaceChild(newInput, searchInput);
-                newInput.addEventListener('keyup', (e) => {
-                    if (e.target.value.length > 2 || e.target.value.length === 0) {
+            const si = document.getElementById('search-input');
+            if (si) {
+                const ni = si.cloneNode(true);
+                si.parentNode.replaceChild(ni, si);
+                ni.addEventListener('keyup', e => {
+                    if (e.target.value.length > 2 || e.target.value.length === 0)
                         fetchHomeProductsPatched(`?keyword=${e.target.value}`);
-                    }
                 });
             }
         });
 
-        // ── Product Action Dropdown Helpers ──
-        function toggleProdMenu(menuId) {
-            // Close all other open menus first
-            document.querySelectorAll('.prod-action-menu.open').forEach(m => {
-                if (m.id !== menuId) m.classList.remove('open');
-            });
-            const menu = document.getElementById(menuId);
-            if (menu) menu.classList.toggle('open');
+        /* ── Dropdown helpers ── */
+        function toggleProdMenu(id) {
+            document.querySelectorAll('.prod-action-menu.open').forEach(m => { if (m.id !== id) m.classList.remove('open'); });
+            document.getElementById(id)?.classList.toggle('open');
         }
-        function closeProdMenu(menuId) {
-            const menu = document.getElementById(menuId);
-            if (menu) menu.classList.remove('open');
-        }
-        // Close all product menus when clicking outside
+        function closeProdMenu(id) { document.getElementById(id)?.classList.remove('open'); }
         document.addEventListener('click', () => {
             document.querySelectorAll('.prod-action-menu.open').forEach(m => m.classList.remove('open'));
         });
 
-        // ── Mobile menu helpers (same logic as original) ──
+        /* ── Mobile menu ── */
         function closeMobileMenu() {
-            const overlay = document.getElementById('mobile-menu-overlay');
-            overlay.classList.remove('opacity-100');
-            setTimeout(() => overlay.classList.add('hidden'), 300);
+            const o = document.getElementById('mobile-menu-overlay');
+            o.classList.remove('opacity-100');
+            setTimeout(() => o.classList.add('hidden'), 300);
         }
     </script>
 </body>
