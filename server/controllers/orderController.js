@@ -71,3 +71,30 @@ exports.updateOrderStatus = async (req, res, next) => {
         }
     } catch (error) { next(error); }
 };
+
+// @desc    Delete order
+// @route   DELETE /api/orders/:id
+exports.deleteOrder = async (req, res, next) => {
+    try {
+        const order = await Order.findById(req.params.id);
+        if (order) {
+            await Order.findByIdAndDelete(req.params.id);
+            res.json({ success: true, message: 'Order removed' });
+        } else {
+            res.status(404).json({ message: 'Order not found' });
+        }
+    } catch (error) { next(error); }
+};
+
+//  Controller function to delete an order (Admin Only) 
+exports.deleteOrder = async (req, res, next) => {
+    try {
+        const order = await Order.findById(req.params.id);
+        if (order) {
+            await Order.findByIdAndDelete(req.params.id);
+            res.json({ success: true, message: 'Order removed' });
+        } else {
+            res.status(404).json({ message: 'Order not found' });
+        }
+    } catch (error) { next(error); }
+};
