@@ -381,16 +381,19 @@
            connecting to footer's dark tone
         ══════════════════════════════════════════════ */
         .products-outer {
-            background: var(--surface-2);
+            background: rgba(255, 255, 255, .04);
+            /* background: var(--surface-2); */
             padding: 48px 20px 52px;
         }
 
         .products-inner {
-            background: var(--surface);
+            background: rgba(255, 255, 255, .04);
+            /* background: var(--surface); */
             border-radius: 28px;
             border: 1.5px solid var(--border);
             padding: 48px 40px;
             max-width: 1280px;
+            color: white;
             margin: 0 auto;
             position: relative;
             overflow: hidden;
@@ -410,7 +413,8 @@
 
         /* Product cards */
         .product-card {
-            background: var(--surface);
+            background: rgba(255, 255, 255, .04);
+            /* background: var(--surface); */
             border: 1.5px solid var(--border);
             border-radius: 22px;
             padding: 14px;
@@ -423,13 +427,13 @@
         }
 
         .product-card:hover {
-            border-color: #bfdbfe;
+            border-color: #bccdfc;
             box-shadow: 0 24px 48px rgba(15, 23, 42, .1);
             transform: translateY(-6px);
         }
 
         .product-img-wrap {
-            background: var(--surface-2);
+            background: rgba(255, 255, 255, .04);
             border-radius: 16px;
             overflow: hidden;
             aspect-ratio: 1;
@@ -441,7 +445,7 @@
         }
 
         .product-card:hover .product-img-wrap {
-            background: #eff6ff;
+            background: #6f90e9;
         }
 
         .product-img-wrap img {
@@ -1271,18 +1275,12 @@
                     if (!prod) return '';
                     const oos = prod.countInStock <= 0;
                     const img = prod.images?.length ? prod.images[0] : 'https://via.placeholder.com/300';
-                    const stars = buildStars(prod.rating || 0);
-
                     return `
                     <div class="product-card group">
                         ${oos ? `<div class="oos-overlay"><span class="oos-badge">Out of Stock</span></div>` : ''}
                         ${prod.isFeatured ? `<div class="feat-ribbon"><i class="fa-solid fa-bolt" style="font-size:8px"></i> Featured</div>` : ''}
 
-                        // <button onclick="event.stopPropagation();toggleProdMenu('menu-${prod._id}')" class="prod-action-btn" aria-label="Actions">
-                        //     <i class="fa-solid fa-ellipsis-vertical text-slate-400 text-sm"></i>
-                        // </button>
 
-                       
                         <div class="product-img-wrap cursor-pointer" onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">
                             <img src="${img}" alt="${prod.name || 'Product'}" class="${oos ? 'grayscale' : ''}" onerror="this.src='https://via.placeholder.com/300'">
                         </div>
