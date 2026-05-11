@@ -1084,7 +1084,8 @@
                         <div style="display:flex;align-items:flex-start;gap:18px">
                             <div
                                 style="width:52px;height:52px;flex-shrink:0;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:16px;display:flex;align-items:center;justify-content:center">
-                                <i class="fa-solid fa-phone-volume" style="color:#60a5fa;font-size:20px"></i></div>
+                                <i class="fa-solid fa-phone-volume" style="color:#60a5fa;font-size:20px"></i>
+                            </div>
                             <div>
                                 <p
                                     style="font-size:11px;font-weight:700;letter-spacing:.12em;color:#475569;text-transform:uppercase;margin:0 0 8px">
@@ -1125,7 +1126,8 @@
                         <div style="display:flex;align-items:flex-start;gap:18px">
                             <div
                                 style="width:52px;height:52px;flex-shrink:0;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:16px;display:flex;align-items:center;justify-content:center">
-                                <i class="fa-solid fa-comments" style="color:#4ade80;font-size:20px"></i></div>
+                                <i class="fa-solid fa-comments" style="color:#4ade80;font-size:20px"></i>
+                            </div>
                             <div>
                                 <p
                                     style="font-size:11px;font-weight:700;letter-spacing:.12em;color:#475569;text-transform:uppercase;margin:0 0 8px">
@@ -1335,10 +1337,9 @@
                         <button onclick="event.stopPropagation();if(requireLogin('add to cart')){window.globalAddToCart('${prod._id}',${oos});closeProdMenu('menu-${prod._id}');}" class="prod-action-item cart-item ${oos ? 'disabled-item' : ''}">
                             <i class="fa-solid fa-cart-plus text-blue-500 w-4 text-center"></i>${oos ? 'Out of Stock' : 'Add to Cart'}
                         </button>
-                        <button onclick="event.stopPropagation();if(requireLogin('add to wishlist')){window.handleWishlistClick('${prod._id}');closeProdMenu('menu-${prod._id}');}" class="prod-action-item wish-item">
-                            <i class="fa-solid fa-heart text-rose-400 w-4 text-center"></i>Add to Wishlist
-                        </button>
-                        <div style="height:1px;background:var(--border);margin:4px 0"></div>
+                      
+                       <div style="height:1px;background:var(--border);margin:4px 0"></div>
+
                         <button onclick="window.location.href='/pages/product-details.html?id=${prod._id}'" class="prod-action-item">
                             <i class="fa-solid fa-eye text-slate-400 w-4 text-center"></i>View Details
                         </button>
@@ -1351,14 +1352,18 @@
                         <h3 class="product-name" onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">${prod.name || 'Product'}</h3>
                         ${desc ? `<p class="prod-desc">${desc}</p>` : ''}
                         <div class="pc-divider"></div>
+
                         <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto">
                             <p class="product-price">$${(prod.price || 0).toFixed(2)}</p>
-                            <button onclick="event.stopPropagation();if(requireLogin('add items to cart'))window.globalAddToCart('${prod._id}',${oos})"
-                                class="add-cart-btn ${oos ? 'disabled' : ''}" ${oos ? 'disabled' : ''}>
-                                <i class="fa-solid fa-cart-plus text-xs"></i>
-                                <span class="hidden sm:inline">${oos ? 'N/A' : 'Add'}</span>
+                            <button onclick="event.stopPropagation();handleBuyNow('${prod._id}',${oos})"
+                                class="add-cart-btn ${oos ? 'disabled' : ''}" ${oos ? 'disabled' : ''}
+                                style="${!oos ? 'background:linear-gradient(135deg,#2563eb,#1d4ed8);' : ''}">
+                                <i class="fa-solid fa-bolt text-xs"></i>
+                                <span class="hidden sm:inline">${oos ? 'N/A' : 'Buy'}</span>
                             </button>
                         </div>
+
+                      
                     </div>
                 </div>`;
                 }).join('');
@@ -1395,6 +1400,11 @@
             const o = document.getElementById('mobile-menu-overlay');
             o.classList.remove('opacity-100');
             setTimeout(() => o.classList.add('hidden'), 300);
+        }
+        function handleBuyNow(productId, isOos) {
+            if (isOos) return;
+            if (!requireLogin('buy this product')) return;
+            window.location.href = `/pages/product-details.html?id=${productId}&buynow=true`;
         }
     </script>
 </body>
