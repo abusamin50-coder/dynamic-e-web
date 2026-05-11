@@ -427,7 +427,7 @@
         }
 
         .product-card:hover {
-            border-color: #bccdfc;
+            border-color: #ffffff;
             box-shadow: 0 24px 48px rgba(15, 23, 42, .1);
             transform: translateY(-6px);
         }
@@ -1275,6 +1275,7 @@
                     if (!prod) return '';
                     const oos = prod.countInStock <= 0;
                     const img = prod.images?.length ? prod.images[0] : 'https://via.placeholder.com/300';
+
                     return `
                     <div class="product-card group">
                         ${oos ? `<div class="oos-overlay"><span class="oos-badge">Out of Stock</span></div>` : ''}
