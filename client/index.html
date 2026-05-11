@@ -531,20 +531,6 @@
             color: var(--accent);
         }
 
-        .prod-stars {
-            display: flex;
-            align-items: center;
-            gap: 1px;
-        }
-
-        .prod-stars i {
-            font-size: 10px;
-            color: #f59e0b;
-        }
-
-        .prod-stars i.empty-star {
-            color: #e2e8f0;
-        }
 
         .prod-rev-count {
             font-size: 10px;
@@ -992,7 +978,7 @@
                         style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#334155">All
                         products ready to ship</span>
                 </div>
-                <!-- <div style="flex:1;height:1px;background:rgba(255,255,255,.06)"></div> -->
+                <div style="flex:1;height:1px;background:rgba(255,255,255,.06)"></div>
             </div>
         </div>
     </section>
@@ -1291,37 +1277,26 @@
                     <div class="product-card group">
                         ${oos ? `<div class="oos-overlay"><span class="oos-badge">Out of Stock</span></div>` : ''}
                         ${prod.isFeatured ? `<div class="feat-ribbon"><i class="fa-solid fa-bolt" style="font-size:8px"></i> Featured</div>` : ''}
-                        <button onclick="event.stopPropagation();toggleProdMenu('menu-${prod._id}')" class="prod-action-btn" aria-label="Actions">
-                            <i class="fa-solid fa-ellipsis-vertical text-slate-400 text-sm"></i>
-                        </button>
-                        <div id="menu-${prod._id}" class="prod-action-menu">
-                            <button onclick="event.stopPropagation();window.globalAddToCart('${prod._id}',${oos});closeProdMenu('menu-${prod._id}')" class="prod-action-item cart-item ${oos ? 'disabled-item' : ''}">
-                                <i class="fa-solid fa-cart-plus text-blue-500 w-4 text-center"></i>${oos ? 'Out of Stock' : 'Add to Cart'}
-                            </button>
 
+                        // <button onclick="event.stopPropagation();toggleProdMenu('menu-${prod._id}')" class="prod-action-btn" aria-label="Actions">
+                        //     <i class="fa-solid fa-ellipsis-vertical text-slate-400 text-sm"></i>
+                        // </button>
 
-                            // <button onclick="event.stopPropagation();window.handleWishlistClick('${prod._id}');closeProdMenu('menu-${prod._id}')" class="prod-action-item wish-item">
-                            //     <i class="fa-solid fa-heart text-rose-400 w-4 text-center"></i>Add to Wishlist
-                            // </button>
-
-
-                            <div style="height:1px;background:var(--border);margin:4px 0"></div>
-                            <button onclick="event.stopPropagation();window.location.href='/pages/product-details.html?id=${prod._id}'" class="prod-action-item">
-                                <i class="fa-solid fa-eye text-slate-400 w-4 text-center"></i>View Details
-                            </button>
-                        </div>
+                       
                         <div class="product-img-wrap cursor-pointer" onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">
                             <img src="${img}" alt="${prod.name || 'Product'}" class="${oos ? 'grayscale' : ''}" onerror="this.src='https://via.placeholder.com/300'">
                         </div>
                         <div style="flex:1;display:flex;flex-direction:column;padding:0 2px">
                             ${prod.brand ? `<span class="prod-brand">${prod.brand}</span>` : ''}
+
                             <h3 class="product-name cursor-pointer" onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">${prod.name || 'Product'}</h3>
                             <div style="display:flex;align-items:center;margin-bottom:10px">
-                                <div class="prod-stars">${stars}</div>
+                                
                                 <span class="prod-rev-count">(${prod.numReviews || 0})</span>
                             </div>
                             <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px">
                                 <p class="product-price">$${(prod.price || 0).toFixed(2)}</p>
+
                                 <button onclick="event.stopPropagation();window.globalAddToCart('${prod._id}',${oos})" class="add-cart-btn ${oos ? 'disabled' : ''}" ${oos ? 'disabled' : ''}>
                                     <i class="fa-solid fa-cart-plus text-xs"></i>
                                     <span class="hidden sm:inline">${oos ? 'N/A' : 'Add'}</span>
