@@ -1326,47 +1326,54 @@
                     if (!prod) return '';
                     const oos = prod.countInStock <= 0;
                     const img = prod.images?.length ? prod.images[0] : 'https://via.placeholder.com/300';
+
+                    // Description handling: লিমিটেড ক্যারেক্টার শো করবে
                     const desc = prod.description ? (prod.description.length > 80 ? prod.description.slice(0, 80).trim() + '…' : prod.description) : '';
+
                     return `
-                <div class="product-card">
-                    ${oos ? `<div class="oos-overlay"><span class="oos-badge">Out of Stock</span></div>` : ''}
-                    ${prod.isFeatured ? `<div class="feat-ribbon"><i class="fa-solid fa-bolt" style="font-size:8px"></i> Featured</div>` : ''}
-                    <button onclick="event.stopPropagation();toggleProdMenu('menu-${prod._id}')" class="prod-action-btn"><i class="fa-solid fa-ellipsis-vertical text-slate-400 text-sm"></i></button>
-                    <div id="menu-${prod._id}" class="prod-action-menu">
-                        <button onclick="event.stopPropagation();if(requireLogin('add to cart')){window.globalAddToCart('${prod._id}',${oos});closeProdMenu('menu-${prod._id}');}" class="prod-action-item cart-item ${oos ? 'disabled-item' : ''}">
-                            <i class="fa-solid fa-cart-plus text-blue-500 w-4 text-center"></i>${oos ? 'Out of Stock' : 'Add to Cart'}
-                        </button>
-                      
-                       <div style="height:1px;background:var(--border);margin:4px 0"></div>
+        <div class="product-card">
+            ${oos ? `<div class="oos-overlay"><span class="oos-badge">Out of Stock</span></div>` : ''}
+            ${prod.isFeatured ? `<div class="feat-ribbon"><i class="fa-solid fa-bolt" style="font-size:8px"></i> Featured</div>` : ''}
+            <button onclick="event.stopPropagation();toggleProdMenu('menu-${prod._id}')" class="prod-action-btn"><i class="fa-solid fa-ellipsis-vertical text-slate-400 text-sm"></i></button>
+            <div id="menu-${prod._id}" class="prod-action-menu">
+                <button onclick="event.stopPropagation();if(requireLogin('add to cart')){window.globalAddToCart('${prod._id}',${oos});closeProdMenu('menu-${prod._id}');}" class="prod-action-item cart-item ${oos ? 'disabled-item' : ''}">
+                    <i class="fa-solid fa-cart-plus text-blue-500 w-4 text-center"></i>${oos ? 'Out of Stock' : 'Add to Cart'}
+                </button>
+                
+                <div style="height:1px;background:var(--border);margin:4px 0"></div>
 
-                        <button onclick="window.location.href='/pages/product-details.html?id=${prod._id}'" class="prod-action-item">
-                            <i class="fa-solid fa-eye text-slate-400 w-4 text-center"></i>View Details
-                        </button>
-                    </div>
-                    <div class="product-img-wrap cursor-pointer" onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">
-                        <img src="${img}" alt="${prod.name || 'Product'}" class="${oos ? 'grayscale' : ''}" onerror="this.src='https://via.placeholder.com/300'">
-                    </div>
-                    <div class="pc-body">
-                        ${prod.brand ? `<span class="prod-brand">${prod.brand}</span>` : ''}
-                        <h3 class="product-name" onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">${prod.name || 'Product'}</h3>
-                        ${desc ? `<p class="prod-desc">${desc}</p>` : ''}
-                        <div class="pc-divider"></div>
+                <button onclick="window.location.href='/pages/product-details.html?id=${prod._id}'" class="prod-action-item">
+                    <i class="fa-solid fa-eye text-slate-400 w-4 text-center"></i>View Details
+                </button>
+            </div>
+            <div class="product-img-wrap cursor-pointer" onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">
+                <img src="${img}" alt="${prod.name || 'Product'}" class="${oos ? 'grayscale' : ''}" onerror="this.src='https://via.placeholder.com/300'">
+            </div>
+            <div class="pc-body">
+                ${prod.brand ? `<span class="prod-brand">${prod.brand}</span>` : ''}
+                <h3 class="product-name" onclick="window.location.href='/pages/product-details.html?id=${prod._id}'">${prod.name || 'Product'}</h3>
+                
+                <!-- Updated Description Display -->
+                ${desc ? `<p class="prod-desc" style="margin-bottom: 12px; font-size: 12px; color: #64748b;">${desc}</p>` : ''}
+                
+                <div class="pc-divider" style="margin-top: auto;"></div>
 
-                        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto">
-                            <p class="product-price">$${(prod.price || 0).toFixed(2)}</p>
-                           <button onclick="event.stopPropagation();window.globalBuyNow('${prod._id}', ${oos})"
-    class="add-cart-btn ${oos ? 'disabled' : ''}" ${oos ? 'disabled' : ''}
-    style="${!oos ? 'background:linear-gradient(135deg,#2563eb,#1d4ed8);' : ''}">
-    <span class="hidden sm:inline">${oos ? 'N/A' : 'Buy Now'}</span>
-</button>
-                        </div>
-                      
-                    </div>
-                </div>`;
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top: 10px;">
+                    <p class="product-price">$${(prod.price || 0).toFixed(2)}</p>
+                    <button onclick="event.stopPropagation();window.globalBuyNow('${prod._id}', ${oos})"
+                            class="add-cart-btn ${oos ? 'disabled' : ''}" ${oos ? 'disabled' : ''}
+                            style="${!oos ? 'background:linear-gradient(135deg,#2563eb,#1d4ed8);' : ''}">
+                            <span class="hidden sm:inline">${oos ? 'N/A' : 'Buy Now'}</span>
+                    </button>
+                </div>
+            </div>
+        </div>`;
                 }).join('');
-            } catch (e) { console.error(e); el.innerHTML = `<p class="col-span-full text-center py-10" style="color:#475569">Unable to load products. Please refresh.</p>`; }
+            } catch (e) {
+                console.error(e);
+                el.innerHTML = `<p class="col-span-full text-center py-10" style="color:#475569">Unable to load products. Please refresh.</p>`;
+            }
         };
-
         window.filterByCategory = (id) => {
             fetchHomeProductsPatched(`?category=${id}`);
             document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });

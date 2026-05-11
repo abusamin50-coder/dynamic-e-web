@@ -46,19 +46,64 @@ const fetchRelated = async (productId, categoryId) => {
 
         if (related.length > 0) {
             section.classList.remove('hidden');
-            container.innerHTML = related.map(prod => `
-                <div class="bg-white rounded-3xl border border-slate-100 p-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 flex flex-col h-full relative group">
+            container.innerHTML = related.map(prod => {
+                const oos = prod.countInStock <= 0;
+                const desc = prod.description ? (prod.description.length > 60 ? prod.description.slice(0, 60).trim() + '…' : prod.description) : '';
+
+                return `
+                <div class="product-card bg-white rounded-[22px] p-4 border border-slate-100 flex flex-col h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-2 relative">
+                    
+                    <!-- ⋮ Action Button (Top Right) -->
+                    <button onclick="event.stopPropagation();toggleProdMenu('menu-${prod._id}')" class="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-lg bg-slate-50 border border-slate-100 hover:border-blue-300 transition-all">
+                        <i class="fa-solid fa-ellipsis-vertical text-slate-400 text-sm"></i>
+                    </button>
+                    
+                    <!-- Action Menu (Hidden by default, same logic as index) -->
+                    <div id="menu-${prod._id}" class="prod-action-menu absolute top-14 right-4 z-30 bg-white border border-slate-100 rounded-xl shadow-xl p-2 hidden min-w-[150px]">
+                        <button onclick="event.stopPropagation();window.globalAddToCart('${prod._id}',${oos});closeProdMenu('menu-${prod._id}');" class="flex items-center gap-2 p-2 text-xs font-bold text-slate-600 hover:bg-slate-50 w-full rounded-lg">
+                            <i class="fa-solid fa-cart-plus text-blue-500 w-4"></i> Add to Cart
+                        </button>
+                        <button onclick="window.location.href='product-details.html?id=${prod._id}'" class="flex items-center gap-2 p-2 text-xs font-bold text-slate-600 hover:bg-slate-50 w-full rounded-lg">
+                            <i class="fa-solid fa-eye text-slate-400 w-4"></i> View Details
+                        </button>
+                    </div>
+
+                    <!-- Image -->
                     <div class="relative bg-slate-50 rounded-2xl overflow-hidden aspect-square flex items-center justify-center cursor-pointer mb-4" onclick="window.location.href='product-details.html?id=${prod._id}'">
-                        <img src="${prod.images[0]}" class="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-110">
+                        <img src="${prod.images[0]}" class="w-full h-full object-contain p-4 transition-transform duration-700 hover:scale-110">
+                        ${oos ? '<div class="absolute inset-0 bg-white/60 flex items-center justify-center font-black text-[10px] uppercase tracking-widest text-red-600">Out of Stock</div>' : ''}
                     </div>
-                    <div class="flex-1 px-2">
-                        <h3 class="font-bold text-slate-800 text-sm line-clamp-1 group-hover:text-blue-600 transition-colors">${prod.name}</h3>
-                        <p class="text-xl font-black text-slate-900 mt-2">$${prod.price}</p>
+                    
+                    <!-- Content -->
+                    <div class="pc-body flex flex-col flex-1 px-1">
+                        ${prod.brand ? `<span class="text-[9px] uppercase font-bold text-blue-500 mb-1">${prod.brand}</span>` : ''}
+                        <h3 class="font-bold text-slate-800 text-sm line-clamp-1 mb-1 cursor-pointer" onclick="window.location.href='product-details.html?id=${prod._id}'">${prod.name}</h3>
+                        
+                        <!-- Description snippet -->
+                        <p class="text-[11px] text-slate-500 mb-4 flex-1">${desc}</p>
+                        
+                        <!-- Price & Buy Now -->
+                        <div class="mt-auto flex items-center justify-between pt-3 border-t">
+                            <p class="font-black text-slate-900 text-lg">$${(prod.price || 0).toFixed(2)}</p>
+                            <button onclick="event.stopPropagation();window.globalBuyNow('${prod._id}', ${oos})"
+                                class="bg-blue-600 text-white text-[11px] font-bold px-4 py-2 rounded-xl transition hover:bg-blue-700 ${oos ? 'opacity-50 cursor-not-allowed' : ''}" 
+                                ${oos ? 'disabled' : ''}>
+                                ${oos ? 'N/A' : 'Buy Now'}
+                            </button>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                </div>`;
+            }).join('');
         }
     } catch (err) { console.error(err); }
 };
-
 document.addEventListener('DOMContentLoaded', fetchProductDetails);
+
+// মেনু টগল করার জন্য হেল্পার ফাংশন
+function toggleProdMenu(id) {
+    document.querySelectorAll('.prod-action-menu').forEach(m => { if (m.id !== id) m.classList.add('hidden'); });
+    document.getElementById(id)?.classList.toggle('hidden');
+}
+function closeProdMenu(id) { document.getElementById(id)?.classList.add('hidden'); }
+// বাইরের কোথাও ক্লিক করলে মেনু বন্ধ হবে
+document.addEventListener('click', () => { document.querySelectorAll('.prod-action-menu').forEach(m => m.classList.add('hidden')); });
