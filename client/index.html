@@ -1355,7 +1355,7 @@
 
                         <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto">
                             <p class="product-price">$${(prod.price || 0).toFixed(2)}</p>
-                            <button onclick="event.stopPropagation();handleBuyNow('${prod._id}',${oos})"
+                            <button onclick="event.stopPropagation();if(requireLogin('buy this product')){window.location.href='/pages/product-details.html?id=${prod._id}&buynow=true'}"
                                 class="add-cart-btn ${oos ? 'disabled' : ''}" ${oos ? 'disabled' : ''}
                                 style="${!oos ? 'background:linear-gradient(135deg,#2563eb,#1d4ed8);' : ''}">
                                 <i class="fa-solid fa-bolt text-xs"></i>
@@ -1401,11 +1401,7 @@
             o.classList.remove('opacity-100');
             setTimeout(() => o.classList.add('hidden'), 300);
         }
-        function handleBuyNow(productId, isOos) {
-            if (isOos) return;
-            if (!requireLogin('buy this product')) return;
-            window.location.href = `/pages/product-details.html?id=${productId}&buynow=true`;
-        }
+
     </script>
 </body>
 
