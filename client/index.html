@@ -1300,7 +1300,7 @@
             if (!el) return;
             try {
                 const json = await (await fetch('/api/categories')).json();
-                const cats = Array.isArray(json.data) ? json.data :[];
+                const cats = Array.isArray(json.data) ? json.data : [];
                 if (!cats.length) { el.innerHTML = `<p style="color:#475569;font-style:italic;padding:16px 0">No categories available.</p>`; return; }
                 el.innerHTML = cats.map((cat, i) => `
                 <div onclick="window.filterByCategory('${cat._id}')" class="category-card" style="animation-delay:${i * 70}ms">
@@ -1317,7 +1317,7 @@
             if (!el) return;
             try {
                 const json = await (await fetch(`/api/products${q}`)).json();
-                const prods = Array.isArray(json.data) ? json.data :[];
+                const prods = Array.isArray(json.data) ? json.data : [];
                 if (!prods.length) {
                     el.innerHTML = `<div class="col-span-full py-20 text-center"><i class="fa-solid fa-magnifying-glass" style="font-size:44px;color:rgba(255,255,255,.1);display:block;margin-bottom:14px"></i><p style="color:#475569;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:12px">No products found.</p><button onclick="fetchHomeProductsPatched('')" style="color:#60a5fa;font-weight:700;margin-top:12px;background:none;border:none;cursor:pointer;font-size:14px;text-decoration:underline">Refresh</button></div>`;
                     return;
@@ -1354,11 +1354,11 @@
 
                         <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto">
                             <p class="product-price">$${(prod.price || 0).toFixed(2)}</p>
-                            <button onclick="event.stopPropagation();if(requireLogin('buy this product')){window.location.href='/pages/product-details.html?id=${prod._id}&buynow=true'}"
-                                class="add-cart-btn ${oos ? 'disabled' : ''}" ${oos ? 'disabled' : ''}
-                                style="${!oos ? 'background:linear-gradient(135deg,#2563eb,#1d4ed8);' : ''}">
-                                <span class="hidden sm:inline">${oos ? 'N/A' : 'Buy Now'}</span>
-                            </button>
+                           <button onclick="event.stopPropagation();window.globalBuyNow('${prod._id}', ${oos})"
+    class="add-cart-btn ${oos ? 'disabled' : ''}" ${oos ? 'disabled' : ''}
+    style="${!oos ? 'background:linear-gradient(135deg,#2563eb,#1d4ed8);' : ''}">
+    <span class="hidden sm:inline">${oos ? 'N/A' : 'Buy Now'}</span>
+</button>
                         </div>
                       
                     </div>

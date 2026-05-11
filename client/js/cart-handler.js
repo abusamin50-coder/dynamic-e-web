@@ -54,3 +54,31 @@ window.globalAddToCart = async (productId, isOutOfStock) => {
         }
     } catch (err) { console.error(err); }
 };
+
+// NEW FUNCTION FOR BUY NOW
+window.globalBuyNow = async (productId, isOutOfStock) => {
+    if (isOutOfStock) return;
+    const token = CartHandler.getToken();
+    if (!token) { window.showAuthModal('purchase'); return; }
+
+    try {
+        const res = await fetch('/api/cart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify({ productId, qty: 1 })
+        });
+        
+        if (res.ok) {
+            window.showToast("Product added to cart. Redirecting...");
+            // কার্টে যোগ হওয়ার পর সরাসরি কার্ট পেজে পাঠিয়ে দিবে
+            setTimeout(() => {
+                window.location.href = '/pages/cart.html';
+            }, 1000);
+        } else {
+            window.showToast("Failed to add to cart.", "error");
+        }
+    } catch (err) { 
+        console.error(err); 
+        window.showToast("Something went wrong.", "error");
+    }
+};
