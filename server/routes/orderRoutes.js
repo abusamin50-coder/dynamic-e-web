@@ -5,18 +5,21 @@ const {
     getMyOrders, 
     getOrderById, 
     getOrders, 
-    updateOrderStatus 
+    updateOrderStatus,
+    deleteOrder // এটি নতুন যোগ হয়েছে
 } = require('../controllers/orderController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
 router.route('/')
-    .get(protect, admin, getOrders) // Admin sees all
+    .get(protect, admin, getOrders)
     .post(protect, addOrderItems);
 
 router.route('/myorders').get(protect, getMyOrders);
 
-router.route('/:id').get(protect, getOrderById);
+router.route('/:id')
+    .get(protect, getOrderById)
+    .delete(protect, admin, deleteOrder); // ডিলিট রুট যোগ করা হলো
 
-router.route('/:id/status').put(protect, admin, updateOrderStatus); // Admin updates status
+router.route('/:id/status').put(protect, admin, updateOrderStatus);
 
 module.exports = router;

@@ -87,14 +87,14 @@ document.getElementById('add-category-form')?.addEventListener('submit', async (
 document.getElementById('add-product-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const f = e.target;
-    const data = { 
-        name: f.name.value, 
-        description: f.description.value, 
-        price: Number(f.price.value), 
-        countInStock: Number(f.countInStock.value), 
-        brand: f.brand.value, 
-        category: f.category.value, 
-        images: [f.images.value] 
+    const data = {
+        name: f.name.value,
+        description: f.description.value,
+        price: Number(f.price.value),
+        countInStock: Number(f.countInStock.value),
+        brand: f.brand.value,
+        category: f.category.value,
+        images: [f.images.value]
     };
     const res = await fetch('/api/products', { method: 'POST', headers: getAuthHeaders(true), body: JSON.stringify(data) });
     if (res.ok) { alert("Product Published!"); window.location.href = 'products.html'; }
@@ -106,14 +106,14 @@ document.getElementById('edit-product-form')?.addEventListener('submit', async (
     e.preventDefault();
     const id = new URLSearchParams(window.location.search).get('id');
     const f = e.target;
-    const data = { 
-        name: f.name.value, 
-        description: f.description.value, 
-        price: Number(f.price.value), 
-        countInStock: Number(f.countInStock.value), 
-        brand: f.brand.value, 
-        category: f.category.value, 
-        images: [f.images.value] 
+    const data = {
+        name: f.name.value,
+        description: f.description.value,
+        price: Number(f.price.value),
+        countInStock: Number(f.countInStock.value),
+        brand: f.brand.value,
+        category: f.category.value,
+        images: [f.images.value]
     };
     const res = await fetch(`/api/products/${id}`, { method: 'PUT', headers: getAuthHeaders(true), body: JSON.stringify(data) });
     if (res.ok) { alert("Product Updated!"); window.location.href = 'products.html'; }
@@ -142,7 +142,7 @@ const loadEditPageData = async () => {
             const f = document.getElementById('edit-product-form');
             if (document.getElementById('product-id-badge')) document.getElementById('product-id-badge').innerText = `ID: ${p._id}`;
             f.name.value = p.name; f.price.value = p.price; f.brand.value = p.brand; f.countInStock.value = p.countInStock; f.description.value = p.description; f.images.value = p.images[0] || '';
-            await fetchAdminCategories(); 
+            await fetchAdminCategories();
             f.category.value = p.category._id || p.category;
         } catch (e) { console.error(e); }
     }
@@ -196,6 +196,7 @@ const fetchAdminCategories = async () => {
 };
 
 // --- 4. ORDERS ---
+// --- 4. ORDERS ---
 const fetchAdminOrders = async () => {
     const tbody = document.getElementById('admin-orders-body');
     if (!tbody) return;
@@ -204,16 +205,46 @@ const fetchAdminOrders = async () => {
         const result = await res.json();
         tbody.innerHTML = (result.data || []).map(order => `
             <tr class="border-b hover:bg-slate-50 transition text-sm">
-                <td class="p-4 font-bold">#${order._id.substring(15)}</td>
-                <td class="p-4 text-sm font-bold text-slate-600">${order.user?.name || 'Customer'}</td>
-                <td class="p-4 font-black text-blue-600">$${order.totalPrice.toFixed(2)}</td>
-                <td class="p-4"><span class="px-2 py-1 rounded-full text-[9px] font-black uppercase ${order.status === 'Delivered' ? 'bg-green-100 text-green-600' : 'bg-amber-100 text-amber-600'}">${order.status}</span></td>
-                <td class="p-4"><select onchange="updateOrderStatus('${order._id}', this.value)" class="bg-slate-100 text-[10px] font-black p-2 rounded-lg outline-none cursor-pointer"><option value="Pending" ${order.status === 'Pending' ? 'selected' : ''}>Pending</option><option value="Delivered" ${order.status === 'Delivered' ? 'selected' : ''}>Delivered</option><option value="Cancelled" ${order.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option></select></td>
-                <td class="p-4 text-center"><a href="../order-details.html?id=${order._id}" class="text-blue-500 hover:scale-110 transition"><i class="fa-solid fa-file-invoice text-lg"></i></a></td>
+                <td class="p-6">
+                    <div class="font-bold text-slate-800 text-xs">#${order._id.substring(15)}</div>
+                    <div class="text-slate-400 text-[10px]">${new Date(order.createdAt).toLocaleDateString()}</div>
+                </td>
+                <td class="p-6 font-bold text-slate-600">${order.user?.name || 'Customer'}</td>
+                <td class="p-6 font-black text-blue-600">$${order.totalPrice.toFixed(2)}</td>
+                <td class="p-6">
+                    <span class="px-2 py-1 rounded-full text-[9px] font-black uppercase ${order.status === 'Delivered' ? 'bg-green-100 text-green-600' : (order.status === 'Cancelled' ? 'bg-red-100 text-red-600' : 'bg-amber-100 text-amber-600')}">
+                        ${order.status}
+                    </span>
+                </td>
+                <td class="p-6">
+                    <select onchange="updateOrderStatus('${order._id}', this.value)" class="bg-slate-100 text-[10px] font-black p-2 rounded-lg outline-none cursor-pointer">
+                        <option value="Pending" ${order.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                        <option value="Processing" ${order.status === 'Processing' ? 'selected' : ''}>Processing</option>
+                        <option value="Delivered" ${order.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                        <option value="Cancelled" ${order.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                    </select>
+                </td>
+                <td class="p-6 text-center">
+                    <div class="flex justify-center space-x-3">
+                        <a href="../order-details.html?id=${order._id}" class="text-blue-500 hover:scale-110 transition"><i class="fa-solid fa-file-invoice text-lg"></i></a>
+                        <button onclick="deleteOrder('${order._id}')" class="text-red-500 hover:scale-110 transition"><i class="fa-solid fa-trash text-lg"></i></button>
+                    </div>
+                </td>
             </tr>`).join('');
     } catch (e) { console.error(e); }
 };
 
+window.updateOrderStatus = async (id, status) => {
+    await fetch(`/api/orders/${id}/status`, { method: 'PUT', headers: getAuthHeaders(true), body: JSON.stringify({ status }) });
+    fetchAdminOrders();
+};
+
+window.deleteOrder = async (id) => {
+    if (confirm("Are you sure you want to delete this order?")) {
+        await fetch(`/api/orders/${id}`, { method: 'DELETE', headers: getAuthHeaders() });
+        fetchAdminOrders();
+    }
+};
 window.updateOrderStatus = async (id, status) => {
     await fetch(`/api/orders/${id}/status`, { method: 'PUT', headers: getAuthHeaders(true), body: JSON.stringify({ status }) });
     fetchAdminOrders();
@@ -234,8 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Global Handlers
-window.changeStatus = async (id, status) => { if (confirm(`Change to ${status}?`)) { await fetch(`/api/users/${id}/status`, { method: 'PUT', headers: getAuthHeaders(true), body: JSON.stringify({ status }) }); fetchDashboardData(); }};
-window.removeUser = async (id) => { if (confirm("Delete User?")) { await fetch(`/api/users/${id}`, { method: 'DELETE', headers: getAuthHeaders() }); fetchDashboardData(); }};
-window.deleteProduct = async (id) => { if(confirm("Delete Product?")) { await fetch(`/api/products/${id}`, { method: 'DELETE', headers: getAuthHeaders() }); fetchAdminProducts(); }};
-window.deleteCategory = async (id) => { if(confirm("Delete Category?")) { await fetch(`/api/categories/${id}`, { method: 'DELETE', headers: getAuthHeaders() }); fetchAdminCategories(); }};
+window.changeStatus = async (id, status) => { if (confirm(`Change to ${status}?`)) { await fetch(`/api/users/${id}/status`, { method: 'PUT', headers: getAuthHeaders(true), body: JSON.stringify({ status }) }); fetchDashboardData(); } };
+window.removeUser = async (id) => { if (confirm("Delete User?")) { await fetch(`/api/users/${id}`, { method: 'DELETE', headers: getAuthHeaders() }); fetchDashboardData(); } };
+window.deleteProduct = async (id) => { if (confirm("Delete Product?")) { await fetch(`/api/products/${id}`, { method: 'DELETE', headers: getAuthHeaders() }); fetchAdminProducts(); } };
+window.deleteCategory = async (id) => { if (confirm("Delete Category?")) { await fetch(`/api/categories/${id}`, { method: 'DELETE', headers: getAuthHeaders() }); fetchAdminCategories(); } };
 window.handleLogout = () => { localStorage.removeItem('userInfo'); window.location.href = '/'; };
