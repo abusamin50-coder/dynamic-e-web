@@ -88,11 +88,10 @@
             border-right: 1px solid var(--border);
         }
 
-        /* ── Hero ── */
+        /* ── Hero ── CHANGE 1: overflow:hidden REMOVED */
         .hero-section {
             background: var(--primary);
             position: relative;
-            overflow: hidden;
         }
 
         .hero-section::after {
@@ -164,7 +163,6 @@
             padding: 14px 20px;
         }
 
-        /*  .hero-section::before { content:''; position:absolute; width:600px; height:600px; background:radial-gradient(circle,rgba(59,130,246,.15) 0%,transparent 70%); top:-100px; right:-100px; pointer-events:none; } */
         /* ── Section labels ── */
         .section-label {
             font-size: 11px;
@@ -191,7 +189,6 @@
             position: relative;
         }
 
-        /* Shared glow blobs for the whole dark band */
         .dark-band::before {
             content: '';
             position: absolute;
@@ -214,7 +211,6 @@
             pointer-events: none;
         }
 
-        /* All text inside dark band defaults to white-ish */
         .dark-band .section-label {
             color: #60a5fa;
         }
@@ -372,7 +368,6 @@
             transform: translateX(3px);
         }
 
-        /* Divider between categories and products */
         .band-divider {
             margin: 0 auto;
             max-width: 1280px;
@@ -400,7 +395,6 @@
             margin: 0 auto;
         }
 
-        /* Product cards — white on dark bg for contrast */
         .product-card {
             background: rgba(255, 255, 255, .97);
             border: 1.5px solid rgba(255, 255, 255, .15);
@@ -414,7 +408,7 @@
         }
 
         .product-card:hover {
-            border-color: #93c5fd;
+            border-color: rgba(255, 255, 255, .25);
             box-shadow: 0 24px 56px rgba(0, 0, 0, .35);
             transform: translateY(-7px);
         }
@@ -429,8 +423,9 @@
             transition: background .3s;
         }
 
+        /* CHANGE 2: blue (#dbeafe) removed — stays neutral grey on hover */
         .product-card:hover .product-img-wrap {
-            background: #dbeafe;
+            background: var(--surface-2);
         }
 
         .product-img-wrap img {
@@ -683,11 +678,10 @@
         }
 
         /* ════════════════════════
-           ★ SUPPORT — no wrapper gap
+           ★ SUPPORT
         ════════════════════════ */
         .support-pad {
             padding: 0 20px 72px;
-            /* no top padding — flows directly from products */
             position: relative;
             z-index: 1;
         }
@@ -703,7 +697,6 @@
             border: 1px solid rgba(255, 255, 255, .06);
         }
 
-        /* glow blobs */
         .support-inner::before {
             content: '';
             position: absolute;

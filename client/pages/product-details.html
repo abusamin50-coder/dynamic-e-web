@@ -8,14 +8,42 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ── Homepage dark background applied ── */
         body {
-            background-color: #f8fafc;
+            background-color: #0f172a;
             scroll-behavior: smooth;
             font-family: 'Inter', sans-serif;
         }
 
         .back-btn:hover i {
             transform: translateX(-5px);
+        }
+
+        /* Back button — light text for dark bg */
+        .back-btn {
+            color: #94a3b8;
+        }
+
+        .back-btn:hover {
+            color: #f1f5f9;
+        }
+
+        /* Breadcrumb — light text for dark bg */
+        .breadcrumb-link {
+            color: #475569;
+        }
+
+        .breadcrumb-link:hover {
+            color: #60a5fa;
+        }
+
+        .breadcrumb-current {
+            color: #94a3b8;
+        }
+
+        /* Related section title — light for dark bg */
+        .related-title {
+            color: #f1f5f9;
         }
 
         /* Prevent layout shift while image loads */
@@ -28,7 +56,7 @@
 
 <body class="min-h-screen flex flex-col">
 
-    <!-- Header -->
+    <!-- Header — unchanged -->
     <header class="bg-white shadow-sm sticky top-0 z-50 py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="/" class="text-2xl font-black text-blue-600 tracking-tighter">ElectroMart</a>
@@ -45,23 +73,24 @@
     </header>
 
     <main class="container mx-auto px-4 py-8 flex-1">
-        
-<!-- Breadcrumbs (Professional Addition) -->
-        <nav class="flex items-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">
-            <a href="/" class="hover:text-blue-600">Home</a>
-            <i class="fa-solid fa-chevron-right mx-3 text-[8px]"></i>
-            <span id="breadcrumb-category" class="hover:text-blue-600 cursor-pointer">Category</span>
-            <i class="fa-solid fa-chevron-right mx-3 text-[8px]"></i>
-            <span id="breadcrumb-name" class="text-slate-600">Product</span>
+
+        <!-- Breadcrumbs — structure intact, text colors updated for dark bg -->
+        <nav class="flex items-center text-xs font-bold uppercase tracking-widest mb-6">
+            <a href="/" class="breadcrumb-link transition-colors">Home</a>
+            <i class="fa-solid fa-chevron-right mx-3 text-[8px] text-slate-600"></i>
+            <span id="breadcrumb-category"
+                class="breadcrumb-link hover:text-blue-400 cursor-pointer transition-colors">Category</span>
+            <i class="fa-solid fa-chevron-right mx-3 text-[8px] text-slate-600"></i>
+            <span id="breadcrumb-name" class="breadcrumb-current">Product</span>
         </nav>
 
-        <!-- Back Navigation -->
+        <!-- Back Navigation — structure intact, color updated -->
         <button onclick="window.location.href='/'"
-            class="back-btn flex items-center text-slate-500 font-bold mb-8 transition group text-sm">
+            class="back-btn flex items-center font-bold mb-8 transition group text-sm">
             <i class="fa-solid fa-arrow-left mr-2 transition-transform"></i> Back to Shop
         </button>
 
-        <!-- Main Product Card -->
+        <!-- Main Product Card — unchanged (white card on dark bg looks great) -->
         <div
             class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden flex flex-col md:flex-row mb-20">
             <!-- Image Area -->
@@ -120,9 +149,9 @@
             </div>
         </div>
 
-        <!-- RELATED PRODUCTS SECTION -->
+        <!-- RELATED PRODUCTS SECTION — structure intact, title color updated -->
         <section id="related-section" class="hidden">
-            <h2 class="text-2xl font-black text-slate-800 mb-10 flex items-center">
+            <h2 class="related-title text-2xl font-black mb-10 flex items-center">
                 <span class="w-2 h-8 bg-blue-600 mr-4 rounded-full"></span> Similar Products
             </h2>
             <div id="related-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -131,6 +160,7 @@
         </section>
     </main>
 
+    <!-- Footer — unchanged -->
     <footer style="background:#0f172a; margin-top:auto">
         <!-- Main footer -->
         <div class="container mx-auto px-4 py-12">
@@ -225,7 +255,7 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Scripts — 100% unchanged -->
     <script src="../js/cart-handler.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/details.js"></script>
