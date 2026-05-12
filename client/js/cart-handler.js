@@ -2,20 +2,21 @@
  * GLOBAL UI NOTIFICATIONS & CART HANDLER
  */
 const CartHandler = {
-    // 1. THE POPUP SYSTEM (TOAST)
+    // 1. THE POPUP SYSTEM (TOAST) - RESPONSIVE VERSION
     showToast: (message, type = 'success') => {
         // Remove old ones first
         const existing = document.querySelector('.toast-popup');
         if (existing) existing.remove();
 
         const toast = document.createElement('div');
-        toast.className = `toast-popup fixed bottom-10 right-10 px-8 py-4 rounded-2xl text-white font-black shadow-2xl z-[10000] transition-all duration-500 transform translate-y-20 flex items-center space-x-3`;
+        // Added responsive classes: bottom-5 left-5 right-5 for mobile, fixed position for desktop
+        toast.className = `toast-popup fixed bottom-5 md:bottom-10 md:right-10 md:left-auto left-5 right-5 px-6 py-4 rounded-2xl text-white font-black shadow-2xl z-[10000] transition-all duration-500 transform translate-y-20 flex items-center space-x-3`;
 
         // Success = Blue (Professional), Error = Red
         toast.style.backgroundColor = type === 'success' ? '#2563eb' : '#dc2626';
 
         const icon = type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation';
-        toast.innerHTML = `<i class="fa-solid ${icon} text-xl"></i> <span>${message}</span>`;
+        toast.innerHTML = `<i class="fa-solid ${icon} text-lg"></i> <span class="text-sm font-medium">${message}</span>`;
 
         document.body.appendChild(toast);
 
@@ -37,6 +38,7 @@ const CartHandler = {
 
 // EXPOSE TO ALL OTHER JS FILES
 window.showToast = CartHandler.showToast;
+
 window.globalAddToCart = async (productId, isOutOfStock) => {
     if (isOutOfStock) return;
     const token = CartHandler.getToken();
@@ -70,7 +72,6 @@ window.globalBuyNow = async (productId, isOutOfStock) => {
         
         if (res.ok) {
             window.showToast("Product added to cart. Redirecting...");
-            // কার্টে যোগ হওয়ার পর সরাসরি কার্ট পেজে পাঠিয়ে দিবে
             setTimeout(() => {
                 window.location.href = '/pages/cart.html';
             }, 1000);
