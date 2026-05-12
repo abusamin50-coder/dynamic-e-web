@@ -842,7 +842,7 @@
     </style>
 </head>
 
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen overflow-x-hidden ">
 
     <!-- NAVBAR -->
     <header class="navbar sticky top-0 z-50">
@@ -1270,27 +1270,40 @@
         /* All IDs, API calls, window.* functions: 100% intact */
 
         /* ── Login Gate ── */
-        function requireLogin(label) {
+        window.checkAuth = (actionName) => {
             let user = null;
             try { user = JSON.parse(localStorage.getItem('userInfo')); } catch (e) { }
+
+            // যদি ইউজার লগইন থাকে
             if (user && user.token) return true;
+
+            // যদি লগইন না থাকে, মোডাল দেখাবে
             const modal = document.getElementById('auth-modal');
             const msg = document.getElementById('modal-action-name');
-            if (msg) msg.textContent = `Please login to ${label}.`;
+            if (msg) msg.textContent = `Please login to ${actionName}.`;
             if (modal) { modal.classList.remove('hidden'); modal.classList.add('flex'); }
             return false;
-        }
+        };
+
         window.closeAuthModal = () => {
             const m = document.getElementById('auth-modal');
             if (m) { m.classList.add('hidden'); m.classList.remove('flex'); }
         };
+
         document.getElementById('auth-modal')?.addEventListener('click', function (e) {
             if (e.target === this) window.closeAuthModal();
         });
 
+        /* ── Hero shop click (Updated to use window.checkAuth) ── */
+        function handleShopClick() {
+            if (!window.checkAuth('start shopping')) return;
+            document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+        }
+        
         /* ── Hero shop click ── */
         function handleShopClick() {
-            if (!requireLogin('start shopping')) return;
+            // এখানে requireLogin এর পরিবর্তে window.checkAuth ব্যবহার করতে হবে
+            if (!window.checkAuth('start shopping')) return;
             document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
         }
 
